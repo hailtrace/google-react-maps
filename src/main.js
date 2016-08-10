@@ -61,7 +61,6 @@ class App extends React.Component {
                         </DataLayer>
                     })}
         		</Map>
-                {/*
                 <h2>Simple Map with KML Layer</h2>
                 <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:1000, width:1000}}>
                     <KmlLayer zIndex={1} url="http://virtualglobetrotting.com/category/land/raceways-velodromes/export-0.kml" />
@@ -97,7 +96,7 @@ class App extends React.Component {
                     })}
                     {this.state.KmlUrls.map((url, index) => <KmlLayer key={index} url={url} zIndex={index} />)}
 
-                </Map>*/}
+                </Map>
 
         	</div>
         );

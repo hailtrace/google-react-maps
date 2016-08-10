@@ -37,9 +37,9 @@ class Feature extends React.Component {
     componentWillUpdate(nextProps, nextState) {
      	    
     }
-    shouldComponentUpdate(nextProps, nextState) {
-    	return false;
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    // 	return true;
+    // }
     updateFeatureGeometry(geoJson) {
 
     }

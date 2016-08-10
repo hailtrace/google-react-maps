@@ -116,9 +116,9 @@ class DataLayer extends React.Component {
     componentWillReceiveProps(nextProps) {
     	console.log("Data Layer will recieve props.");
     }
-   	shouldComponentUpdate(nextProps, nextState) {
-   		return nextProps.children.length != this.props.children.length;
-   	}
+   	// shouldComponentUpdate(nextProps, nextState) {
+   	// 	// return nextProps.children.length != this.props.children.length;
+   	// }
     render() {
     	var children = []
 
