@@ -1,6 +1,5 @@
 import React from 'react';
 import mapsapi from 'google-maps-api';
-import maps from '../../test-data/feature-collections.js';
 
 class Map extends React.Component {
     constructor(props) {

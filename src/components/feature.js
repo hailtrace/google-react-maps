@@ -10,9 +10,12 @@ class Feature extends React.Component {
     	this.state = {
     		feature : null,
     		listeners : [],
+    		geoJson : null
     	}
 
+    	this.initListeners = this.initListeners.bind(this);
     	this.addListener = this.addListener.bind(this);
+    	this.removeListeners = this.removeListeners.bind(this);
     	//Check props.
     	this.checkPropEditable = this.checkPropEditable.bind(this);
 
@@ -20,34 +23,89 @@ class Feature extends React.Component {
     	this.getGeometryForFeature = this.getGeometryForFeature.bind(this);
     	this.generateFeatureFromGeoJson = this.generateFeatureFromGeoJson.bind(this);
     }
-    addListener(listener) {
-
-    	var listeners = this.state.listeners.slice();
+    initListeners() {
+  		//Set geometry listener.
+  		this.addListener(this.props.data.addListener('setgeometry', ({feature}) => {
+  			if(feature.getId() == this.state.feature.getId()) {
+      			feature.toGeoJson(geoJson => this.setState({geoJson : JSON.parse(JSON.stringify(geoJson))},() => {
+      				this.props.onChange(geoJson);
+      				console.log("F: State Changed.");
+      			}));
+  			}
+  		}));
+    }
+    removeListeners(callback) {
     	this.state.listeners.forEach(listener => listener.remove());
+    	this.setState({listeners : []}, callback ? callback : ()=>{});
+    }
+    addListener(listener, callback) {
+    	var listeners = this.state.listeners.slice();
     	listeners.push(listener);
-    	this.setState({listeners});
-
+    	this.setState({listeners}, callback ? callback : ()=>{});
     }
     componentWillReceiveProps(nextProps) {
+    	console.log("F: componentWillRecieveProps");
 		if(nextProps.data && this.state.feature) {
 	   		this.checkPropEditable(nextProps);
+	   		this.updateFeatureGeometry(nextProps.geoJson)
+
     	}
-    	console.log("Feature will recieve props.");
+    	// console.log("Feature will recieve props.");
     }
     componentWillUpdate(nextProps, nextState) {
-     	    
+     	console.log("F: componentWillUpdate")
     }
     // shouldComponentUpdate(nextProps, nextState) {
-    // 	return true;
+    // 	return false;
     // }
     updateFeatureGeometry(geoJson) {
+    	//resets the geometry to match the geojson.
+    	var resetGeometry = f => {
+	   		this.removeListeners(() => {
+		    	var geometry = this.getGeometryForFeature(geoJson);
+		    	this.state.feature.setGeometry(geometry);
+		    	console.log("F: refreshed geometry for id: ", this.props.id);
+		   		this.initListeners(); //Restart the listening on this geometry.
+   			}); //Stop all listening on this geometry.
+    	}
 
+    	//Diff: this logic block makes sure that we have to reset the geometry.
+    	if(this.state.feature) {
+    		var type = this.state.feature.getGeometry().getType();
+    		switch(type) {
+    			case "Polygon":
+    				var currGeoJson = this.state.geoJson;
+		   			//If the coordinates length is not the same, obviously something changed so reset the geometry.
+		   			if(geoJson.geometry.coordinates[0].length != currGeoJson.geometry.coordinates[0].length) {
+		   				console.log("F: Entered unequal coordinate block for id: ", this.props.id);
+		   				resetGeometry();
+		   			}
+		   			//If the coordinate lengths are the same, check to see if all of the points are equal. If any of them are not equal, obviously something changed so reset the geometry.
+		   			else {
+		   				console.log("F: Starting coordinate comparison for id: ", this.props.id , currGeoJson.geometry.coordinates[0], geoJson.geometry.coordinates[0]);
+
+		   				for (var i = currGeoJson.geometry.coordinates[0].length - 1; i >= 0; i--) {
+		   					var currPoint = currGeoJson.geometry.coordinates[0][i];
+		   					var newPoint = geoJson.geometry.coordinates[0][i];
+		   					if(currPoint[0] != newPoint[0] || currPoint[1] != newPoint[1]) {
+				   				console.log("F: Entered modified point block for id: ", this.props.id);
+		   						resetGeometry();
+		   						break;
+		   					}
+		   				};
+		   			}
+    				break;
+    			// case "Point": 
+    			
+    		}
+    	}
     }
     getGeometryForFeature(geoJson) {
     	var {map,maps} = this.props;
     	switch(geoJson.geometry.type) {
     		case "Polygon":
 		    	var latLngs = geoJson.geometry.coordinates[0].map(coordinate => new maps.LatLng({lng : coordinate[0], lat: coordinate[1]}));
+		    	latLngs.pop(); //Remove the last item.
 		    	var properties = geoJson.properties;
 		    	var polygon = new maps.Data.Polygon([latLngs]);
 		    	return polygon;
@@ -68,10 +126,11 @@ class Feature extends React.Component {
     	return feature;
     }
     componentDidMount() {
+    	console.log("F: componentDidMount")
       if(this.props.data) {
 
       	var id = undefined;
-      	console.log("Feature Mounted with ID:", this.props.id);
+      	// console.log("Feature Mounted with ID:", this.props.id);
       	if(this.props.id) {
       		id = this.props.id
       	}//Force the user to supply the property to use as the id.
@@ -85,7 +144,8 @@ class Feature extends React.Component {
       	}
 
       	this.setState({
-      		feature
+      		feature,
+      		geoJson : JSON.parse(JSON.stringify(this.props.geoJson)) //Deep copy
       	}, () => {
       		this.props.data.add(feature);
 
@@ -93,12 +153,7 @@ class Feature extends React.Component {
       		//Setup listeners for this features.
       		if(this.props.onChange)
       		
-      		this.addListener(this.props.data.addListener('setgeometry', ({feature}) => {
-      			console.log("setgeometry fired");
-      			if(feature.getId() == this.state.feature.getId())
-	      			feature.toGeoJson(geoJson => this.props.onChange(geoJson));
-      		}));
-
+      		this.initListeners();
       		this.checkPropEditable(this.props);
       	})
       }
@@ -117,7 +172,7 @@ class Feature extends React.Component {
     	return this.state.feature;
     }
     checkPropEditable(props) {
-    	console.log("Checking editable.");
+    	// console.log("Checking editable.");
     	try {
 	    	if(typeof props.editable !== 'undefined' && props.editable) {
 	    		props.data.overrideStyle(this.state.feature, {editable : true});
@@ -132,10 +187,10 @@ class Feature extends React.Component {
     }
     render() {
     	if(this.props.data && this.state.feature) {
-	   		this.checkPropEditable();
+	   		this.checkPropEditable(this.props);
 
     	}
-    	console.log("Feature Rendered");
+    	console.log("F: feature Rendered");
         return <div>Feature</div>;
     }
 }

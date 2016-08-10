@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Map from './components/map';
-import DataLayer from './components/dataLayer';
-import KmlLayer from './components/kmlLayer';
+import {Map} from './src/components/index';
+import DataLayer from './src/components/dataLayer';
+import KmlLayer from './src/components/kmlLayer';
 
-import Feature from './components/feature';
+import Feature from './src/components/feature';
 
-import layers from '../test-data/test-layers';
+import layers from './test-data/test-layers';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.displayName = 'App';
         this.state = {
-            layers,
+            layers : [layers[0]],
             KmlUrl : "",
             KmlUrls : ["http://virtualglobetrotting.com/category/land/raceways-velodromes/export-0.kml", "http://www.nohrsc.noaa.gov/data/vector/master/st_us.kmz"]
         }
@@ -23,6 +23,9 @@ class App extends React.Component {
         console.log(layers);
         this.mutateFeature = this.mutateFeature.bind(this);
 
+    }
+    componentDidMount() {
+        // setInterval(()=>this.setState({layers : this.state.layers}), 1000);
     }
     mutateFeature(geoJson, layerIndex, featureIndex) {
         var {layers} = Object.assign({}, this.state);
@@ -43,13 +46,21 @@ class App extends React.Component {
         return (
         	<div>
         		<h1>Simple Map</h1>
-        		<Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{ height:1000, width:1000}}>
+        		
+                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{ height:1000, width:1000}}>
         		</Map>
+
+
         		<h2>Simple Map with Data Layers</h2>
                 {(()=>{
                     if(this.state.layers.length > 0)
                         return <ul>{this.state.layers.map((layer,index) => <li key={index}><button onClick={() => this.toggleVisibility(index)}>{layer.name}</button></li>)}</ul>
                 })()}
+                <button onClick={() => {
+                    var layers = this.state.layers.slice();
+                    layers[0].geoJson.features[0].geometry.coordinates[0][1][0] = -118.71806335449219;
+                    this.setState({layers});
+                }}>Simulate External Map Change</button>
         		<Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:1000, width:1000}}>
                     {this.state.layers.map((layer, layerIndex) => {
                         return <DataLayer zIndex={layerIndex + 1} key={layerIndex} visible={layer.visible}>
@@ -61,7 +72,8 @@ class App extends React.Component {
                         </DataLayer>
                     })}
         		</Map>
-                <h2>Simple Map with KML Layer</h2>
+
+                {/*<h2>Simple Map with KML Layer</h2>
                 <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:1000, width:1000}}>
                     <KmlLayer zIndex={1} url="http://virtualglobetrotting.com/category/land/raceways-velodromes/export-0.kml" />
                 </Map>
@@ -96,7 +108,7 @@ class App extends React.Component {
                     })}
                     {this.state.KmlUrls.map((url, index) => <KmlLayer key={index} url={url} zIndex={index} />)}
 
-                </Map>
+                </Map>*/}
 
         	</div>
         );

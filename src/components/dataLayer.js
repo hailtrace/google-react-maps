@@ -46,12 +46,13 @@ class DataLayer extends React.Component {
 
     }
 
-    checkPropVisibility() {
+    checkPropVisibility(nextProps) {
     	var {visible} = this.props;
-    	if(typeof visible === 'boolean' && visible) {
+
+    	if(!visible && nextProps.visible) {
     		this.state.data.setMap(this.props.map);
     	}
-    	else
+    	else if(visible && !nextProps.visible)
     		this.state.data.setMap(null);
     }
 
@@ -70,7 +71,7 @@ class DataLayer extends React.Component {
         var zIndex = feature.getProperty('zIndex');
         var strokeColor = feature.getProperty('strokeColor');
         var fillColor = feature.getProperty('fillColor');
-        var fillOpacity = feature.getProperty('fillOpacity');
+        var fillOpacity = this.props.fillOpacity;
 
         //Do some logic on the options to make things a bit easier.
         if(!strokeColor)
@@ -100,25 +101,35 @@ class DataLayer extends React.Component {
         }
     }
     componentWillMount() {
+    	console.log("DL: componentWillMount",this.props)
 		if(this.props.maps && this.props.map) {
 			this.initDataLayer();
+			this.checkPropVisibility(this.props);
 		}
 		else
 			console.error(new Error("You must put this compenent in a <Map /> context component or provide the maps and map props manually."))
     }
     componentWillUnmount() {
-    	console.log("Unmounting new data layer...");
+    	console.log("DL: componentWillUnmount");
     	this.state.data.setMap(null);
     	this.setState({data : null})
     }
     componentDidUpdate(prevProps, prevState) {
+   		console.log("DL: componentDidUpdate", prevProps,prevState);
     }
     componentWillReceiveProps(nextProps) {
-    	console.log("Data Layer will recieve props.");
+    	console.log("DL: componentWillReceiveProps", nextProps, this.props);
+    	if(typeof nextProps.visible !== 'undefined') {
+	   		this.checkPropVisibility(nextProps);
+    	}
     }
-   	// shouldComponentUpdate(nextProps, nextState) {
-   	// 	// return nextProps.children.length != this.props.children.length;
-   	// }
+   	shouldComponentUpdate(nextProps, nextState) {
+   		console.log("DL: shouldComponentUpdate", nextProps, nextState);
+   		return true;
+   	}
+   	componentWillUpdate(nextProps, nextState) {
+   	    console.log("DL: componentWillUpdate", nextProps, nextState);
+   	}
     render() {
     	var children = []
 
@@ -129,9 +140,6 @@ class DataLayer extends React.Component {
 	    		map : this.props.map,
 	    		data : this.state.data
 	    	}));
-
-
-	   		this.checkPropVisibility();
     	}
     	console.log("Rendered DataLayer");
         return <div>{children}</div>;
@@ -146,7 +154,8 @@ DataLayer.propTypes = {
     visible : React.PropTypes.bool,
     onChange : React.PropTypes.func,
     styleFeatures : React.PropTypes.func,
-    zIndex : React.PropTypes.number.isRequired
+    zIndex : React.PropTypes.number.isRequired,
+    fillOpacity : React.PropTypes.number
 }
 
 export default DataLayer;

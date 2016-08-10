@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 
-var app = ['./src/main.js'];
+var app = ['./main.js'];
 var plugins = [];
 var presets = ['react','es2015'];
 var config;
