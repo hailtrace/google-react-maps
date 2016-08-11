@@ -1,6 +1,13 @@
 import React from 'react';
 import mapsapi from 'google-maps-api';
 
+/**
+* The Map Component in the root component for the google maps library. It handles the interface between the google maps javascript api and the implementation of the other components.
+* @class Map
+*
+* @property {string} api-key Required. The javascript api key from your [google console]{@link http://console.developer.google.com}.
+* @property {object} mapOptions Optional. A google.maps.MapOptions object.
+*/
 class Map extends React.Component {
     constructor(props) {
         super(props);
@@ -8,9 +15,13 @@ class Map extends React.Component {
         
 
         var _div_id = "map_div_" + Math.floor(Date.now() * Math.random()).toString();
+        /** 
+        *   @property {object} state The Map component's internal state.
+        *   @property {object} state.maps A google maps javascript api reference.
+        *   @property {object} state._div_id The div id of this map.
+        */
         this.state = {
         	maps : null,
-        	children : [],
         	_div_id
         }
     }

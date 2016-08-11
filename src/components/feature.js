@@ -2,11 +2,13 @@ import React from 'react';
 import {GeoJSON} from '../utils/utils';
 window.GeoJSON = GeoJSON;
 
+//Rational: This component emulates the google Data.Feature. 
+//It lives in the context of a <DataLayer /> Component and interfaces with it's Data object that has been passed as prop to it.
 class Feature extends React.Component {
     constructor(props) {
         super(props);
         this.displayName = 'Feature';
-        this.getDataFeature = this.getDataFeature.bind(this);
+
     	this.state = {
     		feature : null,
     		listeners : [],
@@ -23,16 +25,30 @@ class Feature extends React.Component {
     	this.getGeometryForFeature = this.getGeometryForFeature.bind(this);
     	this.generateFeatureFromGeoJson = this.generateFeatureFromGeoJson.bind(this);
     }
+    ///--------------------------------Listener Management Methods-----------------------------------///
     initListeners() {
   		//Set geometry listener.
   		this.addListener(this.props.data.addListener('setgeometry', ({feature}) => {
   			if(feature.getId() == this.state.feature.getId()) {
       			feature.toGeoJson(geoJson => this.setState({geoJson : JSON.parse(JSON.stringify(geoJson))},() => {
       				this.props.onChange(geoJson);
-      				console.log("F: State Changed.");
       			}));
   			}
   		}));
+
+      //Polygon clicked.
+      this.addListener(this.props.data.addListener('click', (event) => {
+        var {feature} = event;
+        if(feature.getId() == this.state.feature.getId()) {
+
+          var coords = event.latLng.toJSON()
+          coords[0] = coords.lng;
+          coords[1] = coords.lat;
+
+          if(this.props.onClick)
+            this.props.onClick({id : this.props.id, coords });
+        }
+      }));
     }
     removeListeners(callback) {
     	this.state.listeners.forEach(listener => listener.remove());
@@ -43,6 +59,7 @@ class Feature extends React.Component {
     	listeners.push(listener);
     	this.setState({listeners}, callback ? callback : ()=>{});
     }
+    ///--------------------------------Lifecycle Methods-----------------------------------///
     componentWillReceiveProps(nextProps) {
     	console.log("F: componentWillRecieveProps");
 		if(nextProps.data && this.state.feature) {
@@ -58,6 +75,51 @@ class Feature extends React.Component {
     // shouldComponentUpdate(nextProps, nextState) {
     // 	return false;
     // }
+    componentDidMount() {
+      console.log("F: componentDidMount")
+      if(this.props.data) {
+
+        var id = undefined;
+        // console.log("Feature Mounted with ID:", this.props.id);
+        if(this.props.id) {
+          id = this.props.id
+        }//Force the user to supply the property to use as the id.
+        var feature;
+        try {
+      feature = this.generateFeatureFromGeoJson(this.props.geoJson)
+        }
+        catch(e)
+        {
+          console.error(e);
+        }
+
+        this.setState({
+          feature,
+          geoJson : JSON.parse(JSON.stringify(this.props.geoJson)) //Deep copy
+        }, () => {
+          this.props.data.add(feature);
+
+
+          //Setup listeners for this features.
+          if(this.props.onChange)
+          
+          this.initListeners();
+          this.checkPropEditable(this.props);
+        })
+      }
+      else
+        console.error(new Error("You must put this <Feature /> component within the context of a <DataLayer /> Component."))
+    }
+    componentWillUnmount() {
+      console.error("Feature unmounting.");
+      if(this.props.data)
+        this.props.data.remove(this.state.feature);
+
+      if(this.state.listeners)
+        this.removeListeners();
+    }
+
+    ///--------------------------------Google Data.Feature Managmenent Methods-----------------------------------///
     updateFeatureGeometry(geoJson) {
     	//resets the geometry to match the geojson.
     	var resetGeometry = f => {
@@ -125,73 +187,28 @@ class Feature extends React.Component {
     	});
     	return feature;
     }
-    componentDidMount() {
-    	console.log("F: componentDidMount")
-      if(this.props.data) {
-
-      	var id = undefined;
-      	// console.log("Feature Mounted with ID:", this.props.id);
-      	if(this.props.id) {
-      		id = this.props.id
-      	}//Force the user to supply the property to use as the id.
-      	var feature;
-      	try {
-			feature = this.generateFeatureFromGeoJson(this.props.geoJson)
-      	}
-      	catch(e)
-      	{
-      		console.error(e);
-      	}
-
-      	this.setState({
-      		feature,
-      		geoJson : JSON.parse(JSON.stringify(this.props.geoJson)) //Deep copy
-      	}, () => {
-      		this.props.data.add(feature);
-
-
-      		//Setup listeners for this features.
-      		if(this.props.onChange)
-      		
-      		this.initListeners();
-      		this.checkPropEditable(this.props);
-      	})
-      }
-      else
-      	console.error(new Error("You must put this <Feature /> component within the context of a <DataLayer /> Component."))
-    }
-    componentWillUnmount() {
-    	console.error("Feature unmounting.");
-    	if(this.props.data)
-    		this.props.data.remove(this.state.feature);
-
-    	if(this.state.listeners)
-    		this.state.listeners.forEach(listener => listener.remove());
-    }
-    getDataFeature() {
-    	return this.state.feature;
-    }
     checkPropEditable(props) {
-    	// console.log("Checking editable.");
-    	try {
-	    	if(typeof props.editable !== 'undefined' && props.editable) {
-	    		props.data.overrideStyle(this.state.feature, {editable : true});
-	    	}
-	    	else
-	    		props.data.overrideStyle(this.state.feature, {editable : false});
+      // console.log("Checking editable.");
+      try {
+        if(typeof props.editable !== 'undefined' && props.editable) {
+          props.data.overrideStyle(this.state.feature, {editable : true});
+        }
+        else
+          props.data.overrideStyle(this.state.feature, {editable : false});
 
-    	}
-    	catch(e) {
-    		console.error(e);
-    	}
-    }
+      }
+      catch(e) {
+        console.error(e);
+      }
+    }    
+
     render() {
     	if(this.props.data && this.state.feature) {
 	   		this.checkPropEditable(this.props);
 
     	}
     	console.log("F: feature Rendered");
-        return <div>Feature</div>;
+        return <noscript />;
     }
 }
 
@@ -201,6 +218,8 @@ Feature.propTypes = {
 	data : React.PropTypes.object,
 	geoJson : React.PropTypes.object.isRequired,
 	id : React.PropTypes.string.isRequired,
+  onChange : React.PropTypes.func,
+  onClick : React.PropTypes.func
 }
 
 export default Feature;

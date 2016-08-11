@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Google React Maps Source: components/markerCluster.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cosmo.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Google React Maps</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Cluster.html">Cluster</a></li><li><a href="ClusterIconInfo.html">ClusterIconInfo</a></li><li><a href="ClusterIconStyle.html">ClusterIconStyle</a></li><li><a href="Map.html">Map</a></li><li><a href="Map.InfoWindow.html">Map.InfoWindow</a></li><li><a href="Map.Marker.html">Map.Marker</a></li><li><a href="Map.MarkerCluster.html">Map.MarkerCluster</a></li><li><a href="MarkerClusterer.html">MarkerClusterer</a></li><li><a href="MarkerClustererOptions.html">MarkerClustererOptions</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="MarkerClusterer.html#event:click">MarkerClusterer#event:click</a></li><li><a href="MarkerClusterer.html#event:clusteringbegin">MarkerClusterer#event:clusteringbegin</a></li><li><a href="MarkerClusterer.html#event:clusteringend">MarkerClusterer#event:clusteringend</a></li><li><a href="MarkerClusterer.html#event:mouseout">MarkerClusterer#event:mouseout</a></li><li><a href="MarkerClusterer.html#event:mouseover">MarkerClusterer#event:mouseover</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#processPoints">processPoints</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: components/markerCluster.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">import React from 'react';
+import MarkerClusterer from 'marker-clusterer-plus';
+/**
+* Clusters `&lt;Marker />` components passed as children in props.children
+
+* @memberof Map
+*
+* @property {object} props
+* @property {object} props.map The google.maps.Map object from the map component.
+* @property {Array.&lt;Map.Marker>} props.children These should only be {@link Marker} components.
+* @property {MarkerClustererOptions} props.options The MarkerClusterer instantiates with these options.
+* @property {object} state The state of the MarkerCluster component.
+* @property {MarkerClusterer} state.MarkerClusterer The instance of {@link MarkerClusterer} for this component.
+*
+*
+*/
+class MarkerCluster extends React.Component {
+    constructor(props) {
+        super(props);
+        this.displayName = 'MarkerCluster';
+        this.state = {
+        	MarkerClusterer : null
+        }
+    }
+    componentDidMount() {
+    	if(this.props.map &amp;&amp; this.props.maps) {
+	    	var options = {gridSize: 50, maxZoom: 15}
+
+	    	if(this.props.options)
+	    		options = Object.assign(options, this.props.options);
+
+	    	this.setState({
+	    		MarkerClusterer : new MarkerClusterer(this.props.map, [], options)
+	    	});
+    	}
+    	else {
+    		console.error(new Error("You must run &lt;MarkerCluster /> components within the context of a &lt;Map /> component. Otherwise, provide the maps and map props manually."));
+    	}
+    }
+    componentWillUnmount() {
+    	var {MarkerClusterer} = this.state;
+    	if(MarkerClusterer) {
+    		MarkerClusterer.removeMarkers(MarkerClusterer.getMarkers());
+    	}
+	    this.setState({MarkerClusterer : null})
+    }
+    render() {
+    	var children = [];
+    	if(this.props.map &amp;&amp; this.props.maps)
+	    	children = React.Children.map(this.props.children, child => React.cloneElement(child, {
+	    		MarkerClusterer : this.state.MarkerClusterer
+	    	}))
+        return &lt;div>{children}&lt;/div>;
+    }
+}
+
+MarkerCluster.propTypes = {
+	map : React.PropTypes.object,
+	maps : React.PropTypes.object,
+	options : React.PropTypes.object
+}
+
+export default MarkerCluster;
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+
+	<span class="copyright">
+	This is a Austin Hunt project.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	
+		on Thu Aug 11th 2016
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
+
+</body>
+</html>

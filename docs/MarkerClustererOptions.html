@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Google React Maps Class: MarkerClustererOptions</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cosmo.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Google React Maps</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Cluster.html">Cluster</a></li><li><a href="ClusterIconInfo.html">ClusterIconInfo</a></li><li><a href="ClusterIconStyle.html">ClusterIconStyle</a></li><li><a href="Map.html">Map</a></li><li><a href="Map.InfoWindow.html">Map.InfoWindow</a></li><li><a href="Map.Marker.html">Map.Marker</a></li><li><a href="Map.MarkerCluster.html">Map.MarkerCluster</a></li><li><a href="MarkerClusterer.html">MarkerClusterer</a></li><li><a href="MarkerClustererOptions.html">MarkerClustererOptions</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="MarkerClusterer.html#event:click">MarkerClusterer#event:click</a></li><li><a href="MarkerClusterer.html#event:clusteringbegin">MarkerClusterer#event:clusteringbegin</a></li><li><a href="MarkerClusterer.html#event:clusteringend">MarkerClusterer#event:clusteringend</a></li><li><a href="MarkerClusterer.html#event:mouseout">MarkerClusterer#event:mouseout</a></li><li><a href="MarkerClusterer.html#event:mouseover">MarkerClusterer#event:mouseover</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#processPoints">processPoints</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Class: MarkerClustererOptions</h1>
+<section>
+
+<header>
+    
+        <h2>
+        MarkerClustererOptions
+        </h2>
+        
+            <div class="class-description"><p>This class represents the optional parameter passed to<br> the <a href="MarkerClusterer.html">MarkerClusterer</a> constructor.</p></div>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="MarkerClustererOptions"><span class="type-signature"></span>new MarkerClustererOptions()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gridSize</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    60
+                
+                </td>
+            
+
+            <td class="description last"><p>The grid size of a cluster in pixels. The grid is a square.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>maxZoom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last"><p>The maximum zoom level at which clustering is enabled or<br> <code>null</code> if clustering is to be enabled at all zoom levels.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>zoomOnClick</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether to zoom the map when a cluster marker is<br> clicked. You may want to set this to <code>false</code> if you have installed a handler<br> for the <code>click</code> event and it deals with zooming on its own.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>averageCenter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether the position of a cluster marker should be<br> the average position of all markers in the cluster. If set to <code>false</code>, the<br> cluster marker is positioned at the location of the first marker added to the cluster.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>minimumClusterSize</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    2
+                
+                </td>
+            
+
+            <td class="description last"><p>The minimum number of markers needed in a cluster<br> before the markers are hidden and a cluster marker appears.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ignoreHidden</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether to ignore hidden markers in clusters. You<br> may want to set this to <code>true</code> to ensure that hidden markers are not included<br> in the marker count that appears on a cluster marker (this count is the value of the<br> <code>text</code> property of the result returned by the default <code>calculator</code>).<br> If set to <code>true</code> and you change the visibility of a marker being clustered, be<br> sure to also call <code>MarkerClusterer.repaint()</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last"><p>The tooltip to display when the mouse moves over a cluster<br> marker. (Alternatively, you can use a custom <code>calculator</code> function to specify a<br> different tooltip for each cluster marker.)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>calculator</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    MarkerClusterer.CALCULATOR
+                
+                </td>
+            
+
+            <td class="description last"><p>The function used to determine<br> the text to be displayed on a cluster marker and the index indicating which style to use<br> for the cluster marker. The input parameters for the function are (1) the array of markers<br> represented by a cluster marker and (2) the number of cluster icon styles. It returns a<br> <a href="ClusterIconInfo.html">ClusterIconInfo</a> object. The default <code>calculator</code> returns a<br> <code>text</code> property which is the number of markers in the cluster and an<br> <code>index</code> property which is one higher than the lowest integer such that<br> <code>10^i</code> exceeds the number of markers in the cluster, or the size of the styles<br> array, whichever is less. The <code>styles</code> array element used has an index of<br> <code>index</code> minus 1. For example, the default <code>calculator</code> returns a<br> <code>text</code> value of <code>&quot;125&quot;</code> and an <code>index</code> of <code>3</code><br> for a cluster icon representing 125 markers so the element used in the <code>styles</code><br> array is <code>2</code>. A <code>calculator</code> may also return a <code>title</code><br> property that contains the text of the tooltip to be used for the cluster marker. If<br>  <code>title</code> is not defined, the tooltip is set to the value of the <code>title</code><br>  property for the MarkerClusterer.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>clusterClass</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "cluster"
+                
+                </td>
+            
+
+            <td class="description last"><p>The name of the CSS class defining general styles<br> for the cluster markers. Use this class to define CSS styles that are not set up by the code<br> that processes the <code>styles</code> array.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>styles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>An array of <a href="ClusterIconStyle.html">ClusterIconStyle</a> elements defining the styles<br> of the cluster markers to be used. The element to be used to style a given cluster marker<br> is determined by the function defined by the <code>calculator</code> property.<br> The default is an array of <a href="ClusterIconStyle.html">ClusterIconStyle</a> elements whose properties are derived<br> from the values for <code>imagePath</code>, <code>imageExtension</code>, and<br> <code>imageSizes</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>enableRetinaIcons</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether to allow the use of cluster icons that<br>have sizes that are some multiple (typically double) of their actual display size. Icons such<br>as these look better when viewed on high-resolution monitors such as Apple's Retina displays.<br>Note: if this property is <code>true</code>, sprites cannot be used as cluster icons.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>batchSize</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    MarkerClusterer.BATCH_SIZE
+                
+                </td>
+            
+
+            <td class="description last"><p>Set this property to the<br> number of markers to be processed in a single batch when using a browser other than<br> Internet Explorer (for Internet Explorer, use the batchSizeIE property instead).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>batchSizeIE</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    MarkerClusterer.BATCH_SIZE_IE
+                
+                </td>
+            
+
+            <td class="description last"><p>When Internet Explorer is<br> being used, markers are processed in several batches with a small delay inserted between<br> each batch in an attempt to avoid Javascript timeout errors. Set this property to the<br> number of markers to be processed in a single batch; select as high a number as you can<br> without causing a timeout error in the browser. This number might need to be as low as 100<br> if 15,000 markers are being managed, for example.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imagePath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    MarkerClusterer.IMAGE_PATH
+                
+                </td>
+            
+
+            <td class="description last"><p>The full URL of the root name of the group of image files to use for cluster icons.<br> The complete file name is of the form <code>imagePath</code>n.<code>imageExtension</code><br> where n is the image file number (1, 2, etc.).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imageExtension</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    MarkerClusterer.IMAGE_EXTENSION
+                
+                </td>
+            
+
+            <td class="description last"><p>The extension name for the cluster icon image files (e.g., <code>&quot;png&quot;</code> or<br> <code>&quot;jpg&quot;</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imageSizes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    MarkerClusterer.IMAGE_SIZES
+                
+                </td>
+            
+
+            <td class="description last"><p>An array of numbers containing the widths of the group of<br> <code>imagePath</code>n.<code>imageExtension</code> image files.<br> (The images are assumed to be square.)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html">utils/v3-utility-library-master/markerclustererplus/src/markerclusterer.js</a>,
+				 <a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html#sunlight-1-line-543">line 543</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+
+	<span class="copyright">
+	This is a Austin Hunt project.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	
+		on Thu Aug 11th 2016
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
+
+</body>
+</html>
