@@ -22,6 +22,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 window.GeoJSON = _utils.GeoJSON;
 
+//Rational: This component emulates the google Data.Feature. 
+//It lives in the context of a <DataLayer /> Component and interfaces with it's Data object that has been passed as prop to it.
+
 var Feature = function (_React$Component) {
   _inherits(Feature, _React$Component);
 
@@ -31,7 +34,7 @@ var Feature = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Feature).call(this, props));
 
     _this.displayName = 'Feature';
-    _this.getDataFeature = _this.getDataFeature.bind(_this);
+
     _this.state = {
       feature: null,
       listeners: [],
@@ -49,6 +52,8 @@ var Feature = function (_React$Component) {
     _this.generateFeatureFromGeoJson = _this.generateFeatureFromGeoJson.bind(_this);
     return _this;
   }
+  ///--------------------------------Listener Management Methods-----------------------------------///
+
 
   _createClass(Feature, [{
     key: 'initListeners',
@@ -63,9 +68,22 @@ var Feature = function (_React$Component) {
           feature.toGeoJson(function (geoJson) {
             return _this2.setState({ geoJson: JSON.parse(JSON.stringify(geoJson)) }, function () {
               _this2.props.onChange(geoJson);
-              console.log("F: State Changed.");
             });
           });
+        }
+      }));
+
+      //Polygon clicked.
+      this.addListener(this.props.data.addListener('click', function (event) {
+        var feature = event.feature;
+
+        if (feature.getId() == _this2.state.feature.getId()) {
+
+          var coords = event.latLng.toJSON();
+          coords[0] = coords.lng;
+          coords[1] = coords.lat;
+
+          if (_this2.props.onClick) _this2.props.onClick({ id: _this2.props.id, coords: coords });
         }
       }));
     }
@@ -84,6 +102,8 @@ var Feature = function (_React$Component) {
       listeners.push(listener);
       this.setState({ listeners: listeners }, callback ? callback : function () {});
     }
+    ///--------------------------------Lifecycle Methods-----------------------------------///
+
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
@@ -104,17 +124,60 @@ var Feature = function (_React$Component) {
     // }
 
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      console.log("F: componentDidMount");
+      if (this.props.data) {
+
+        var id = undefined;
+        // console.log("Feature Mounted with ID:", this.props.id);
+        if (this.props.id) {
+          id = this.props.id;
+        } //Force the user to supply the property to use as the id.
+        var feature;
+        try {
+          feature = this.generateFeatureFromGeoJson(this.props.geoJson);
+        } catch (e) {
+          console.error(e);
+        }
+
+        this.setState({
+          feature: feature,
+          geoJson: JSON.parse(JSON.stringify(this.props.geoJson)) //Deep copy
+        }, function () {
+          _this3.props.data.add(feature);
+
+          //Setup listeners for this features.
+          if (_this3.props.onChange) _this3.initListeners();
+          _this3.checkPropEditable(_this3.props);
+        });
+      } else console.error(new Error("You must put this <Feature /> component within the context of a <DataLayer /> Component."));
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.error("Feature unmounting.");
+      if (this.props.data) this.props.data.remove(this.state.feature);
+
+      if (this.state.listeners) this.removeListeners();
+    }
+
+    ///--------------------------------Google Data.Feature Managmenent Methods-----------------------------------///
+
+  }, {
     key: 'updateFeatureGeometry',
     value: function updateFeatureGeometry(geoJson) {
-      var _this3 = this;
+      var _this4 = this;
 
       //resets the geometry to match the geojson.
       var resetGeometry = function resetGeometry(f) {
-        _this3.removeListeners(function () {
-          var geometry = _this3.getGeometryForFeature(geoJson);
-          _this3.state.feature.setGeometry(geometry);
-          console.log("F: refreshed geometry for id: ", _this3.props.id);
-          _this3.initListeners(); //Restart the listening on this geometry.
+        _this4.removeListeners(function () {
+          var geometry = _this4.getGeometryForFeature(geoJson);
+          _this4.state.feature.setGeometry(geometry);
+          console.log("F: refreshed geometry for id: ", _this4.props.id);
+          _this4.initListeners(); //Restart the listening on this geometry.
         }); //Stop all listening on this geometry.
       };
 
@@ -187,53 +250,6 @@ var Feature = function (_React$Component) {
       return feature;
     }
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this4 = this;
-
-      console.log("F: componentDidMount");
-      if (this.props.data) {
-
-        var id = undefined;
-        // console.log("Feature Mounted with ID:", this.props.id);
-        if (this.props.id) {
-          id = this.props.id;
-        } //Force the user to supply the property to use as the id.
-        var feature;
-        try {
-          feature = this.generateFeatureFromGeoJson(this.props.geoJson);
-        } catch (e) {
-          console.error(e);
-        }
-
-        this.setState({
-          feature: feature,
-          geoJson: JSON.parse(JSON.stringify(this.props.geoJson)) //Deep copy
-        }, function () {
-          _this4.props.data.add(feature);
-
-          //Setup listeners for this features.
-          if (_this4.props.onChange) _this4.initListeners();
-          _this4.checkPropEditable(_this4.props);
-        });
-      } else console.error(new Error("You must put this <Feature /> component within the context of a <DataLayer /> Component."));
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      console.error("Feature unmounting.");
-      if (this.props.data) this.props.data.remove(this.state.feature);
-
-      if (this.state.listeners) this.state.listeners.forEach(function (listener) {
-        return listener.remove();
-      });
-    }
-  }, {
-    key: 'getDataFeature',
-    value: function getDataFeature() {
-      return this.state.feature;
-    }
-  }, {
     key: 'checkPropEditable',
     value: function checkPropEditable(props) {
       // console.log("Checking editable.");
@@ -252,11 +268,7 @@ var Feature = function (_React$Component) {
         this.checkPropEditable(this.props);
       }
       console.log("F: feature Rendered");
-      return _react2.default.createElement(
-        'div',
-        null,
-        'Feature'
-      );
+      return _react2.default.createElement('noscript', null);
     }
   }]);
 
@@ -268,7 +280,9 @@ Feature.propTypes = {
   map: _react2.default.PropTypes.object,
   data: _react2.default.PropTypes.object,
   geoJson: _react2.default.PropTypes.object.isRequired,
-  id: _react2.default.PropTypes.string.isRequired
+  id: _react2.default.PropTypes.string.isRequired,
+  onChange: _react2.default.PropTypes.func,
+  onClick: _react2.default.PropTypes.func
 };
 
 exports.default = Feature;

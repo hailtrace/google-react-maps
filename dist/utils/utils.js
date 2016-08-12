@@ -1,8 +1,57 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.refreshComponentFromProps = refreshComponentFromProps;
+/** @namespace Utils */
+
+/** Function to refresh components based on their props. 
+* @method 
+* @memberof Utils 
+*/
+function refreshComponentFromProps() {
+	var _this = this;
+
+	if (!this) throw new Error("You must bind this function to a react component to call it.");
+
+	var properties = Object.getOwnPropertyNames(this.props);
+	properties.forEach(function (prop) {
+		if (prop != 'ref' && prop != 'key' && typeof _this.props[prop] !== 'function' && typeof _this.props[prop] !== 'undefined' && typeof _this[prop + "PropDidChange"] === 'function') {
+			if (_this[prop + "PropDidChange"]() && typeof _this[prop + "HandleChange"] === 'function') _this[prop + "HandleChange"]();
+		}
+	});
+}
+/** Import these Map Control positions by `import {ControlPosition} from 'google-react-maps'`
+* @enum ControlPosition
+* @memberof Map
+* @property {enum} BOTTOM_CENTER
+* @property {enum} BOTTOM_LEFT
+* @property {enum} BOTTOM_RIGHT
+* @property {enum} LEFT_BOTTOM
+* @property {enum} LEFT_CENTER
+* @property {enum} LEFT_TOP
+* @property {enum} RIGHT_BOTTOM
+* @property {enum} RIGHT_CENTER
+* @property {enum} RIGHT_TOP
+* @property {enum} TOP_CENTER
+* @property {enum} TOP_LEFT
+* @property {enum} TOP_RIGHT
+*/
+var ControlPosition = exports.ControlPosition = {
+	BOTTOM_CENTER: "BOTTOM_CENTER",
+	BOTTOM_LEFT: "BOTTOM_LEFT",
+	BOTTOM_RIGHT: "BOTTOM_RIGHT",
+	LEFT_BOTTOM: "LEFT_BOTTOM",
+	LEFT_CENTER: "LEFT_CENTER",
+	LEFT_TOP: "LEFT_TOP",
+	RIGHT_BOTTOM: "RIGHT_BOTTOM",
+	RIGHT_CENTER: "RIGHT_CENTER",
+	RIGHT_TOP: "RIGHT_TOP",
+	TOP_CENTER: "TOP_CENTER",
+	TOP_LEFT: "TOP_LEFT",
+	TOP_RIGHT: "TOP_RIGHT"
+};
 //License for the GeoJSON function:
 
 // Copyright (c) 2012, Jason Sanford
