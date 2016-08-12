@@ -1,3 +1,28 @@
+/** @namespace Utils */
+
+/* Function to refresh components based on their props. 
+* @method 
+* @memberof Utils 
+*/
+export function refreshComponentFromProps() {
+	if(!this)
+		throw new Error("You must bind this function to a react component to call it.");
+
+    var properties = Object.getOwnPropertyNames(this.props);
+    properties.forEach(prop => {
+        if( prop != 'ref' &&
+        	prop != 'key' &&
+        	typeof this.props[prop] !== 'function' && 
+            typeof this.props[prop] !== 'undefined' &&
+            typeof this[prop + "PropDidChange"] === 'function'
+            ) 
+        {
+            if(this[prop + "PropDidChange"]() && typeof this[prop+"HandleChange"] === 'function')
+                this[prop + "HandleChange"]()
+
+        }
+    });
+}
 //License for the GeoJSON function:
 
 // Copyright (c) 2012, Jason Sanford

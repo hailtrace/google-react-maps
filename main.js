@@ -16,7 +16,12 @@ class App extends React.Component {
             layers : layers,
             KmlUrl : "",
             KmlUrls : ["http://virtualglobetrotting.com/category/land/raceways-velodromes/export-0.kml", "http://www.nohrsc.noaa.gov/data/vector/master/st_us.kmz"],
-            showInfoWindow : true
+            showInfoWindow : true,
+            center : {
+                lat : 39.5,
+                lng : -58.35
+            },
+            zoom : 4
         }
 
         this.removeLayer = this.removeLayer.bind(this);
@@ -56,8 +61,10 @@ class App extends React.Component {
         return (
         	<div>
         		<h1>Simple Map</h1>
-        		
-                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{ height:1000, width:1000}}>
+                <div>
+            		Zoom : <input type="number" onChange={e => this.setState({zoom : Number(e.target.value)})} value={this.state.zoom} />
+                </div>
+                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" zoom={Number(this.state.zoom)} center={this.state.center} style={{ height:1000, width:1000}}>
         		</Map>
 
 
@@ -145,7 +152,7 @@ class App extends React.Component {
                                     </InfoWindow>
                             )
                     })()}
-                    <Marker coords={{lng: -110.44364929199219, lat: 40.058001435398296}}>
+                    <Marker coords={{lng: -117.44364929199219, lat: 40.058001435398296}}>
                         <InfoWindow open={true}>
                             <div>This is a component within a marker.</div>
                         </InfoWindow> 
