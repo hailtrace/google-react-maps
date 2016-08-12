@@ -4,6 +4,10 @@ import DataLayer from './dataLayer';
 import Feature from './feature';
 import InfoWindow from './infoWindow';
 import Marker from './marker';
+import MapControl from './mapControl';
+import * as Utils from '../utils/utils';
+
+export const ControlPosition = Utils.ControlPosition;
 
 export {
 	Map, 
@@ -11,5 +15,6 @@ export {
 	DataLayer,
 	Feature,
 	InfoWindow,
-	Marker
+	Marker,
+	MapControl
 }

@@ -1,6 +1,6 @@
 /** @namespace Utils */
 
-/* Function to refresh components based on their props. 
+/** Function to refresh components based on their props. 
 * @method 
 * @memberof Utils 
 */
@@ -22,6 +22,36 @@ export function refreshComponentFromProps() {
 
         }
     });
+}
+/** Import these Map Control positions by `import {ControlPosition} from 'google-react-maps'`
+* @enum ControlPosition
+* @memberof Map
+* @property {enum} BOTTOM_CENTER
+* @property {enum} BOTTOM_LEFT
+* @property {enum} BOTTOM_RIGHT
+* @property {enum} LEFT_BOTTOM
+* @property {enum} LEFT_CENTER
+* @property {enum} LEFT_TOP
+* @property {enum} RIGHT_BOTTOM
+* @property {enum} RIGHT_CENTER
+* @property {enum} RIGHT_TOP
+* @property {enum} TOP_CENTER
+* @property {enum} TOP_LEFT
+* @property {enum} TOP_RIGHT
+*/
+export const ControlPosition = {
+	BOTTOM_CENTER : "BOTTOM_CENTER",
+	BOTTOM_LEFT : "BOTTOM_LEFT",
+	BOTTOM_RIGHT : "BOTTOM_RIGHT",
+	LEFT_BOTTOM : "LEFT_BOTTOM",
+	LEFT_CENTER : "LEFT_CENTER",
+	LEFT_TOP : "LEFT_TOP",
+	RIGHT_BOTTOM : "RIGHT_BOTTOM",
+	RIGHT_CENTER : "RIGHT_CENTER",
+	RIGHT_TOP : "RIGHT_TOP",
+	TOP_CENTER : "TOP_CENTER",
+	TOP_LEFT : "TOP_LEFT",
+	TOP_RIGHT : "TOP_RIGHT"
 }
 //License for the GeoJSON function:
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import {Map, InfoWindow, Marker} from './src/components/index';
+import {Map, InfoWindow, Marker, MapControl} from './src/components/index';
+import {ControlPosition} from './src/utils/utils';
 import DataLayer from './src/components/dataLayer';
 import KmlLayer from './src/components/kmlLayer';
 
@@ -21,7 +22,8 @@ class App extends React.Component {
                 lat : 39.5,
                 lng : -58.35
             },
-            zoom : 4
+            zoom : 4,
+            customControls : []
         }
 
         this.removeLayer = this.removeLayer.bind(this);
@@ -31,7 +33,19 @@ class App extends React.Component {
         this.simulateFeatureCoordinateEdit = this.simulateFeatureCoordinateEdit.bind(this);
     }
     componentDidMount() {
-        // setInterval(()=>this.setState({layers : this.state.layers}), 1000);
+        var controls = [];
+        var positions = Object.getOwnPropertyNames(ControlPosition);
+        positions.forEach(p => {
+            controls.push(
+                <MapControl position={p}>
+                    <div style={{backgroundColor:"#fff"}}>
+                        <h3>{p}</h3>
+                    </div>
+                </MapControl>
+            );
+        })
+
+        this.setState({customControls : controls})
     }
     mutateFeature(geoJson, layerIndex, featureIndex) {
         var {layers} = Object.assign({}, this.state);
@@ -58,6 +72,7 @@ class App extends React.Component {
         this.setState({layers});
     }
     render() {
+
         return (
         	<div>
         		<h1>Simple Map</h1>
@@ -67,8 +82,17 @@ class App extends React.Component {
                 <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" zoom={Number(this.state.zoom)} center={this.state.center} style={{ height:1000, width:1000}}>
         		</Map>
 
+                <h2>Simple Map with Custom Controls</h2>
+                <Map 
+                    api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" 
+                    zoom={Number(this.state.zoom)} 
+                    center={this.state.center} 
+                    style={{ height:1000, width:1000}}
+                    controls={this.state.customControls}
+                    >
+                </Map>                
 
-        		<h2>Simple Map with Data Layers</h2>
+        		{/*<h2>Simple Map with Data Layers</h2>
                 {(()=>{
                     if(this.state.layers.length > 0)
                         return <ul>{this.state.layers.map((layer,index) => <li key={index}><button onClick={() => this.toggleVisibility(index)}>{layer.name}</button></li>)}</ul>
@@ -164,7 +188,7 @@ class App extends React.Component {
                     </Marker>
 
 
-                </Map>
+                </Map>*/}
 
         	</div>
         );

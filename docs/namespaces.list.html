@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Google React Maps Class: InfoWindow</title>
+	<title>Google React Maps Namespaces</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -84,18 +84,14 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: InfoWindow</h1>
+	<h1 class="page-title">Namespaces</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="Map.html">Map</a>.</span>
         
-        InfoWindow
         </h2>
-        
-            <div class="class-description"><p>The component designed to implement the google.maps.InfoWindow class. This component can be the child of either the <code>&lt;Map /&gt;</code> or <code>&lt;Marker /&gt;</code> components, but if you decide to put it within the <code>&lt;Map /&gt;</code> component you must set its coordinate property so that it has an anchor point.</p></div>
         
     
 </header>
@@ -105,564 +101,11 @@
     <div class="container-overview">
     
         
-<hr>
-<dt>
-    <h4 class="name" id="InfoWindow"><span class="type-signature"></span>new InfoWindow()</h4>
-    
-    
-</dt>
-<dd>
 
-    
-
-    
-
-    
-
-    
-    
-
-    
+        
 <dl class="details">
     
 
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>props</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>maps</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="google.maps.html">google.maps</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Required.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>map</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">google.maps.Map</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Required.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>anchor</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">google.maps.MVCObject</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Required if coordinates aren't provided.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>coords</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Required if anchor isn't provided.</p>
-                <h6>Properties</h6>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>lng</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lat</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>disableAutopan</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">bool</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maxWidth</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pixelOffset</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>width</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">google.maps.InfoWindowOptions</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>These will overwrite any of the convenience props above. See <a href="https://developers.google.com/maps/documentation/javascript/3.exp/reference#InfoWindowOptions">google.maps.InfoWindowOptions</a> documentation for all the options.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>open</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">bool</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Allows you to open and close a window without fully unmounting it.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>infoWindow</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">google.maps.InfoWindow</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The internal instance of the infoWindow.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>props.onCloseClick</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Use this to listen for the close click event. When someone tries to close the infowindow. Implement closing.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
-    
-
 	
 
 	
@@ -689,16 +132,6 @@
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="components_infoWindow.js.html">components/infoWindow.js</a>,
-				 <a href="components_infoWindow.js.html#sunlight-1-line-26">line 26</a>
-			</li>
-		</ul>
-	</dd>
 	
 
 	
@@ -709,21 +142,7 @@
 </dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
+        
     
     </div>
 
@@ -732,237 +151,758 @@
     
 
     
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="cleanInfoWindowContentForUnmount"><span class="type-signature"></span>cleanInfoWindowContentForUnmount()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Place rendered children back into their normal location to await their destruction.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="components_infoWindow.js.html">components/infoWindow.js</a>,
-				 <a href="components_infoWindow.js.html#sunlight-1-line-76">line 76</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
+            <dt><a href="Cluster.html">Cluster</a></dt>
+            <dd></dd>
         
-<span class="param-type">undefined</span>
-
-
-
-    </dd>
-</dl>
-
-
+            <dt><a href="ClusterIconInfo.html">ClusterIconInfo</a></dt>
+            <dd></dd>
         
-
-    
-</dd>
-
+            <dt><a href="ClusterIconStyle.html">ClusterIconStyle</a></dt>
+            <dd></dd>
         
-            
-<hr>
-<dt>
-    <h4 class="name" id="loadInfoWindowContent"><span class="type-signature"></span>loadInfoWindowContent()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Load rendered children into infoWindow.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="components_infoWindow.js.html">components/infoWindow.js</a>,
-				 <a href="components_infoWindow.js.html#sunlight-1-line-64">line 64</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
+            <dt><a href="google.maps.LatLngLiteral.html">LatLngLiteral</a></dt>
+            <dd></dd>
         
-<span class="param-type">undefined</span>
-
-
-
-    </dd>
-</dl>
-
-
+            <dt><a href="Map.html">Map</a></dt>
+            <dd></dd>
         
-
-    
-</dd>
-
+            <dt><a href="Map.InfoWindow.html">InfoWindow</a></dt>
+            <dd></dd>
+        
+            <dt><a href="Map.Marker.html">Marker</a></dt>
+            <dd></dd>
+        
+            <dt><a href="Map.MarkerCluster.html">MarkerCluster</a></dt>
+            <dd></dd>
+        
+            <dt><a href="MapControl.html">MapControl</a></dt>
+            <dd></dd>
+        
+            <dt><a href="MarkerClusterer.html">MarkerClusterer</a></dt>
+            <dd></dd>
+        
+            <dt><a href="MarkerClustererOptions.html">MarkerClustererOptions</a></dt>
+            <dd></dd>
         </dl>
     
 
     
 
+    
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="namespaces.html#google.maps"><a href="google.maps.html">maps</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#Utils"><a href="Utils.html">Utils</a></a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:click">click</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This event is fired when a cluster marker is clicked.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>c</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Cluster.html">Cluster</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The cluster that was clicked.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html">utils/v3-utility-library-master/markerclustererplus/src/markerclusterer.js</a>,
+				 <a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html#sunlight-1-line-106">line 106</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:clusteringbegin">clusteringbegin</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This event is fired when the <code>MarkerClusterer</code> begins<br> clustering markers.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MarkerClusterer.html">MarkerClusterer</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The MarkerClusterer whose markers are being clustered.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html">utils/v3-utility-library-master/markerclustererplus/src/markerclusterer.js</a>,
+				 <a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html#sunlight-1-line-1446">line 1446</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:clusteringend">clusteringend</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This event is fired when the <code>MarkerClusterer</code> stops<br> clustering markers.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MarkerClusterer.html">MarkerClusterer</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The MarkerClusterer whose markers are being clustered.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html">utils/v3-utility-library-master/markerclustererplus/src/markerclusterer.js</a>,
+				 <a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html#sunlight-1-line-1491">line 1491</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:mouseout">mouseout</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This event is fired when the mouse moves out of a cluster marker.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>c</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Cluster.html">Cluster</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The cluster that the mouse moved out of.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html">utils/v3-utility-library-master/markerclustererplus/src/markerclusterer.js</a>,
+				 <a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html#sunlight-1-line-153">line 153</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:mouseover">mouseover</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This event is fired when the mouse moves over a cluster marker.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>c</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Cluster.html">Cluster</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The cluster that the mouse moved over.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html">utils/v3-utility-library-master/markerclustererplus/src/markerclusterer.js</a>,
+				 <a href="utils_v3-utility-library-master_markerclustererplus_src_markerclusterer.js.html#sunlight-1-line-142">line 142</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
     
 </article>
 

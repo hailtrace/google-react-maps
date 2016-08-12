@@ -75,7 +75,7 @@ class Map extends React.Component {
         if(center)
             return !new maps.LatLng(center.lat,center.lng).equals(map.getCenter());
         else
-            return true;
+            return false;
     }
     centerHandleChange() {
         this.state.maps.setCenter(this.props.center);
@@ -135,18 +135,31 @@ class Map extends React.Component {
     }
     componentDidUpdate() {
         console.log("MC: Component Did Update");
-        this.refreshComponentFromProps();
+        if(this.state.map)
+            this.refreshComponentFromProps();
     }
     render() {
     	var children = [];
-    	if(this.state.maps && this.state.map && this.props.children) 
+    	var controls = [];
+
+        if(this.state.maps && this.state.map && this.props.children) 
 	    	children = React.Children.map(this.props.children, child => child ? React.cloneElement(child, {
 	    		maps : this.state.maps,
 	    		map : this.state.map
 	    	}) : undefined );
 
+        if(this.state.maps && this.state.map && this.props.controls && this.props.controls.constructor.name === 'Array') {
+            controls = React.Children.map(this.props.controls, control => control ? React.cloneElement(control, {
+                maps : this.state.maps,
+                map : this.state.map
+            }) : undefined ); 
+
+        }
+        
         return <div id={this.state._div_id} style={this.props.style}>
-        	{children}
+        	<div>{children}</div>
+            <div>{controls}</div>
+
         </div>;
     }
 }
