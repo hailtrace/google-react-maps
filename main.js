@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import {Map, InfoWindow, Marker, MapControl} from './src/components/index';
+import {Map, DataLayer, Feature, InfoWindow, Marker, MapControl} from './src/components/index';
 import {ControlPosition} from './src/utils/utils';
 import DataLayer from './src/components/dataLayer';
 import KmlLayer from './src/components/kmlLayer';
@@ -79,17 +79,19 @@ class App extends React.Component {
                 <div>
             		Zoom : <input type="number" onChange={e => this.setState({zoom : Number(e.target.value)})} value={this.state.zoom} />
                 </div>
-                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" zoom={Number(this.state.zoom)} center={this.state.center} style={{ height:1000, width:1000}}>
+                <Map onClick={e => console.log(e)} api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" zoom={Number(this.state.zoom)} center={this.state.center} style={{ height:1000, width:1000}}>
         		</Map>
 
                 <h2>Simple Map with Custom Controls</h2>
                 <Map 
+                    ref={()}
                     api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" 
                     zoom={Number(this.state.zoom)} 
                     center={this.state.center} 
                     style={{ height:1000, width:1000}}
                     controls={this.state.customControls}
                     >
+                    
                 </Map>                
 
         		{/*<h2>Simple Map with Data Layers</h2>

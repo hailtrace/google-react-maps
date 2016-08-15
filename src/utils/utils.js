@@ -23,6 +23,34 @@ export function refreshComponentFromProps() {
         }
     });
 }
+
+export function isValidMapListener(prop = "") {
+	prop = prop.toLowerCase();
+	switch(prop) {
+ 		case "bounds_changed": 
+ 		case "center_changed": 
+ 		case "click": 
+ 		case "dblclick": 
+ 		case "drag": 
+ 		case "dragend": 
+ 		case "dragstart": 
+ 		case "heading_changed": 
+ 		case "idle": 
+ 		case "maptypeid_changed": 
+ 		case "mousemove": 
+ 		case "mouseout": 
+ 		case "mouseover": 
+ 		case "projection_changed": 
+ 		case "resize": 
+ 		case "rightclick": 
+ 		case "tilesloaded": 
+ 		case "tilt_changed": 
+ 		case "zoom_change": 
+ 			return true;
+ 		default:
+ 			return false;
+	}
+}
 /** Import these Map Control positions by `import {ControlPosition} from 'google-react-maps'`
 * @enum ControlPosition
 * @memberof Map

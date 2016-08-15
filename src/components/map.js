@@ -1,6 +1,6 @@
 import React from 'react';
 import mapsapi from 'google-maps-api';
-import {refreshComponentFromProps} from '../utils/utils';
+import {refreshComponentFromProps, isValidMapListener} from '../utils/utils';
 
 /**
 * See [Google Maps Javascript API]{@link https://developers.google.com/maps/documentation/javascript/3.exp/reference}
@@ -45,8 +45,14 @@ class Map extends React.Component {
         */
         this.state = {
         	maps : null,
+            map : null,
         	_div_id
         }
+        this.listeners = [];
+        
+        this.getGeocoder = this.getGeocoder.bind(this);
+        this.getGoogleMapsApi = this.getGoogleMapsApi.bind(this);
+        this.getGoogleMap = this.getGoogleMap.bind(this);
 
         this.getOptions = this.getOptions.bind(this);
 
@@ -56,6 +62,22 @@ class Map extends React.Component {
         this.boundsPropDidChange = this.boundsPropDidChange.bind(this);
         this.zoomPropDidChange = this.zoomPropDidChange.bind(this);
 
+        this.addListener = this.addListener.bind(this);
+        this.removeListeners = this.removeListeners.bind(this);
+
+        this.setupMapListenerHooks = this.setupMapListenerHooks.bind(this);
+    }
+    /** Gets the instance of the geocoder tied to this google map. */
+    getGeocoder() {
+        return this.state.geocoder;
+    }
+    /** Gets the google maps api reference from within the component. (Could be used to do google maps api stuff outside of the component) */
+    getGoogleMapsApi() {
+        return this.state.maps;
+    }
+    /** Gets the google maps instance created by `new maps.Map()` keyword. */
+    getGoogleMap() {
+        return this.state.map;
     }
     getOptions() {
         var mapOptions = {
@@ -78,7 +100,7 @@ class Map extends React.Component {
             return false;
     }
     centerHandleChange() {
-        this.state.maps.setCenter(this.props.center);
+        this.state.map.setCenter(this.props.center);
     }
     boundsPropDidChange() {
         var {bounds} = this.props;
@@ -103,7 +125,37 @@ class Map extends React.Component {
             console.error(e);
         }
     }
+    addListener(listener) {
+        this.listeners.push(listener);
+    }
+    removeListeners() {
+        while(this.listeners.length > 0) {
+            this.listeners.pop().remove();
+        }
+    }
+    setupMapListenerHooks() {
+        var {maps, map} = this.state;
+        if(maps && map) {
+            this.removeListeners();
+            var assemble = (name, callback) => this.addListener(maps.event.addListener(map, name, callback));
+            var props = Object.getOwnPropertyNames(this.props);
 
+            props.forEach(prop => {
+                if(/^on.*$/.test(prop)) {
+                    var action = prop.slice(2, prop.length);
+                    if(isValidMapListener(action)) {
+
+                        assemble(action.toLowerCase(), this.props[prop])
+
+                    }
+                    else {
+                        console.warn(new Error("You tried adding " + prop + " which is not a valid action for a <Map /> component."));
+                    }
+
+                }
+            });
+        }
+    }
     componentDidMount() {
         console.log("MC : Component did mount.");
 
@@ -112,6 +164,7 @@ class Map extends React.Component {
     		window.maps = maps;
     		var mapOptions = this.getOptions();            
             try {
+                var geocoder = new maps.Geocoder();
         		var map = new maps.Map( document.getElementById(this.state._div_id) , mapOptions);
 
                 map.setCenter(!this.props.center? new maps.LatLng(39.5, -98.35) : new maps.LatLng(this.props.center.lat,this.props.center.lng));
@@ -121,9 +174,10 @@ class Map extends React.Component {
             }
             this.setState({
                 map,
-                maps
+                maps,
+                geocoder
             }, this.refreshComponentFromProps);
-
+            this.setupMapListenerHooks();
     	}
 
     	if(this.props["api-key"]) {
@@ -135,8 +189,13 @@ class Map extends React.Component {
     }
     componentDidUpdate() {
         console.log("MC: Component Did Update");
-        if(this.state.map)
+        if(this.state.map) {
             this.refreshComponentFromProps();
+            this.setupMapListenerHooks();
+        }
+    }
+    componentWillUnmount() {
+          this.removeListeners();
     }
     render() {
     	var children = [];

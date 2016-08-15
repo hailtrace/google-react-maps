@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.refreshComponentFromProps = refreshComponentFromProps;
+exports.isValidMapListener = isValidMapListener;
 /** @namespace Utils */
 
 /** Function to refresh components based on their props. 
@@ -21,6 +22,36 @@ function refreshComponentFromProps() {
 			if (_this[prop + "PropDidChange"]() && typeof _this[prop + "HandleChange"] === 'function') _this[prop + "HandleChange"]();
 		}
 	});
+}
+
+function isValidMapListener() {
+	var prop = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+
+	prop = prop.toLowerCase();
+	switch (prop) {
+		case "bounds_changed":
+		case "center_changed":
+		case "click":
+		case "dblclick":
+		case "drag":
+		case "dragend":
+		case "dragstart":
+		case "heading_changed":
+		case "idle":
+		case "maptypeid_changed":
+		case "mousemove":
+		case "mouseout":
+		case "mouseover":
+		case "projection_changed":
+		case "resize":
+		case "rightclick":
+		case "tilesloaded":
+		case "tilt_changed":
+		case "zoom_change":
+			return true;
+		default:
+			return false;
+	}
 }
 /** Import these Map Control positions by `import {ControlPosition} from 'google-react-maps'`
 * @enum ControlPosition

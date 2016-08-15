@@ -71,8 +71,14 @@ var Map = function (_React$Component) {
         */
         _this.state = {
             maps: null,
+            map: null,
             _div_id: _div_id
         };
+        _this.listeners = [];
+
+        _this.getGeocoder = _this.getGeocoder.bind(_this);
+        _this.getGoogleMapsApi = _this.getGoogleMapsApi.bind(_this);
+        _this.getGoogleMap = _this.getGoogleMap.bind(_this);
 
         _this.getOptions = _this.getOptions.bind(_this);
 
@@ -82,10 +88,36 @@ var Map = function (_React$Component) {
         _this.boundsPropDidChange = _this.boundsPropDidChange.bind(_this);
         _this.zoomPropDidChange = _this.zoomPropDidChange.bind(_this);
 
+        _this.addListener = _this.addListener.bind(_this);
+        _this.removeListeners = _this.removeListeners.bind(_this);
+
+        _this.setupMapListenerHooks = _this.setupMapListenerHooks.bind(_this);
+
         return _this;
     }
+    /** Gets the instance of the geocoder tied to this google map. */
+
 
     _createClass(Map, [{
+        key: 'getGeocoder',
+        value: function getGeocoder() {
+            return this.state.geocoder;
+        }
+        /** Gets the google maps api reference from within the component. (Could be used to do google maps api stuff outside of the component) */
+
+    }, {
+        key: 'getGoogleMapsApi',
+        value: function getGoogleMapsApi() {
+            return this.state.maps;
+        }
+        /** Gets the google maps instance created by `new maps.Map()` keyword. */
+
+    }, {
+        key: 'getGoogleMap',
+        value: function getGoogleMap() {
+            return this.state.map;
+        }
+    }, {
         key: 'getOptions',
         value: function getOptions() {
             var mapOptions = {
@@ -111,7 +143,7 @@ var Map = function (_React$Component) {
     }, {
         key: 'centerHandleChange',
         value: function centerHandleChange() {
-            this.state.maps.setCenter(this.props.center);
+            this.state.map.setCenter(this.props.center);
         }
     }, {
         key: 'boundsPropDidChange',
@@ -147,27 +179,70 @@ var Map = function (_React$Component) {
             }
         }
     }, {
+        key: 'addListener',
+        value: function addListener(listener) {
+            this.listeners.push(listener);
+        }
+    }, {
+        key: 'removeListeners',
+        value: function removeListeners() {
+            while (this.listeners.length > 0) {
+                this.listeners.pop().remove();
+            }
+        }
+    }, {
+        key: 'setupMapListenerHooks',
+        value: function setupMapListenerHooks() {
+            var _this2 = this;
+
+            var _state2 = this.state;
+            var maps = _state2.maps;
+            var map = _state2.map;
+
+            if (maps && map) {
+                this.removeListeners();
+                var assemble = function assemble(name, callback) {
+                    return _this2.addListener(maps.event.addListener(map, name, callback));
+                };
+                var props = Object.getOwnPropertyNames(this.props);
+
+                props.forEach(function (prop) {
+                    if (/^on.*$/.test(prop)) {
+                        var action = prop.slice(2, prop.length);
+                        if ((0, _utils.isValidMapListener)(action)) {
+
+                            assemble(action.toLowerCase(), _this2.props[prop]);
+                        } else {
+                            console.warn(new Error("You tried adding " + prop + " which is not a valid action for a <Map /> component."));
+                        }
+                    }
+                });
+            }
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
+            var _this3 = this;
 
             console.log("MC : Component did mount.");
 
             var initMapComponentWithLibrary = function initMapComponentWithLibrary(maps) {
 
                 window.maps = maps;
-                var mapOptions = _this2.getOptions();
+                var mapOptions = _this3.getOptions();
                 try {
-                    var map = new maps.Map(document.getElementById(_this2.state._div_id), mapOptions);
+                    var geocoder = new maps.Geocoder();
+                    var map = new maps.Map(document.getElementById(_this3.state._div_id), mapOptions);
 
-                    map.setCenter(!_this2.props.center ? new maps.LatLng(39.5, -98.35) : new maps.LatLng(_this2.props.center.lat, _this2.props.center.lng));
+                    map.setCenter(!_this3.props.center ? new maps.LatLng(39.5, -98.35) : new maps.LatLng(_this3.props.center.lat, _this3.props.center.lng));
                 } catch (e) {
                     console.error(e);
                 }
-                _this2.setState({
+                _this3.setState({
                     map: map,
                     maps: maps
-                }, _this2.refreshComponentFromProps);
+                }, _this3.refreshComponentFromProps);
+                _this3.setupMapListenerHooks();
             };
 
             if (this.props["api-key"]) {
@@ -178,28 +253,36 @@ var Map = function (_React$Component) {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
             console.log("MC: Component Did Update");
-            if (this.state.map) this.refreshComponentFromProps();
+            if (this.state.map) {
+                this.refreshComponentFromProps();
+                this.setupMapListenerHooks();
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            this.removeListeners();
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             var children = [];
             var controls = [];
 
             if (this.state.maps && this.state.map && this.props.children) children = _react2.default.Children.map(this.props.children, function (child) {
                 return child ? _react2.default.cloneElement(child, {
-                    maps: _this3.state.maps,
-                    map: _this3.state.map
+                    maps: _this4.state.maps,
+                    map: _this4.state.map
                 }) : undefined;
             });
 
             if (this.state.maps && this.state.map && this.props.controls && this.props.controls.constructor.name === 'Array') {
                 controls = _react2.default.Children.map(this.props.controls, function (control) {
                     return control ? _react2.default.cloneElement(control, {
-                        maps: _this3.state.maps,
-                        map: _this3.state.map
+                        maps: _this4.state.maps,
+                        map: _this4.state.map
                     }) : undefined;
                 });
             }

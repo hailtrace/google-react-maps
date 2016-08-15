@@ -1,4 +1,5 @@
 import React from 'react';
+import {processPoints} from '../utils/utils';
 
 class DataLayer extends React.Component {
     constructor(props) {
@@ -15,8 +16,22 @@ class DataLayer extends React.Component {
 
         //Style
         this.styleFeatures = this.styleFeatures.bind(this);
-    }
 
+        //Focus
+        this.focus = this.focus.bind(this);
+
+    }
+    /** Focus the map on this dataLayer's features. */
+    focus(){
+        var {maps} = this.props;
+        var bounds = new maps.LatLngBounds();
+        if(this.data) {
+            this.data.forEach((feature)=>{
+                processPoints(feature.getGeometry(), bounds.extend, bounds);
+            });
+            map.fitBounds(bounds);     
+        }
+    }
     initDataLayer() {
     	var {map, maps} = this.props;
 
