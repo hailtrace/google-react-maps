@@ -83,7 +83,7 @@ var Feature = function (_React$Component) {
           coords[0] = coords.lng;
           coords[1] = coords.lat;
 
-          if (_this2.props.onClick) _this2.props.onClick({ id: _this2.props.id, coords: coords });
+          if (_this2.props.onClick) _this2.props.onClick({ id: _this2.props.id, coords: coords, geoJson: _this2.state.geoJson });
         }
       }));
     }

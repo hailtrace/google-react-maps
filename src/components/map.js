@@ -80,15 +80,15 @@ class Map extends React.Component {
     getGoogleMap() {
         return this.state.map;
     }
-    getOptions() {
+    getOptions(maps) {
         var mapOptions = {
             zoom : 4,
             mapTypeId : maps.MapTypeId[!this.props.mapType? "ROADMAP" : this.props.mapType],
             data : null
         }
         
-        if(this.props.mapOptions)
-            mapOptions = Object.assign(mapOptions, this.props.mapOptions);
+        if(this.props.optionsConstructor)
+            mapOptions = Object.assign(mapOptions, new this.props.optionsConstructor(maps));
 
         return mapOptions;
     }
@@ -163,7 +163,7 @@ class Map extends React.Component {
     	var initMapComponentWithLibrary = (maps) => {
 
     		window.maps = maps;
-    		var mapOptions = this.getOptions();            
+    		var mapOptions = this.getOptions(maps);            
             try {
 
                 var geocoder = new maps.Geocoder();
@@ -226,6 +226,7 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
+    optionsConstructor : React.PropTypes.func,
 	"api-key" : React.PropTypes.string.isRequired,
 	style : React.PropTypes.object,
     mapType : React.PropTypes.string,
