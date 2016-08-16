@@ -10,6 +10,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _googleMapsApi = require('google-maps-api');
 
 var _googleMapsApi2 = _interopRequireDefault(_googleMapsApi);
@@ -92,7 +96,6 @@ var Map = function (_React$Component) {
         _this.removeListeners = _this.removeListeners.bind(_this);
 
         _this.setupMapListenerHooks = _this.setupMapListenerHooks.bind(_this);
-
         return _this;
     }
     /** Gets the instance of the geocoder tied to this google map. */
@@ -231,8 +234,9 @@ var Map = function (_React$Component) {
                 window.maps = maps;
                 var mapOptions = _this3.getOptions();
                 try {
+
                     var geocoder = new maps.Geocoder();
-                    var map = new maps.Map(document.getElementById(_this3.state._div_id), mapOptions);
+                    var map = new maps.Map(_reactDom2.default.findDOMNode(_this3.refs.map), mapOptions);
 
                     map.setCenter(!_this3.props.center ? new maps.LatLng(39.5, -98.35) : new maps.LatLng(_this3.props.center.lat, _this3.props.center.lng));
                 } catch (e) {
@@ -240,7 +244,8 @@ var Map = function (_React$Component) {
                 }
                 _this3.setState({
                     map: map,
-                    maps: maps
+                    maps: maps,
+                    geocoder: geocoder
                 }, _this3.refreshComponentFromProps);
                 _this3.setupMapListenerHooks();
             };
@@ -289,7 +294,7 @@ var Map = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { id: this.state._div_id, style: this.props.style },
+                { ref: 'map', id: this.state._div_id, style: this.props.style },
                 _react2.default.createElement(
                     'div',
                     null,

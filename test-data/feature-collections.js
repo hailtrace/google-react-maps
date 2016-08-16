@@ -104,6 +104,7 @@ const maps = [
     }
   ]
 },
+{"_id":"578508452caeae98754b36cc","__v":7,"properties":{"hail_duration":1,"max_house_count":null,"max_wind_speed_direction":"W","max_wind_speed":"1","max_hail_size":1,"storm_date":"2016-07-12T15:09:22.789Z","publish_date":"2016-07-12T04:00:00.000Z","price":199,"tweet":null,"keywords":null,"description":null,"LegacyMapId":null,"title":"Test Map A","star_level":4,"hail_isolated":false,"cities":["Tulsa, OK","Oklahoma City, OK"],"states":["OK"],"creation_date":"2016-07-12T15:09:57.133Z","deleted":false,"free":false,"created_by":null,"article":null},"features":[{"properties":{"zIndex":3,"_id":"578933208315f97d88ad02e8","fillColor":"#ff0000"},"_id":"578933208315f97d88ad02e8","geometry":{"coordinates":[[[-95.262451171875,36.03133177633187],[-97.1136474609375,35.95577654056531],[-97.3443603515625,34.6015631772409],[-97.3443603515625,33.49101671911273],[-94.7406005859375,33.84760762988741],[-94.5428466796875,35.875698032496665],[-95.262451171875,36.03133177633187]]],"type":"Polygon"},"type":"Feature"}],"type":"FeatureCollection"},
 {
   "type": "FeatureCollection",
   "features": [

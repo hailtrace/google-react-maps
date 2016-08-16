@@ -28,27 +28,31 @@ class Feature extends React.Component {
     ///--------------------------------Listener Management Methods-----------------------------------///
     initListeners() {
   		//Set geometry listener.
-  		this.addListener(this.props.data.addListener('setgeometry', ({feature}) => {
-  			if(feature.getId() == this.state.feature.getId()) {
-      			feature.toGeoJson(geoJson => this.setState({geoJson : JSON.parse(JSON.stringify(geoJson))},() => {
-      				this.props.onChange(geoJson);
-      			}));
-  			}
-  		}));
+      if(typeof this.props.onChange === 'function')
+    		this.addListener(this.props.data.addListener('setgeometry', (event) => {
+          var {feature} = event;
+    			if(feature.getId() == this.state.feature.getId()) {
+        			feature.toGeoJson(geoJson => this.setState({geoJson : JSON.parse(JSON.stringify(geoJson))},() => {
+                if(typeof this.props.onChange === 'function')
+          				this.props.onChange(geoJson);
+        			}));
+    			}
+    		}));
 
       //Polygon clicked.
-      this.addListener(this.props.data.addListener('click', (event) => {
-        var {feature} = event;
-        if(feature.getId() == this.state.feature.getId()) {
+      if(typeof this.props.onClick === 'function')
+        this.addListener(this.props.data.addListener('click', (event) => {
+          var {feature} = event;
+          if(feature.getId() == this.state.feature.getId()) {
+            event.stop();
+            var coords = event.latLng.toJSON()
+            coords[0] = coords.lng;
+            coords[1] = coords.lat;
 
-          var coords = event.latLng.toJSON()
-          coords[0] = coords.lng;
-          coords[1] = coords.lat;
-
-          if(this.props.onClick)
-            this.props.onClick({id : this.props.id, coords });
-        }
-      }));
+            if(this.props.onClick)
+              this.props.onClick({id : this.props.id, coords });
+          }
+        }));
     }
     removeListeners(callback) {
     	this.state.listeners.forEach(listener => listener.remove());
@@ -100,9 +104,6 @@ class Feature extends React.Component {
           this.props.data.add(feature);
 
 
-          //Setup listeners for this features.
-          if(this.props.onChange)
-          
           this.initListeners();
           this.checkPropEditable(this.props);
         })
@@ -123,12 +124,12 @@ class Feature extends React.Component {
     updateFeatureGeometry(geoJson) {
     	//resets the geometry to match the geojson.
     	var resetGeometry = f => {
-	   		this.removeListeners(() => {
+	   		// this.removeListeners(() => {
 		    	var geometry = this.getGeometryForFeature(geoJson);
 		    	this.state.feature.setGeometry(geometry);
 		    	console.log("F: refreshed geometry for id: ", this.props.id);
-		   		this.initListeners(); //Restart the listening on this geometry.
-   			}); //Stop all listening on this geometry.
+		   		// this.initListeners(); //Restart the listening on this geometry.
+   			// }); //Stop all listening on this geometry.
     	}
 
     	//Diff: this logic block makes sure that we have to reset the geometry.

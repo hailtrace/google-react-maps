@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import mapsapi from 'google-maps-api';
 import {refreshComponentFromProps, isValidMapListener} from '../utils/utils';
 
@@ -164,8 +165,9 @@ class Map extends React.Component {
     		window.maps = maps;
     		var mapOptions = this.getOptions();            
             try {
+
                 var geocoder = new maps.Geocoder();
-        		var map = new maps.Map( document.getElementById(this.state._div_id) , mapOptions);
+        		var map = new maps.Map( ReactDom.findDOMNode(this.refs.map) , mapOptions);
 
                 map.setCenter(!this.props.center? new maps.LatLng(39.5, -98.35) : new maps.LatLng(this.props.center.lat,this.props.center.lng));
             }
@@ -215,7 +217,7 @@ class Map extends React.Component {
 
         }
         
-        return <div id={this.state._div_id} style={this.props.style}>
+        return <div ref="map" id={this.state._div_id} style={this.props.style}>
         	<div>{children}</div>
             <div>{controls}</div>
 

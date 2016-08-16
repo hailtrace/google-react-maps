@@ -79,15 +79,14 @@ var InfoWindow = function (_React$Component) {
                position: anchor ? undefined : coords
             };
             var infoWindow = new maps.InfoWindow(options);
-
-            infoWindow.open(map, anchor);
+            if (this.props.open) infoWindow.open(map, anchor);else infoWindow.close();
             //Don't let the infowindow do it's default thing when a user tries to close it.
             maps.event.addListener(infoWindow, 'closeclick', function (e) {
-               if (_this2.props.open) infoWindow.open(map, anchor);
-               if (_this2.props.onCloseClick) _this2.props.onCloseClick;
+               infoWindow.open(map, anchor);
+               if (typeof _this2.props.onCloseClick === 'function') _this2.props.onCloseClick(e);
             });
 
-            this.setState({ infoWindow: infoWindow });
+            this.setState({ infoWindow: infoWindow, anchor: anchor });
          } else {
             console.error("InfoWindow must live inside of a <Map /> component context.");
          }
@@ -134,9 +133,12 @@ var InfoWindow = function (_React$Component) {
    }, {
       key: 'componentDidUpdate',
       value: function componentDidUpdate(prevProps, prevState) {
-         if (this.props.infoWindow) {
-            if (this.props.open) this.props.infoWindow.open(this.props.map);else this.props.infoWindow.open(null);
+         if (this.state.infoWindow) {
+            if (this.props.open) this.state.infoWindow.open(this.props.map, this.state.anchor);else this.state.infoWindow.close();
          }
+         this.loadInfoWindowContent();
+
+         this.state.infoWindow.setPosition(this.props.coords);
       }
    }, {
       key: 'render',
@@ -160,7 +162,10 @@ var InfoWindow = function (_React$Component) {
 InfoWindow.propTypes = {
    maps: _react2.default.PropTypes.object,
    map: _react2.default.PropTypes.object,
-   coords: _react2.default.PropTypes.object,
+   coords: _react2.default.PropTypes.shape({
+      lat: _react2.default.PropTypes.number.isRequired,
+      lng: _react2.default.PropTypes.number.isRequired
+   }),
    onCloseClick: _react2.default.PropTypes.func
 };
 

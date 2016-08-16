@@ -10,6 +10,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _utils = require('../utils/utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38,10 +40,29 @@ var DataLayer = function (_React$Component) {
 
         //Style
         _this.styleFeatures = _this.styleFeatures.bind(_this);
+
+        //Focus
+        _this.focus = _this.focus.bind(_this);
+
         return _this;
     }
+    /** Focus the map on this dataLayer's features. */
+
 
     _createClass(DataLayer, [{
+        key: 'focus',
+        value: function focus() {
+            var maps = this.props.maps;
+
+            var bounds = new maps.LatLngBounds();
+            if (this.data) {
+                this.data.forEach(function (feature) {
+                    (0, _utils.processPoints)(feature.getGeometry(), bounds.extend, bounds);
+                });
+                map.fitBounds(bounds);
+            }
+        }
+    }, {
         key: 'initDataLayer',
         value: function initDataLayer() {
             var _props = this.props;
@@ -68,6 +89,17 @@ var DataLayer = function (_React$Component) {
 
                 dataLayer.addGeoJson(this.props.geoJson, options);
             }
+
+            // dataLayer.addListener('click', (event) => {
+            //   var {feature} = event;
+            //   var coords = event.latLng.toJSON()
+            //   coords[0] = coords.lng;
+            //   coords[1] = coords.lat;
+
+            //   if(this.props.onClick)
+            //     this.props.onClick({id : feature.getId(), coords });
+
+            // });
 
             this.setState({ data: dataLayer });
         }

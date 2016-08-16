@@ -148,6 +148,17 @@ class DataLayer extends React.Component {
      		dataLayer.addGeoJson(this.props.geoJson, options);
      	}
 
+        // dataLayer.addListener('click', (event) => {
+        //   var {feature} = event;
+        //   var coords = event.latLng.toJSON()
+        //   coords[0] = coords.lng;
+        //   coords[1] = coords.lat;
+
+        //   if(this.props.onClick)
+        //     this.props.onClick({id : feature.getId(), coords });
+
+        // });
+
      	this.setState({ data : dataLayer })
 
     }

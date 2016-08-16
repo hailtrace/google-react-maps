@@ -42,17 +42,18 @@ class InfoWindow extends React.Component {
           		position : anchor? undefined : coords
           	}          	
           	var infoWindow = new maps.InfoWindow(options)
-
-          	infoWindow.open(map, anchor);
+          	if(this.props.open)
+	          	infoWindow.open(map, anchor);
+	        else
+	        	infoWindow.close()
           	//Don't let the infowindow do it's default thing when a user tries to close it.
     		maps.event.addListener(infoWindow, 'closeclick', e => {
-    			if(this.props.open)
-	    			infoWindow.open(map, anchor);
-	    		if(this.props.onCloseClick)
-	    			this.props.onCloseClick
+    			infoWindow.open(map, anchor);
+	    		if(typeof this.props.onCloseClick === 'function')
+	    			this.props.onCloseClick(e);
     		});
 
-          	this.setState({infoWindow})
+          	this.setState({infoWindow, anchor})
           }
           else {
           	console.error("InfoWindow must live inside of a <Map /> component context.")
@@ -91,12 +92,16 @@ class InfoWindow extends React.Component {
         console.log("IW: Unmounted info window.")
     }
     componentDidUpdate(prevProps, prevState) {
-    	if(this.props.infoWindow) {
+    	if(this.state.infoWindow) {
     		if(this.props.open)
-		      	this.props.infoWindow.open(this.props.map);
+		      	this.state.infoWindow.open(this.props.map, this.state.anchor);
 	    	else
-	    		this.props.infoWindow.open(null);
+	    		this.state.infoWindow.close();
     	}
+    	this.loadInfoWindowContent();
+
+		this.state.infoWindow.setPosition(this.props.coords);
+
     }
     render() {
     	console.log("IW: Rendered infowindow")
@@ -107,7 +112,10 @@ class InfoWindow extends React.Component {
 InfoWindow.propTypes = {
 	maps : React.PropTypes.object,
 	map : React.PropTypes.object,
-	coords : React.PropTypes.object,
+	coords : React.PropTypes.shape({
+		lat : React.PropTypes.number.isRequired,
+		lng : React.PropTypes.number.isRequired
+	}),
 	onCloseClick : React.PropTypes.func
 }
 

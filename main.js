@@ -2,11 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import {Map, DataLayer, Feature, InfoWindow, Marker, MapControl} from './src/components/index';
 import {ControlPosition} from './src/utils/utils';
-import DataLayer from './src/components/dataLayer';
 import KmlLayer from './src/components/kmlLayer';
-
-import Feature from './src/components/feature';
-
 import layers from './test-data/test-layers';
 
 class App extends React.Component {
@@ -31,6 +27,9 @@ class App extends React.Component {
         console.log("Test Data Layers: ", layers);
         this.mutateFeature = this.mutateFeature.bind(this);
         this.simulateFeatureCoordinateEdit = this.simulateFeatureCoordinateEdit.bind(this);
+
+        this.handleMapClick = this.handleMapClick.bind(this);
+        this.infoWindowMap = null;
     }
     componentDidMount() {
         var controls = [];
@@ -71,6 +70,22 @@ class App extends React.Component {
         })
         this.setState({layers});
     }
+
+    handleMapClick(e) {
+        var geocoder = this.infoWindowMap.getGeocoder();
+        var maps = this.infoWindowMap.getGoogleMapsApi();
+
+        var location = {lng : e.latLng.lng(), lat: e.latLng.lat()};
+        geocoder.geocode({location}, (results,status) => {
+            if(status === maps.GeocoderStatus.OK) {
+                var {formatted_address} = results[0];
+                var show_geocode_infowindow = true;
+                var geocode_infowindow_coords = location;
+                this.setState({formatted_address, show_geocode_infowindow, geocode_infowindow_coords});
+            }
+        })
+    }
+
     render() {
 
         return (
@@ -84,7 +99,6 @@ class App extends React.Component {
 
                 <h2>Simple Map with Custom Controls</h2>
                 <Map 
-                    ref={()}
                     api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" 
                     zoom={Number(this.state.zoom)} 
                     center={this.state.center} 
@@ -94,7 +108,7 @@ class App extends React.Component {
                     
                 </Map>                
 
-        		{/*<h2>Simple Map with Data Layers</h2>
+        		<h2>Simple Map with Data Layers</h2>
                 {(()=>{
                     if(this.state.layers.length > 0)
                         return <ul>{this.state.layers.map((layer,index) => <li key={index}><button onClick={() => this.toggleVisibility(index)}>{layer.name}</button></li>)}</ul>
@@ -102,7 +116,7 @@ class App extends React.Component {
                 <button onClick={this.simulateFeatureCoordinateEdit}>Simulate External Map Change</button>
         		<Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:1000, width:1000}}>
                     {this.state.layers.map((layer, layerIndex) => {
-                        return <DataLayer zIndex={layerIndex + 1} key={layerIndex} visible={layer.visible}>
+                        return <DataLayer onClick={e => console.log(e.id, e.coords)} zIndex={layerIndex + 1} key={layerIndex} visible={layer.visible}>
                             {layer.geoJson.features.map((feature, featureIndex) => 
                                 <Feature 
                                     editable={true} 
@@ -150,7 +164,7 @@ class App extends React.Component {
 
                 <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:1000, width:1000}}>
                     {this.state.layers.map((layer, index) => {
-                        return <DataLayer zIndex={1} key={index} visible={layer.visible}>
+                        return <DataLayer zIndex={1} onClick={e => console.log(e.id,e.coords)} key={index} visible={layer.visible}>
                             {layer.geoJson.features.map((feature, index) => <Feature editable={true} id={feature._id} key={index} geoJson={feature} />)}
                         </DataLayer>
                     })}
@@ -166,21 +180,21 @@ class App extends React.Component {
                     else
                         return <button onClick={toggle}>Show Markers</button>
                 })()}
-                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height: 1000, width: 1000}}>
+                <Map ref={map => {this.infoWindowMap = map}} onClick={this.handleMapClick} api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height: 1000, width: 1000}}>
                     {(()=>{
                         if(this.state.showInfoWindow)
                             return (
                                 
-                                    <InfoWindow open={true} coords={{lng: -115.44364929199219, lat: 45.058001435398296}}>
-                                        <div>This is a regular old infowindow.</div>
+                                    <InfoWindow open={this.state.show_geocode_infowindow} onCloseClick={e => this.setState({show_geocode_infowindow : false})} coords={this.state.geocode_infowindow_coords}>
+                                        <div>This is a regular old infowindow. {this.state.showInfoWindow}</div>
                                         <div>With components rendered inside of it.</div>
                                         <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:150, width:300}} />
                                     </InfoWindow>
                             )
                     })()}
                     <Marker coords={{lng: -117.44364929199219, lat: 40.058001435398296}}>
-                        <InfoWindow open={true}>
-                            <div>This is a component within a marker.</div>
+                        <InfoWindow open={this.state.showInfoWindow}>
+                            <div>This is a component within a marker.{this.state.showInfoWindow.toString()}</div>
                         </InfoWindow> 
                     </Marker>
                     <Marker icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" coords={{lng: -100.44364929199219, lat: 30.058001435398296}}>
@@ -190,7 +204,7 @@ class App extends React.Component {
                     </Marker>
 
 
-                </Map>*/}
+                </Map>
 
         	</div>
         );

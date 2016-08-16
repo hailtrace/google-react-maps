@@ -61,13 +61,13 @@ var Feature = function (_React$Component) {
       var _this2 = this;
 
       //Set geometry listener.
-      this.addListener(this.props.data.addListener('setgeometry', function (_ref) {
-        var feature = _ref.feature;
+      this.addListener(this.props.data.addListener('setgeometry', function (event) {
+        var feature = event.feature;
 
         if (feature.getId() == _this2.state.feature.getId()) {
           feature.toGeoJson(function (geoJson) {
             return _this2.setState({ geoJson: JSON.parse(JSON.stringify(geoJson)) }, function () {
-              _this2.props.onChange(geoJson);
+              if (typeof _this2.props.onChange === 'function') _this2.props.onChange(geoJson);
             });
           });
         }
@@ -78,7 +78,7 @@ var Feature = function (_React$Component) {
         var feature = event.feature;
 
         if (feature.getId() == _this2.state.feature.getId()) {
-
+          event.stop();
           var coords = event.latLng.toJSON();
           coords[0] = coords.lng;
           coords[1] = coords.lat;
@@ -173,12 +173,12 @@ var Feature = function (_React$Component) {
 
       //resets the geometry to match the geojson.
       var resetGeometry = function resetGeometry(f) {
-        _this4.removeListeners(function () {
-          var geometry = _this4.getGeometryForFeature(geoJson);
-          _this4.state.feature.setGeometry(geometry);
-          console.log("F: refreshed geometry for id: ", _this4.props.id);
-          _this4.initListeners(); //Restart the listening on this geometry.
-        }); //Stop all listening on this geometry.
+        // this.removeListeners(() => {
+        var geometry = _this4.getGeometryForFeature(geoJson);
+        _this4.state.feature.setGeometry(geometry);
+        console.log("F: refreshed geometry for id: ", _this4.props.id);
+        // this.initListeners(); //Restart the listening on this geometry.
+        // }); //Stop all listening on this geometry.
       };
 
       //Diff: this logic block makes sure that we have to reset the geometry.
