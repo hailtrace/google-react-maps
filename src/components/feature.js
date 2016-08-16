@@ -50,7 +50,7 @@ class Feature extends React.Component {
             coords[1] = coords.lat;
 
             if(this.props.onClick)
-              this.props.onClick({id : this.props.id, coords });
+              this.props.onClick({id : this.props.id, coords, geoJson : this.state.geoJson });
           }
         }));
     }

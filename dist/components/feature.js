@@ -61,7 +61,7 @@ var Feature = function (_React$Component) {
       var _this2 = this;
 
       //Set geometry listener.
-      this.addListener(this.props.data.addListener('setgeometry', function (event) {
+      if (typeof this.props.onChange === 'function') this.addListener(this.props.data.addListener('setgeometry', function (event) {
         var feature = event.feature;
 
         if (feature.getId() == _this2.state.feature.getId()) {
@@ -74,7 +74,7 @@ var Feature = function (_React$Component) {
       }));
 
       //Polygon clicked.
-      this.addListener(this.props.data.addListener('click', function (event) {
+      if (typeof this.props.onClick === 'function') this.addListener(this.props.data.addListener('click', function (event) {
         var feature = event.feature;
 
         if (feature.getId() == _this2.state.feature.getId()) {
@@ -149,8 +149,7 @@ var Feature = function (_React$Component) {
         }, function () {
           _this3.props.data.add(feature);
 
-          //Setup listeners for this features.
-          if (_this3.props.onChange) _this3.initListeners();
+          _this3.initListeners();
           _this3.checkPropEditable(_this3.props);
         });
       } else console.error(new Error("You must put this <Feature /> component within the context of a <DataLayer /> Component."));
