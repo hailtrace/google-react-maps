@@ -30,6 +30,12 @@ class Marker extends React.Component {
     		
     		var marker = new maps.Marker(this.getOptions());
     		this.setState({marker});
+
+    		if(typeof this.props.onClick === 'function')
+	    		this.props.maps.addListener(marker, 'click', e => {
+	    			if(this.props.onClick)
+	    				this.props.onClick({coords : marker.getPosition().toJSON()})
+	    		});
     	}
     	else {
     		// Whoah boy! We need a map bigly.

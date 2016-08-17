@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.MapControl = exports.Marker = exports.InfoWindow = exports.Feature = exports.DataLayer = exports.KmlLayer = exports.Map = exports.ControlPosition = undefined;
+exports.SearchBox = exports.MapControl = exports.Marker = exports.InfoWindow = exports.Feature = exports.DataLayer = exports.KmlLayer = exports.Map = exports.ControlPosition = undefined;
 
 var _map = require('./map');
 
@@ -33,6 +33,10 @@ var _mapControl = require('./mapControl');
 
 var _mapControl2 = _interopRequireDefault(_mapControl);
 
+var _searchBox = require('./searchBox');
+
+var _searchBox2 = _interopRequireDefault(_searchBox);
+
 var _utils = require('../utils/utils');
 
 var Utils = _interopRequireWildcard(_utils);
@@ -50,4 +54,5 @@ exports.Feature = _feature2.default;
 exports.InfoWindow = _infoWindow2.default;
 exports.Marker = _marker2.default;
 exports.MapControl = _mapControl2.default;
+exports.SearchBox = _searchBox2.default;
 //# sourceMappingURL=index.js.map

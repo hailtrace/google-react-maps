@@ -122,14 +122,14 @@ var Map = function (_React$Component) {
         }
     }, {
         key: 'getOptions',
-        value: function getOptions() {
+        value: function getOptions(maps) {
             var mapOptions = {
                 zoom: 4,
                 mapTypeId: maps.MapTypeId[!this.props.mapType ? "ROADMAP" : this.props.mapType],
                 data: null
             };
 
-            if (this.props.mapOptions) mapOptions = Object.assign(mapOptions, this.props.mapOptions);
+            if (this.props.optionsConstructor) mapOptions = Object.assign(mapOptions, new this.props.optionsConstructor(maps));
 
             return mapOptions;
         }
@@ -232,7 +232,7 @@ var Map = function (_React$Component) {
             var initMapComponentWithLibrary = function initMapComponentWithLibrary(maps) {
 
                 window.maps = maps;
-                var mapOptions = _this3.getOptions();
+                var mapOptions = _this3.getOptions(maps);
                 try {
 
                     var geocoder = new maps.Geocoder();
@@ -313,6 +313,7 @@ var Map = function (_React$Component) {
 }(_react2.default.Component);
 
 Map.propTypes = {
+    optionsConstructor: _react2.default.PropTypes.func,
     "api-key": _react2.default.PropTypes.string.isRequired,
     style: _react2.default.PropTypes.object,
     mapType: _react2.default.PropTypes.string,

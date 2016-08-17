@@ -5,6 +5,9 @@ import Feature from './feature';
 import InfoWindow from './infoWindow';
 import Marker from './marker';
 import MapControl from './mapControl';
+import SearchBox from './searchBox';
+import Circle from './circle';
+
 import * as Utils from '../utils/utils';
 
 export const ControlPosition = Utils.ControlPosition;
@@ -16,5 +19,7 @@ export {
 	Feature,
 	InfoWindow,
 	Marker,
-	MapControl
+	MapControl,
+	SearchBox,
+	Circle
 }
