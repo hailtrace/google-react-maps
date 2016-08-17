@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Google React Maps Source: components/dataLayer.js</title>
+	<title>Google React Maps Source: components/circle.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -84,198 +84,91 @@
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: components/dataLayer.js</h1>
+		<h1 class="page-title">Source: components/circle.js</h1>
     
 <section>
     <article>
         <pre
             class="sunlight-highlight-javascript linenums">import React from 'react';
-import {processPoints} from '../utils/utils';
 
-class DataLayer extends React.Component {
+/** Defines a circle shape in the map. Relates to google.maps.Circle class. 
+* @property {object} props
+* @property {number} props.radius
+* @property {object} props.center
+* @property {number} props.center.lat
+* @property {number} props.center.lng
+* @property {function} props.onRadiusChange
+* @property {function} props.onCenterChange
+
+*/
+class Circle extends React.Component {
     constructor(props) {
         super(props);
-        this.displayName = 'DataLayer';
-        this.state = {
-        	data : null
-        }
+        this.displayName = 'Circle';
+        this.setupListeners = this.setupListeners.bind(this);
+        this.state = {circle : null};
 
-        this.initDataLayer = this.initDataLayer.bind(this);
-
-        //Prop Checking
-        this.checkPropVisibility = this.checkPropVisibility.bind(this);
-
-        //Style
-        this.styleFeatures = this.styleFeatures.bind(this);
-
-        //Focus
         this.focus = this.focus.bind(this);
-
     }
-    /** Focus the map on this dataLayer's features. */
-    focus(){
-        var {maps} = this.props;
-        var bounds = new maps.LatLngBounds();
-        if(this.data) {
-            this.data.forEach((feature)=>{
-                processPoints(feature.getGeometry(), bounds.extend, bounds);
-            });
-            map.fitBounds(bounds);     
-        }
-    }
-    initDataLayer() {
-    	var {map, maps} = this.props;
-
-		var dataOptions = {
-			map
-     	}
-
-     	if(this.props.dataOptions)
-     		dataOptions = Object.assign(dataOptions, this.props.dataOptions);
-
-     	dataOptions = Object.assign(dataOptions, {
-     		style : this.styleFeatures,
-     	})
-
-     	var dataLayer = new maps.Data(dataOptions)
-
-     	//If there is geoJSON, initialize it.
-     	if(this.props.geoJson) {
-     		var options = { idPropertyName : '_id' };
-     		if(this.props.idPropertyName)
-     			options.idPropertyName = this.props.idPropertyName;
-
-     		dataLayer.addGeoJson(this.props.geoJson, options);
-     	}
-
-        // dataLayer.addListener('click', (event) => {
-        //   var {feature} = event;
-        //   var coords = event.latLng.toJSON()
-        //   coords[0] = coords.lng;
-        //   coords[1] = coords.lat;
-
-        //   if(this.props.onClick)
-        //     this.props.onClick({id : feature.getId(), coords });
-
-        // });
-
-     	this.setState({ data : dataLayer })
-
-    }
-
-    checkPropVisibility(nextProps) {
-    	var {visible} = this.props;
-
-    	if(!visible &amp;&amp; nextProps.visible) {
-    		this.state.data.setMap(this.props.map);
+    /** Focus the map on this circle. */
+    focus() {
+    	var {circle} = this.state;
+    	var {map} = this.state;
+    	if(circle &amp;&amp; map) {
+    		map.fitBounds(circle.getBounds());
     	}
-    	else if(visible &amp;&amp; !nextProps.visible)
-    		this.state.data.setMap(null);
     }
-
-    styleFeatures(feature) {
-    	//If they passed in a function to completely overide style features, then do so.
-
-    	if(this.props.styleFeatures)
-    		return this.props.styleFeatures(feature);
-
-        var geo = feature.getGeometry();
-        var type = null;
-        if(geo)
-            type = geo.getType();
-
-        var visible = feature.getProperty('visible');
-        var zIndex = feature.getProperty('zIndex');
-        var strokeColor = feature.getProperty('strokeColor');
-        var fillColor = feature.getProperty('fillColor');
-        var fillOpacity = this.props.fillOpacity;
-
-        //Do some logic on the options to make things a bit easier.
-        if(!strokeColor)
-        	strokeColor = fillColor;
-
-        zIndex = zIndex? zIndex : 10;
-
-        if(this.props.zIndex)
-        	zIndex = zIndex + (10000 * this.props.zIndex) //TODO: Find a better way to separate out layer zIndexes. Right now we are defautling to 10000K features in a GeoJson schema. It works, but there should be a better way.
-
-        switch(type) {
-        	case 'Polygon':
-        		var polyOptions = {
-        			strokeWeight : 1,
-        			strokeColor,
-        			fillColor,
-        			fillOpacity
-        		} //Potential Enhancement: Polyoptions could have different defaults. For now, we will leave this.
-        		
-        		if(typeof visible !== 'undefined')
-        			polyOptions.visible = true;
-        		if(typeof zIndex !== 'undefined');
-        			polyOptions.zIndex = zIndex;
-        		return polyOptions;
-        	default:
-	        	return {}
-        }
+    /** Setup the listeners for this circle */
+    setupListeners() {
+    	var {circle} = this.state;
+    	var {maps, map} = this.state;
+    	if(maps &amp;&amp; circle) {
+    		maps.event.addListener(circle, 'radius_changed',e => {
+    			if(typeof this.onRadiusChange === 'function')
+    				this.onRadiusChange({radius : circle.getRadius()});
+    		})
+    		maps.event.addListener(circle, 'dragend', e => {
+    			if(typeof this.onCenterChange === 'function')
+    				this.onCenterChange({coords: circle.getCenter().toJSON()});
+    		})
+    	}
     }
     componentWillMount() {
-    	console.log("DL: componentWillMount",this.props)
-		if(this.props.maps &amp;&amp; this.props.map) {
-			this.initDataLayer();
-			this.checkPropVisibility(this.props);
-		}
-		else
-			console.error(new Error("You must put this compenent in a &lt;Map /> context component or provide the maps and map props manually."))
+    	var {
+    		map, 
+    		maps,
+    		center,
+    		clickable,
+
+    	} = this.props;
+    	
+    	if(map &amp;&amp; maps) {
+    		var CircleOptions = Object.assign({}, this.props, {maps : undefined});
+    		var circle = new maps.Circle(CircleOptions);
+    		this.setState({circle}, this.setupListeners);
+    	}
     }
     componentWillUnmount() {
-    	console.log("DL: componentWillUnmount");
-    	this.state.data.setMap(null);
-    	this.setState({data : null})
+       if(this.state.circle) {
+            this.props.maps.clearListeners(this.state.circle);
+       		this.state.circle.setMap(null);
+       }
     }
-    componentDidUpdate(prevProps, prevState) {
-   		console.log("DL: componentDidUpdate", prevProps,prevState);
-    }
-    componentWillReceiveProps(nextProps) {
-    	console.log("DL: componentWillReceiveProps", nextProps, this.props);
-    	if(typeof nextProps.visible !== 'undefined') {
-	   		this.checkPropVisibility(nextProps);
-    	}
-    }
-   	shouldComponentUpdate(nextProps, nextState) {
-   		console.log("DL: shouldComponentUpdate", nextProps, nextState);
-   		return true;
-   	}
-   	componentWillUpdate(nextProps, nextState) {
-   	    console.log("DL: componentWillUpdate", nextProps, nextState);
-   	}
     render() {
-    	var children = []
-
-    	if(this.state.data) {
-
-	    	children = React.Children.map(this.props.children, child => React.cloneElement(child, {
-	    		maps : this.props.maps,
-	    		map : this.props.map,
-	    		data : this.state.data
-	    	}));
-    	}
-    	console.log("Rendered DataLayer");
-        return &lt;div>{children}&lt;/div>;
+        return &lt;div>Circle&lt;/div>;
     }
 }
 
-DataLayer.propTypes = {
-    maps : React.PropTypes.object,
-    map : React.PropTypes.object,
-    dataOptions : React.PropTypes.object,
-    geoJson : React.PropTypes.object,
-    visible : React.PropTypes.bool,
-    onChange : React.PropTypes.func,
-    styleFeatures : React.PropTypes.func,
-    zIndex : React.PropTypes.number.isRequired,
-    fillOpacity : React.PropTypes.number
-}
+var {number, shape} = React.PropTypes;
 
-export default DataLayer;
+Circle.propTypes = {
+	radius : number.isRequired,
+	center : shape({
+		lat : number,
+		lng : number
+	}).isRequired
+}
+export default Circle;
 </pre>
     </article>
 </section>

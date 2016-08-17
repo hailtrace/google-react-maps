@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Google React Maps Source: components/dataLayer.js</title>
+	<title>Google React Maps Class: Circle</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -79,207 +79,562 @@
 <div class="row">
 
 	
-	<div class="col-md-12">
+	<div class="col-md-8">
 	
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: components/dataLayer.js</h1>
-    
+	<h1 class="page-title">Class: Circle</h1>
 <section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">import React from 'react';
-import {processPoints} from '../utils/utils';
 
-class DataLayer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.displayName = 'DataLayer';
-        this.state = {
-        	data : null
-        }
+<header>
+    
+        <h2>
+        Circle
+        </h2>
+        
+            <div class="class-description"><p>Defines a circle shape in the map. Relates to google.maps.Circle class.</p></div>
+        
+    
+</header>
 
-        this.initDataLayer = this.initDataLayer.bind(this);
 
-        //Prop Checking
-        this.checkPropVisibility = this.checkPropVisibility.bind(this);
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="Circle"><span class="type-signature"></span>new Circle()</h4>
+    
+    
+</dt>
+<dd>
 
-        //Style
-        this.styleFeatures = this.styleFeatures.bind(this);
+    
 
-        //Focus
-        this.focus = this.focus.bind(this);
+    
 
-    }
-    /** Focus the map on this dataLayer's features. */
-    focus(){
-        var {maps} = this.props;
-        var bounds = new maps.LatLngBounds();
-        if(this.data) {
-            this.data.forEach((feature)=>{
-                processPoints(feature.getGeometry(), bounds.extend, bounds);
-            });
-            map.fitBounds(bounds);     
-        }
-    }
-    initDataLayer() {
-    	var {map, maps} = this.props;
+    
 
-		var dataOptions = {
-			map
-     	}
+    
+    
 
-     	if(this.props.dataOptions)
-     		dataOptions = Object.assign(dataOptions, this.props.dataOptions);
+    
+<dl class="details">
+    
 
-     	dataOptions = Object.assign(dataOptions, {
-     		style : this.styleFeatures,
-     	})
+    <h5 class="subsection-title">Properties:</h5>
 
-     	var dataLayer = new maps.Data(dataOptions)
+    <dl>
 
-     	//If there is geoJSON, initialize it.
-     	if(this.props.geoJson) {
-     		var options = { idPropertyName : '_id' };
-     		if(this.props.idPropertyName)
-     			options.idPropertyName = this.props.idPropertyName;
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-     		dataLayer.addGeoJson(this.props.geoJson, options);
-     	}
+        <th>Type</th>
 
-        // dataLayer.addListener('click', (event) => {
-        //   var {feature} = event;
-        //   var coords = event.latLng.toJSON()
-        //   coords[0] = coords.lng;
-        //   coords[1] = coords.lat;
+        
 
-        //   if(this.props.onClick)
-        //     this.props.onClick({id : feature.getId(), coords });
+        
 
-        // });
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-     	this.setState({ data : dataLayer })
+    <tbody>
+    
 
-    }
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
 
-    checkPropVisibility(nextProps) {
-    	var {visible} = this.props;
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
 
-    	if(!visible &amp;&amp; nextProps.visible) {
-    		this.state.data.setMap(this.props.map);
-    	}
-    	else if(visible &amp;&amp; !nextProps.visible)
-    		this.state.data.setMap(null);
-    }
 
-    styleFeatures(feature) {
-    	//If they passed in a function to completely overide style features, then do so.
 
-    	if(this.props.styleFeatures)
-    		return this.props.styleFeatures(feature);
+            
+            </td>
 
-        var geo = feature.getGeometry();
-        var type = null;
-        if(geo)
-            type = geo.getType();
+            
 
-        var visible = feature.getProperty('visible');
-        var zIndex = feature.getProperty('zIndex');
-        var strokeColor = feature.getProperty('strokeColor');
-        var fillColor = feature.getProperty('fillColor');
-        var fillOpacity = this.props.fillOpacity;
+            
 
-        //Do some logic on the options to make things a bit easier.
-        if(!strokeColor)
-        	strokeColor = fillColor;
+            <td class="description last">
+                <h6>Properties</h6>
 
-        zIndex = zIndex? zIndex : 10;
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-        if(this.props.zIndex)
-        	zIndex = zIndex + (10000 * this.props.zIndex) //TODO: Find a better way to separate out layer zIndexes. Right now we are defautling to 10000K features in a GeoJson schema. It works, but there should be a better way.
+        <th>Type</th>
 
-        switch(type) {
-        	case 'Polygon':
-        		var polyOptions = {
-        			strokeWeight : 1,
-        			strokeColor,
-        			fillColor,
-        			fillOpacity
-        		} //Potential Enhancement: Polyoptions could have different defaults. For now, we will leave this.
-        		
-        		if(typeof visible !== 'undefined')
-        			polyOptions.visible = true;
-        		if(typeof zIndex !== 'undefined');
-        			polyOptions.zIndex = zIndex;
-        		return polyOptions;
-        	default:
-	        	return {}
-        }
-    }
-    componentWillMount() {
-    	console.log("DL: componentWillMount",this.props)
-		if(this.props.maps &amp;&amp; this.props.map) {
-			this.initDataLayer();
-			this.checkPropVisibility(this.props);
-		}
-		else
-			console.error(new Error("You must put this compenent in a &lt;Map /> context component or provide the maps and map props manually."))
-    }
-    componentWillUnmount() {
-    	console.log("DL: componentWillUnmount");
-    	this.state.data.setMap(null);
-    	this.setState({data : null})
-    }
-    componentDidUpdate(prevProps, prevState) {
-   		console.log("DL: componentDidUpdate", prevProps,prevState);
-    }
-    componentWillReceiveProps(nextProps) {
-    	console.log("DL: componentWillReceiveProps", nextProps, this.props);
-    	if(typeof nextProps.visible !== 'undefined') {
-	   		this.checkPropVisibility(nextProps);
-    	}
-    }
-   	shouldComponentUpdate(nextProps, nextState) {
-   		console.log("DL: shouldComponentUpdate", nextProps, nextState);
-   		return true;
-   	}
-   	componentWillUpdate(nextProps, nextState) {
-   	    console.log("DL: componentWillUpdate", nextProps, nextState);
-   	}
-    render() {
-    	var children = []
+        
 
-    	if(this.state.data) {
+        
 
-	    	children = React.Children.map(this.props.children, child => React.cloneElement(child, {
-	    		maps : this.props.maps,
-	    		map : this.props.map,
-	    		data : this.state.data
-	    	}));
-    	}
-    	console.log("Rendered DataLayer");
-        return &lt;div>{children}&lt;/div>;
-    }
-}
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-DataLayer.propTypes = {
-    maps : React.PropTypes.object,
-    map : React.PropTypes.object,
-    dataOptions : React.PropTypes.object,
-    geoJson : React.PropTypes.object,
-    visible : React.PropTypes.bool,
-    onChange : React.PropTypes.func,
-    styleFeatures : React.PropTypes.func,
-    zIndex : React.PropTypes.number.isRequired,
-    fillOpacity : React.PropTypes.number
-}
+    <tbody>
+    
 
-export default DataLayer;
-</pre>
-    </article>
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>center</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lat</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lng</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onRadiusChange</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onCenterChange</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="components_circle.js.html">components/circle.js</a>,
+				 <a href="components_circle.js.html#sunlight-1-line-13">line 13</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="focus"><span class="type-signature"></span>focus()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Focus the map on this circle.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="components_circle.js.html">components/circle.js</a>,
+				 <a href="components_circle.js.html#sunlight-1-line-23">line 23</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setupListeners"><span class="type-signature"></span>setupListeners()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Setup the listeners for this circle</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="components_circle.js.html">components/circle.js</a>,
+				 <a href="components_circle.js.html#sunlight-1-line-31">line 31</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 
@@ -289,6 +644,10 @@ export default DataLayer;
 
 	<div class="clearfix"></div>
 
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
 </div>
