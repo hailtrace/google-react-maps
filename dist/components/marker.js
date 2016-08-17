@@ -52,6 +52,8 @@ var Marker = function (_React$Component) {
   _createClass(Marker, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
+      var _this2 = this;
+
       if (this.props.map && this.props.maps) {
         var _props = this.props;
         var map = _props.map;
@@ -60,6 +62,10 @@ var Marker = function (_React$Component) {
 
         var marker = new maps.Marker(this.getOptions());
         this.setState({ marker: marker });
+
+        if (typeof this.props.onClick === 'function') this.props.maps.addListener(marker, 'click', function (e) {
+          if (_this2.props.onClick) _this2.props.onClick({ coords: marker.getPosition().toJSON() });
+        });
       } else {
         // Whoah boy! We need a map bigly.
         console.error(new Error("<Marker /> components must be instantiated within a Map component. Please check your component's context."));
@@ -92,14 +98,14 @@ var Marker = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var children = [];
       if (this.props.children) children = _react2.default.Children.map(this.props.children, function (child) {
         return _react2.default.cloneElement(child, {
-          map: _this2.props.map,
-          maps: _this2.props.maps,
-          anchor: _this2.state.marker
+          map: _this3.props.map,
+          maps: _this3.props.maps,
+          anchor: _this3.state.marker
         });
       });
       return _react2.default.createElement(

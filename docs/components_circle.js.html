@@ -90,7 +90,7 @@
     <article>
         <pre
             class="sunlight-highlight-javascript linenums">import React from 'react';
-
+import {mapChildren} from '../utils/utils';
 /** Defines a circle shape in the map. Relates to google.maps.Circle class. 
 * @property {object} props
 * @property {number} props.radius
@@ -120,26 +120,42 @@ class Circle extends React.Component {
     }
     /** Setup the listeners for this circle */
     setupListeners() {
+
     	var {circle} = this.state;
-    	var {maps, map} = this.state;
+    	var {maps, map} = this.props;
     	if(maps &amp;&amp; circle) {
     		maps.event.addListener(circle, 'radius_changed',e => {
-    			if(typeof this.onRadiusChange === 'function')
-    				this.onRadiusChange({radius : circle.getRadius()});
-    		})
-    		maps.event.addListener(circle, 'dragend', e => {
-    			if(typeof this.onCenterChange === 'function')
-    				this.onCenterChange({coords: circle.getCenter().toJSON()});
-    		})
+    			if(typeof this.props.onRadiusChange === 'function')
+    				this.props.onRadiusChange(circle.getRadius());
+    		});
+    		maps.event.addListener(circle, 'center_changed', e => {
+    			if(typeof this.props.onCenterChange === 'function')
+    				this.props.onCenterChange(circle.getCenter().toJSON());
+    		});
+    		maps.event.addListener(circle, 'click', e => {
+    			if(typeof this.props.onClick === 'function')
+    				this.props.onClick({coords : e.latLng.toJSON()});
+    		});
+    		maps.event.addListener(circle, 'rightclick', ({latLng}) => 
+    			typeof this.props.onRightClick === 'function' ? this.props.onRightClick({coords:latLng.toJSON()}) : f => f);
     	}
+    	else 
+    		console.error(new Error("You must pass maps and map to this component. Otherwise, run it inside a map component."));
+    }
+    componentDidUpdate(prevProps, prevState) {
+    	var currCenter = new this.props.maps.LatLng(this.props.center);
+    	var prevCenter = this.state.circle.getCenter();
+
+    	if(!currCenter.equals(prevCenter))
+    		this.state.circle.setCenter(currCenter);
+    	
+    	if(this.props.radius != this.state.circle.getRadius())
+    		this.state.circle.setRadius(this.props.radius);
     }
     componentWillMount() {
     	var {
     		map, 
     		maps,
-    		center,
-    		clickable,
-
     	} = this.props;
     	
     	if(map &amp;&amp; maps) {
@@ -155,7 +171,12 @@ class Circle extends React.Component {
        }
     }
     render() {
-        return &lt;div>Circle&lt;/div>;
+    	var children = [];
+    	if(this.props.children &amp;&amp; this.props.maps &amp;&amp; this.props.map)
+    		children = mapChildren({
+    			coords : this.state.circle.getCenter().toJSON()
+    		}, this);
+        return &lt;div>{children}&lt;/div>;
     }
 }
 

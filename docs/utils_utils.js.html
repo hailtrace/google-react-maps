@@ -89,8 +89,22 @@
 <section>
     <article>
         <pre
-            class="sunlight-highlight-javascript linenums">/** @namespace Utils */
+            class="sunlight-highlight-javascript linenums">import React from 'react';
+/** @namespace Utils */
+/** Bind children maps 
+* @method
+* @memberof Utils
+*/
+export function mapChildren(props, thisArg) {
 
+	var {map, maps} = arguments[arguments.length - 1].props;
+	if(arguments.length > 0)
+		props = Object.assign({},...Array.prototype.slice.call(arguments, 0, arguments.length - 1));
+	return React.Children.map(thisArg.props.children, child => React.cloneElement(child, Object.assign({
+		map,
+		maps,
+	}, props)));
+}
 /** Function to refresh components based on their props. 
 * @method 
 * @memberof Utils 

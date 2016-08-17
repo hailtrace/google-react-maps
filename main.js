@@ -19,7 +19,8 @@ class App extends React.Component {
                 lng : -58.35
             },
             zoom : 4,
-            customControls : []
+            customControls : [],
+            circleCenter : {lng: -100.44364929199219, lat: 30.058001435398296}
         }
 
         this.removeLayer = this.removeLayer.bind(this);
@@ -209,7 +210,11 @@ class App extends React.Component {
                 </Map>
                 <h1>Simple Map with shapes</h1>
                 <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height: 1000, width: 1000}}>
-                    <Circle editable={true} fillColor="#fff" strokeColor="#112233" radius={500000} center={{lng: -100.44364929199219, lat: 30.058001435398296}} onCenterChange={coords => {}} onRadiusChange={radius => {}} />
+                    <Circle editable={true} fillColor="#fff" strokeColor="#112233" radius={500000} center={this.state.circleCenter} onCenterChange={coords => {console.log(coords); this.setState({circleCenter : coords});}} onRadiusChange={radius => {}}>
+                        <InfoWindow open={true}>
+                            <h1>Test</h1>
+                        </InfoWindow>
+                    </Circle>
                 </Map>
         	</div>
         );
