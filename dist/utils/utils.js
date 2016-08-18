@@ -3,10 +3,37 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.processPoints = exports.GeoJSON = exports.ControlPosition = undefined;
+exports.mapChildren = mapChildren;
 exports.refreshComponentFromProps = refreshComponentFromProps;
 exports.isValidMapListener = isValidMapListener;
-/** @namespace Utils */
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/** @namespace Utils */
+/** Bind children maps 
+* @method
+* @memberof Utils
+*/
+function mapChildren(props, thisArg) {
+	var _arguments$props = arguments[arguments.length - 1].props;
+	var map = _arguments$props.map;
+	var maps = _arguments$props.maps;
+
+	if (arguments.length > 0) props = Object.assign.apply(Object, [{}].concat(_toConsumableArray(Array.prototype.slice.call(arguments, 0, arguments.length - 1))));
+	return _react2.default.Children.map(thisArg.props.children, function (child) {
+		return _react2.default.cloneElement(child, Object.assign({
+			map: map,
+			maps: maps
+		}, props));
+	});
+}
 /** Function to refresh components based on their props. 
 * @method 
 * @memberof Utils 

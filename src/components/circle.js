@@ -57,7 +57,7 @@ class Circle extends React.Component {
 
     	if(!currCenter.equals(prevCenter))
     		this.state.circle.setCenter(currCenter);
-    	
+
     	if(this.props.radius != this.state.circle.getRadius())
     		this.state.circle.setRadius(this.props.radius);
     }
@@ -75,7 +75,7 @@ class Circle extends React.Component {
     }
     componentWillUnmount() {
        if(this.state.circle) {
-            this.props.maps.clearListeners(this.state.circle);
+            this.props.maps.event.clearListeners(this.state.circle);
        		this.state.circle.setMap(null);
        }
     }

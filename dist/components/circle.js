@@ -10,6 +10,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _utils = require('../utils/utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64,27 +66,44 @@ var Circle = function (_React$Component) {
             var _this2 = this;
 
             var circle = this.state.circle;
-            var _state = this.state;
-            var maps = _state.maps;
-            var map = _state.map;
+            var _props = this.props;
+            var maps = _props.maps;
+            var map = _props.map;
 
             if (maps && circle) {
                 maps.event.addListener(circle, 'radius_changed', function (e) {
-                    if (typeof _this2.onRadiusChange === 'function') _this2.onRadiusChange({ radius: circle.getRadius() });
+                    if (typeof _this2.props.onRadiusChange === 'function') _this2.props.onRadiusChange(circle.getRadius());
                 });
-                maps.event.addListener(circle, 'dragend', function (e) {
-                    if (typeof _this2.onCenterChange === 'function') _this2.onCenterChange({ coords: circle.getCenter().toJSON() });
+                maps.event.addListener(circle, 'center_changed', function (e) {
+                    if (typeof _this2.props.onCenterChange === 'function') _this2.props.onCenterChange(circle.getCenter().toJSON());
                 });
-            }
+                maps.event.addListener(circle, 'click', function (e) {
+                    if (typeof _this2.props.onClick === 'function') _this2.props.onClick({ coords: e.latLng.toJSON() });
+                });
+                maps.event.addListener(circle, 'rightclick', function (_ref) {
+                    var latLng = _ref.latLng;
+                    return typeof _this2.props.onRightClick === 'function' ? _this2.props.onRightClick({ coords: latLng.toJSON() }) : function (f) {
+                        return f;
+                    };
+                });
+            } else console.error(new Error("You must pass maps and map to this component. Otherwise, run it inside a map component."));
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            var currCenter = new this.props.maps.LatLng(this.props.center);
+            var prevCenter = this.state.circle.getCenter();
+
+            if (!currCenter.equals(prevCenter)) this.state.circle.setCenter(currCenter);
+
+            if (this.props.radius != this.state.circle.getRadius()) this.state.circle.setRadius(this.props.radius);
         }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _props = this.props;
-            var map = _props.map;
-            var maps = _props.maps;
-            var center = _props.center;
-            var clickable = _props.clickable;
+            var _props2 = this.props;
+            var map = _props2.map;
+            var maps = _props2.maps;
 
 
             if (map && maps) {
@@ -97,17 +116,21 @@ var Circle = function (_React$Component) {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             if (this.state.circle) {
-                this.props.maps.clearListeners(this.state.circle);
+                this.props.maps.event.clearListeners(this.state.circle);
                 this.state.circle.setMap(null);
             }
         }
     }, {
         key: 'render',
         value: function render() {
+            var children = [];
+            if (this.props.children && this.props.maps && this.props.map) children = (0, _utils.mapChildren)({
+                coords: this.state.circle.getCenter().toJSON()
+            }, this);
             return _react2.default.createElement(
                 'div',
                 null,
-                'Circle'
+                children
             );
         }
     }]);

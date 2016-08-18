@@ -63,7 +63,7 @@ var Marker = function (_React$Component) {
         var marker = new maps.Marker(this.getOptions());
         this.setState({ marker: marker });
 
-        if (typeof this.props.onClick === 'function') this.props.maps.addListener(marker, 'click', function (e) {
+        if (typeof this.props.onClick === 'function') this.props.maps.event.addListener(marker, 'click', function (e) {
           if (_this2.props.onClick) _this2.props.onClick({ coords: marker.getPosition().toJSON() });
         });
       } else {
