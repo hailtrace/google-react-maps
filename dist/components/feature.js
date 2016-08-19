@@ -24,6 +24,7 @@ window.GeoJSON = _utils.GeoJSON;
 
 //Rational: This component emulates the google Data.Feature. 
 //It lives in the context of a <DataLayer /> Component and interfaces with it's Data object that has been passed as prop to it.
+/** The component that handles individual features within a data layer. */
 
 var Feature = function (_React$Component) {
   _inherits(Feature, _React$Component);
@@ -86,6 +87,19 @@ var Feature = function (_React$Component) {
           if (_this2.props.onClick) _this2.props.onClick({ id: _this2.props.id, coords: coords, geoJson: _this2.state.geoJson });
         }
       }));
+
+      if (typeof this.props.onRightClick === 'function') this.addListener(this.props.data.addListener('rightclick', function (event) {
+        var feature = event.feature;
+
+        if (feature.getId() == _this2.state.feature.getId()) {
+          event.stop();
+          var coords = event.latLng.toJSON();
+          coords[0] = coords.lng;
+          coords[1] = coords.lat;
+
+          if (_this2.props.onRightClick) _this2.props.onRightClick(Object.assign({}, event, { id: _this2.props.id, coords: coords, geoJson: _this2.state.geoJson }));
+        }
+      }));
     }
   }, {
     key: 'removeListeners',
@@ -107,7 +121,7 @@ var Feature = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      console.log("F: componentWillRecieveProps");
+      // console.log("F: componentWillRecieveProps");
       if (nextProps.data && this.state.feature) {
         this.checkPropEditable(nextProps);
         this.updateFeatureGeometry(nextProps.geoJson);
@@ -116,9 +130,9 @@ var Feature = function (_React$Component) {
     }
   }, {
     key: 'componentWillUpdate',
-    value: function componentWillUpdate(nextProps, nextState) {
-      console.log("F: componentWillUpdate");
-    }
+    value: function componentWillUpdate(nextProps, nextState) {}
+    // console.log("F: componentWillUpdate")
+
     // shouldComponentUpdate(nextProps, nextState) {
     // 	return false;
     // }
@@ -128,7 +142,7 @@ var Feature = function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      console.log("F: componentDidMount");
+      // console.log("F: componentDidMount")
       if (this.props.data) {
 
         var id = undefined;
@@ -175,7 +189,7 @@ var Feature = function (_React$Component) {
         // this.removeListeners(() => {
         var geometry = _this4.getGeometryForFeature(geoJson);
         _this4.state.feature.setGeometry(geometry);
-        console.log("F: refreshed geometry for id: ", _this4.props.id);
+        // console.log("F: refreshed geometry for id: ", this.props.id);
         // this.initListeners(); //Restart the listening on this geometry.
         // }); //Stop all listening on this geometry.
       };
@@ -188,18 +202,18 @@ var Feature = function (_React$Component) {
             var currGeoJson = this.state.geoJson;
             //If the coordinates length is not the same, obviously something changed so reset the geometry.
             if (geoJson.geometry.coordinates[0].length != currGeoJson.geometry.coordinates[0].length) {
-              console.log("F: Entered unequal coordinate block for id: ", this.props.id);
+              // console.log("F: Entered unequal coordinate block for id: ", this.props.id);
               resetGeometry();
             }
             //If the coordinate lengths are the same, check to see if all of the points are equal. If any of them are not equal, obviously something changed so reset the geometry.
             else {
-                console.log("F: Starting coordinate comparison for id: ", this.props.id, currGeoJson.geometry.coordinates[0], geoJson.geometry.coordinates[0]);
+                // console.log("F: Starting coordinate comparison for id: ", this.props.id , currGeoJson.geometry.coordinates[0], geoJson.geometry.coordinates[0]);
 
                 for (var i = currGeoJson.geometry.coordinates[0].length - 1; i >= 0; i--) {
                   var currPoint = currGeoJson.geometry.coordinates[0][i];
                   var newPoint = geoJson.geometry.coordinates[0][i];
                   if (currPoint[0] != newPoint[0] || currPoint[1] != newPoint[1]) {
-                    console.log("F: Entered modified point block for id: ", this.props.id);
+                    // console.log("F: Entered modified point block for id: ", this.props.id);
                     resetGeometry();
                     break;
                   }
@@ -266,7 +280,7 @@ var Feature = function (_React$Component) {
       if (this.props.data && this.state.feature) {
         this.checkPropEditable(this.props);
       }
-      console.log("F: feature Rendered");
+      // console.log("F: feature Rendered");
       return _react2.default.createElement('noscript', null);
     }
   }]);

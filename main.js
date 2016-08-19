@@ -90,7 +90,19 @@ class App extends React.Component {
     }
 
     render() {
-
+        var controls = [];
+        var Wrapper = (props) => (<div style={{backgroundColor:"red",padding:"10px"}}>{props.children}</div>);
+        controls.push(<SearchBox wrapper={Wrapper} onPlacesChanged={pl => console.log("Places: ", pl)} position="TOP_CENTER" />)
+        var positions = Object.getOwnPropertyNames(ControlPosition);
+        positions.forEach(p => {
+            controls.push(
+                <MapControl position={p}>
+                    <div style={{backgroundColor:"#fff"}}>
+                        <h3>{p}</h3>
+                    </div>
+                </MapControl>
+            );
+        })
         return (
         	<div>
         		<h1>Simple Map</h1>
@@ -101,12 +113,13 @@ class App extends React.Component {
         		</Map>
 
                 <h2>Simple Map with Custom Controls</h2>
+
                 <Map 
                     api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" 
                     zoom={Number(this.state.zoom)} 
                     center={this.state.center} 
                     style={{ height:1000, width:1000}}
-                    controls={this.state.customControls}
+                    controls={controls}
                     >
                     
                 </Map>                

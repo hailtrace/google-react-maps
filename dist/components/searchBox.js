@@ -32,14 +32,22 @@ var SearchBox = function (_React$Component) {
 
     _this.displayName = 'SearchBox';
     _this.state = {
-      searchBox: null
+      searchBox: null,
+      internalPosition: -1
     };
+    _this.postRender = _this.postRender.bind(_this);
+    _this.preRender = _this.preRender.bind(_this);
     return _this;
   }
 
   _createClass(SearchBox, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.postRender();
+    }
+  }, {
+    key: 'postRender',
+    value: function postRender() {
       var _this2 = this;
 
       var _props = this.props;
@@ -52,8 +60,6 @@ var SearchBox = function (_React$Component) {
         var container = _reactDom2.default.findDOMNode(this.refs.child);
         var searchBox = new maps.places.SearchBox(input);
 
-        this.setState({ searchBox: searchBox });
-
         map.addListener('bounds_changed', function () {
           searchBox.setBounds(map.getBounds());
         });
@@ -64,15 +70,44 @@ var SearchBox = function (_React$Component) {
 
         if (!position) position = "TOP_LEFT";
 
-        map.controls[maps.ControlPosition[position]].push(container);
+        if (this.state.internalPosition < 0) map.controls[maps.ControlPosition[position]].push(container);else map.controls[maps.ControlPosition[position]].insertAt(this.state.internalPosition, container);
+
+        var internalPosition = map.controls[maps.ControlPosition[position]].length - 1;
+
+        if (this.state.internalPosition != internalPosition) this.setState({
+          internalPosition: internalPosition
+        });
       } else console.warn(new Error("You must pass this component as a control to a Map component."));
+    }
+  }, {
+    key: 'preRender',
+    value: function preRender() {
+      var _props2 = this.props;
+      var map = _props2.map;
+      var maps = _props2.maps;
+      var position = _props2.position;
+      var internalPosition = this.state.internalPosition;
+
+      map.controls[maps.ControlPosition[position]].removeAt(internalPosition);
+
+      var child = _reactDom2.default.findDOMNode(this.refs.child);
+      var parent = _reactDom2.default.findDOMNode(this.refs.parent);
+      parent.appendChild(child);
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+      if (this.state.internalPosition > -1) this.preRender();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.state.internalPosition > -1 && prevState.internalPosition != -1) this.postRender();
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      var child = _reactDom2.default.findDOMNode(this.refs.child);
-      var parent = _reactDom2.default.findDOMNode(this.refs.parent);
-      parent.appendChild(child);
+      this.preRender();
     }
   }, {
     key: 'render',
