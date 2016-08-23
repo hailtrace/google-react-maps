@@ -63,7 +63,7 @@ var Marker = function (_React$Component) {
 
         var marker = new maps.Marker(this.getOptions());
         this.setState({ marker: marker });
-        debugger;
+
         if (MarkerClusterer) MarkerClusterer.addMarker(marker);
 
         if (typeof this.props.onClick === 'function') this.props.maps.event.addListener(marker, 'click', function (e) {

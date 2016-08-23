@@ -77,6 +77,11 @@ var MarkerCluster = function (_React$Component) {
             this.setState({ MarkerClusterer: null });
         }
     }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            if (this.state.MarkerClusterer) this.state.MarkerClusterer.redraw_();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
