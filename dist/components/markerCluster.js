@@ -75,15 +75,15 @@ var MarkerCluster = function (_React$Component) {
             var MarkerClusterer = this.state.MarkerClusterer;
 
             if (MarkerClusterer) {
-                MarkerClusterer.removeMarkers(MarkerClusterer.getMarkers());
+                MarkerClusterer.clearMarkers();
             }
             this.setState({ MarkerClusterer: null });
         }
-    }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-            if (this.state.MarkerClusterer) this.state.MarkerClusterer.repaint();
-        }
+        // componentDidUpdate() {
+        // if(this.state.MarkerClusterer)
+        // 	this.state.MarkerClusterer.repaint();
+        // }
+
     }, {
         key: 'render',
         value: function render() {

@@ -234,7 +234,7 @@ class App extends React.Component {
                     <MarkerCluster>
                         {(()=>{
                             var markers = [];
-                            for (var i = 0; i < 1000; i++) {
+                            for (var i = 0; i < 5000; i++) {
                                 markers.push(
                                     <Marker icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" coords={{lng: -100.44364929199219 + i / 100, lat: 30.058001435398296 + i / 100}}>
                                     </Marker>

@@ -62,6 +62,9 @@ var Marker = function (_React$Component) {
 
 
         var marker = new maps.Marker(this.getOptions());
+
+        marker.setMap(this.props.map);
+
         this.setState({ marker: marker });
 
         if (MarkerClusterer) MarkerClusterer.addMarker(marker);
@@ -79,7 +82,7 @@ var Marker = function (_React$Component) {
     value: function getOptions() {
       var options = {
         position: this.props.coords,
-        map: this.props.map,
+        // map : this.props.map,
         icon: this.props.icon ? this.props.icon : undefined
       };
       if (this.props.options) options = Object.assign(options, this.props.options);
@@ -89,8 +92,6 @@ var Marker = function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       if (this.state.marker) {
-
-        if (this.props.MarkerClusterer) this.props.MarkerClusterer.removeMarker(this.state.marker);
         this.state.marker.setMap(null);
       }
       this.setState({ marker: null });

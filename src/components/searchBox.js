@@ -64,6 +64,9 @@ class SearchBox extends React.Component {
     	if(this.state.internalPosition > -1)
 	    	this.preRender();
     }
+    shouldComponentUpdate(nextProps, nextState) {
+    	return false;
+    }
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.internalPosition > -1 && prevState.internalPosition != -1)
 	    	this.postRender();

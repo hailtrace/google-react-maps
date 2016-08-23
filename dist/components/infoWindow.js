@@ -82,7 +82,6 @@ var InfoWindow = function (_React$Component) {
             if (this.props.open) infoWindow.open(map, anchor);else infoWindow.close();
             //Don't let the infowindow do it's default thing when a user tries to close it.
             maps.event.addListener(infoWindow, 'closeclick', function (e) {
-               infoWindow.open(map, anchor);
                if (typeof _this2.props.onCloseClick === 'function') _this2.props.onCloseClick(e);
             });
 
@@ -133,11 +132,15 @@ var InfoWindow = function (_React$Component) {
       key: 'componentDidUpdate',
       value: function componentDidUpdate(prevProps, prevState) {
          if (this.state.infoWindow) {
-            if (this.props.open) this.state.infoWindow.open(this.props.map, this.state.anchor);else this.state.infoWindow.close();
+            if (this.props.open && !prevProps.open) this.state.infoWindow.open(this.props.map, this.state.anchor);else if (!this.props.open && prevProps.open) this.state.infoWindow.close();
          }
-         this.loadInfoWindowContent();
 
-         this.state.infoWindow.setPosition(this.props.coords);
+         if (!this.node) this.loadInfoWindowContent();
+
+         var coords = this.props.coords;
+
+
+         if (!prevProps.coords || coords.lat != prevProps.coords.lat && coords.lng != prevProps.coords.lng) this.state.infoWindow.setPosition(this.props.coords);
       }
    }, {
       key: 'render',

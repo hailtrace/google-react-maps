@@ -119,7 +119,6 @@ class Map extends React.Component {
         var {map} = this.state;
         var {zoom} = this.props;
         try {
-            console.log("MC : Setting Zoom", zoom, map);
             map.setZoom(zoom);        
         }
         catch(e) {
@@ -158,7 +157,7 @@ class Map extends React.Component {
         }
     }
     componentDidMount() {
-        console.log("MC : Component did mount.");
+
 
     	var initMapComponentWithLibrary = (maps) => {
 
@@ -190,10 +189,10 @@ class Map extends React.Component {
     	}
     }
     componentDidUpdate() {
-        console.log("MC: Component Did Update");
+
         if(this.state.map) {
             this.refreshComponentFromProps();
-            this.setupMapListenerHooks();
+            // this.setupMapListenerHooks(); ?? This may not be necessary. Only on didMount.
         }
     }
     componentWillUnmount() {

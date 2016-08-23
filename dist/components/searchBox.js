@@ -100,6 +100,11 @@ var SearchBox = function (_React$Component) {
       if (this.state.internalPosition > -1) this.preRender();
     }
   }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      return false;
+    }
+  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
       if (this.state.internalPosition > -1 && prevState.internalPosition != -1) this.postRender();

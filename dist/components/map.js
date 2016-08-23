@@ -175,7 +175,6 @@ var Map = function (_React$Component) {
             var zoom = this.props.zoom;
 
             try {
-                console.log("MC : Setting Zoom", zoom, map);
                 map.setZoom(zoom);
             } catch (e) {
                 console.error(e);
@@ -227,8 +226,6 @@ var Map = function (_React$Component) {
         value: function componentDidMount() {
             var _this3 = this;
 
-            console.log("MC : Component did mount.");
-
             var initMapComponentWithLibrary = function initMapComponentWithLibrary(maps) {
 
                 window.maps = maps;
@@ -257,10 +254,10 @@ var Map = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            console.log("MC: Component Did Update");
+
             if (this.state.map) {
                 this.refreshComponentFromProps();
-                this.setupMapListenerHooks();
+                // this.setupMapListenerHooks(); ?? This may not be necessary. Only on didMount.
             }
         }
     }, {

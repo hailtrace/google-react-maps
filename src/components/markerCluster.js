@@ -42,14 +42,14 @@ class MarkerCluster extends React.Component {
     componentWillUnmount() {
     	var {MarkerClusterer} = this.state;
     	if(MarkerClusterer) {
-    		MarkerClusterer.removeMarkers(MarkerClusterer.getMarkers());
+    		MarkerClusterer.clearMarkers();
     	}
 	    this.setState({MarkerClusterer : null})
     }
-    componentDidUpdate() {
-    	if(this.state.MarkerClusterer)
-    		this.state.MarkerClusterer.repaint();
-    }
+    // componentDidUpdate() {
+    	// if(this.state.MarkerClusterer)
+    	// 	this.state.MarkerClusterer.repaint();
+    // }
     render() {
     	var children = [];
     	var {map, maps} = this.props;

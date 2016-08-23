@@ -29,6 +29,9 @@ class Marker extends React.Component {
     		var {map,maps, MarkerClusterer} = this.props;
     		
     		var marker = new maps.Marker(this.getOptions());
+
+    		marker.setMap(this.props.map);
+    		
     		this.setState({marker});
 
     		if(MarkerClusterer)
@@ -48,7 +51,7 @@ class Marker extends React.Component {
     getOptions() {
 		var options = {
 			position : this.props.coords,
-			map : this.props.map,
+			// map : this.props.map,
 			icon : this.props.icon ? this.props.icon : undefined
 		}
 		if(this.props.options)
@@ -57,9 +60,6 @@ class Marker extends React.Component {
     }
     componentWillUnmount() {
 		if(this.state.marker) {
-
-		if(this.props.MarkerClusterer)
-			this.props.MarkerClusterer.removeMarker(this.state.marker);
 			this.state.marker.setMap(null);
 		}
 		this.setState({marker : null});
