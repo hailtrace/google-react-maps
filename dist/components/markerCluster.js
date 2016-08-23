@@ -52,8 +52,8 @@ var MarkerCluster = function (_React$Component) {
     }
 
     _createClass(MarkerCluster, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
             if (this.props.map && this.props.maps) {
                 var options = { gridSize: 50, maxZoom: 15 };
 
@@ -82,9 +82,15 @@ var MarkerCluster = function (_React$Component) {
             var _this2 = this;
 
             var children = [];
-            if (this.props.map && this.props.maps) children = _react2.default.Children.map(this.props.children, function (child) {
+            var _props = this.props;
+            var map = _props.map;
+            var maps = _props.maps;
+
+            if (this.props.map && this.props.maps && this.state.MarkerClusterer) children = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
-                    MarkerClusterer: _this2.state.MarkerClusterer
+                    MarkerClusterer: _this2.state.MarkerClusterer,
+                    map: map,
+                    maps: maps
                 });
             });
             return _react2.default.createElement(

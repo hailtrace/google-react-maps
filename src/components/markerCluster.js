@@ -22,7 +22,7 @@ class MarkerCluster extends React.Component {
         	MarkerClusterer : null
         }
     }
-    componentDidMount() {
+    componentWillMount() {
     	if(this.props.map && this.props.maps) {
 	    	var options = {gridSize: 50, maxZoom: 15}
 
@@ -47,7 +47,7 @@ class MarkerCluster extends React.Component {
     render() {
     	var children = [];
     	var {map, maps} = this.props;
-    	if(this.props.map && this.props.maps)
+    	if(this.props.map && this.props.maps && this.state.MarkerClusterer)
 	    	children = React.Children.map(this.props.children, child => React.cloneElement(child, {
 	    		MarkerClusterer : this.state.MarkerClusterer,
 	    		map,

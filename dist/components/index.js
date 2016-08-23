@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.Circle = exports.SearchBox = exports.MapControl = exports.Marker = exports.InfoWindow = exports.Feature = exports.DataLayer = exports.KmlLayer = exports.Map = exports.ControlPosition = undefined;
+exports.MarkerCluster = exports.Circle = exports.SearchBox = exports.MapControl = exports.Marker = exports.InfoWindow = exports.Feature = exports.DataLayer = exports.KmlLayer = exports.Map = exports.ControlPosition = undefined;
 
 var _map = require('./map');
 
@@ -28,6 +28,10 @@ var _infoWindow2 = _interopRequireDefault(_infoWindow);
 var _marker = require('./marker');
 
 var _marker2 = _interopRequireDefault(_marker);
+
+var _markerCluster = require('./markerCluster');
+
+var _markerCluster2 = _interopRequireDefault(_markerCluster);
 
 var _mapControl = require('./mapControl');
 
@@ -60,4 +64,5 @@ exports.Marker = _marker2.default;
 exports.MapControl = _mapControl2.default;
 exports.SearchBox = _searchBox2.default;
 exports.Circle = _circle2.default;
+exports.MarkerCluster = _markerCluster2.default;
 //# sourceMappingURL=index.js.map

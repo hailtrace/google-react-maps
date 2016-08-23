@@ -58,10 +58,13 @@ var Marker = function (_React$Component) {
         var _props = this.props;
         var map = _props.map;
         var maps = _props.maps;
+        var MarkerClusterer = _props.MarkerClusterer;
 
 
         var marker = new maps.Marker(this.getOptions());
         this.setState({ marker: marker });
+        debugger;
+        if (MarkerClusterer) MarkerClusterer.addMarker(marker);
 
         if (typeof this.props.onClick === 'function') this.props.maps.event.addListener(marker, 'click', function (e) {
           if (_this2.props.onClick) _this2.props.onClick({ coords: marker.getPosition().toJSON() });
@@ -85,7 +88,11 @@ var Marker = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      if (this.state.marker) this.state.marker.setMap(null);
+      if (this.state.marker) {
+
+        if (this.props.MarkerClusterer) this.props.MarkerClusterer.removeMarker(this.state.marker);
+        this.state.marker.setMap(null);
+      }
       this.setState({ marker: null });
     }
   }, {

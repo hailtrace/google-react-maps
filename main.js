@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import {Map, DataLayer, Feature, InfoWindow, Marker, MapControl, SearchBox, Circle} from './src/components/index';
+import {Map, DataLayer, Feature, InfoWindow, Marker, MarkerCluster, MapControl, SearchBox, Circle} from './src/components/index';
 import {ControlPosition} from './src/utils/utils';
 import KmlLayer from './src/components/kmlLayer';
 import layers from './test-data/test-layers';
@@ -228,6 +228,23 @@ class App extends React.Component {
                             <h1>Test</h1>
                         </InfoWindow>
                     </Circle>
+                </Map>                
+                <h1>Simple Map with marker clusterer</h1>
+                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height: 1000, width: 1000}}>
+                    <MarkerCluster>
+                        {(()=>{
+                            var markers = [];
+                            for (var i = 0; i < 1000; i++) {
+                                markers.push(
+                                    <Marker icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" coords={{lng: -100.44364929199219 + i / 100, lat: 30.058001435398296 + i / 100}}>
+                                    </Marker>
+
+                                )
+                            };  
+                            return markers;      
+                        })()}
+
+                    </MarkerCluster>
                 </Map>
         	</div>
         );

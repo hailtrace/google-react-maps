@@ -30,6 +30,7 @@ class Marker extends React.Component {
     		
     		var marker = new maps.Marker(this.getOptions());
     		this.setState({marker});
+    		debugger;
     		if(MarkerClusterer)
     			MarkerClusterer.addMarker(marker);
 

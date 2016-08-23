@@ -4,6 +4,7 @@ import DataLayer from './dataLayer';
 import Feature from './feature';
 import InfoWindow from './infoWindow';
 import Marker from './marker';
+import MarkerCluster from './markerCluster';
 import MapControl from './mapControl';
 import SearchBox from './searchBox';
 import Circle from './circle';
@@ -21,5 +22,6 @@ export {
 	Marker,
 	MapControl,
 	SearchBox,
-	Circle
+	Circle,
+	MarkerCluster
 }
