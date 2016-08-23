@@ -81,7 +81,7 @@ class InfoWindow extends React.Component {
       	parent.appendChild(child);
     }
     componentDidMount() {
-    	console.log("IW: Mounted Info window.");
+
     	this.loadInfoWindowContent()
     }
     componentWillUnmount() {
@@ -89,7 +89,7 @@ class InfoWindow extends React.Component {
 	    	this.state.infoWindow.open(null);
         this.setState({infoWindow : null});
         this.cleanInfoWindowContentForUnmount();
-        console.log("IW: Unmounted info window.")
+
     }
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.infoWindow) {
@@ -104,7 +104,7 @@ class InfoWindow extends React.Component {
 
     }
     render() {
-    	console.log("IW: Rendered infowindow")
+
         return <div><div ref="infoWindowChildren">{this.props.children}</div></div>;
     }
 }

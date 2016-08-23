@@ -52,6 +52,9 @@ var MarkerCluster = function (_React$Component) {
     }
 
     _createClass(MarkerCluster, [{
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate() {}
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             if (this.props.map && this.props.maps) {
@@ -79,7 +82,7 @@ var MarkerCluster = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            if (this.state.MarkerClusterer) this.state.MarkerClusterer.redraw_();
+            if (this.state.MarkerClusterer) this.state.MarkerClusterer.repaint();
         }
     }, {
         key: 'render',

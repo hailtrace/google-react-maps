@@ -119,7 +119,7 @@ var InfoWindow = function (_React$Component) {
    }, {
       key: 'componentDidMount',
       value: function componentDidMount() {
-         console.log("IW: Mounted Info window.");
+
          this.loadInfoWindowContent();
       }
    }, {
@@ -128,7 +128,6 @@ var InfoWindow = function (_React$Component) {
          if (this.state.infoWindow) this.state.infoWindow.open(null);
          this.setState({ infoWindow: null });
          this.cleanInfoWindowContentForUnmount();
-         console.log("IW: Unmounted info window.");
       }
    }, {
       key: 'componentDidUpdate',
@@ -143,7 +142,7 @@ var InfoWindow = function (_React$Component) {
    }, {
       key: 'render',
       value: function render() {
-         console.log("IW: Rendered infowindow");
+
          return _react2.default.createElement(
             'div',
             null,

@@ -22,6 +22,8 @@ class MarkerCluster extends React.Component {
         	MarkerClusterer : null
         }
     }
+    componentWillUpdate() {
+    }
     componentWillMount() {
     	if(this.props.map && this.props.maps) {
 	    	var options = {gridSize: 50, maxZoom: 15}
@@ -46,7 +48,7 @@ class MarkerCluster extends React.Component {
     }
     componentDidUpdate() {
     	if(this.state.MarkerClusterer)
-    		this.state.MarkerClusterer.redraw_();
+    		this.state.MarkerClusterer.repaint();
     }
     render() {
     	var children = [];

@@ -107,7 +107,7 @@ class DataLayer extends React.Component {
 
         if(this.props.zIndex)
         	zIndex = zIndex + (10000 * this.props.zIndex) //TODO: Find a better way to separate out layer zIndexes. Right now we are defautling to 10000K features in a GeoJson schema. It works, but there should be a better way.
-
+        
         switch(type) {
         	case 'Polygon':
         		var polyOptions = {
