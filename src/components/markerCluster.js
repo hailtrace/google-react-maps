@@ -46,9 +46,12 @@ class MarkerCluster extends React.Component {
     }
     render() {
     	var children = [];
+    	var {map, maps} = this.props;
     	if(this.props.map && this.props.maps)
 	    	children = React.Children.map(this.props.children, child => React.cloneElement(child, {
-	    		MarkerClusterer : this.state.MarkerClusterer
+	    		MarkerClusterer : this.state.MarkerClusterer,
+	    		map,
+	    		maps
 	    	}))
         return <div>{children}</div>;
     }

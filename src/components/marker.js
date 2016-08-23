@@ -26,10 +26,12 @@ class Marker extends React.Component {
     }
     componentWillMount() {
     	if(this.props.map && this.props.maps) {
-    		var {map,maps} = this.props;
+    		var {map,maps, MarkerClusterer} = this.props;
     		
     		var marker = new maps.Marker(this.getOptions());
     		this.setState({marker});
+    		if(MarkerClusterer)
+    			MarkerClusterer.addMarker(marker);
 
     		if(typeof this.props.onClick === 'function')
 	    		this.props.maps.event.addListener(marker, 'click', e => {
@@ -53,9 +55,14 @@ class Marker extends React.Component {
     	return options;
     }
     componentWillUnmount() {
-		if(this.state.marker)
+		if(this.state.marker) {
+
+		if(this.props.MarkerClusterer)
+			this.props.MarkerClusterer.removeMarker(this.state.marker);
 			this.state.marker.setMap(null);
-		this.setState({marker : null});          
+		}
+		this.setState({marker : null});
+		
     }
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.marker) {
