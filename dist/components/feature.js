@@ -171,7 +171,6 @@ var Feature = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      console.error("Feature unmounting.");
       if (this.props.data) this.props.data.remove(this.state.feature);
 
       if (this.state.listeners) this.removeListeners();

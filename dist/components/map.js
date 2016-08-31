@@ -51,6 +51,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 * @property {object} mapOptions Optional. A google.maps.MapOptions object.
 *
 * @property {object} props
+* @property {function} props.onMount callback(map, maps) Get's called right after the component is done it's initial render. (Key for triggering outside events that require google maps api to be instantiated.)
 * @property {number} props.zoom
 * @property {google.maps.LatLngLiteral} props.center
 * @property {object} props.latLngBounds 
@@ -243,7 +244,13 @@ var Map = function (_React$Component) {
                     map: map,
                     maps: maps,
                     geocoder: geocoder
-                }, _this3.refreshComponentFromProps);
+                }, function () {
+                    _this3.refreshComponentFromProps();
+                    if (typeof _this3.props.onMount === 'function') {
+                        _this3.props.onMount(_this3.getGoogleMap(), _this3.getGoogleMapsApi());
+                    }
+                });
+
                 _this3.setupMapListenerHooks();
             };
 
@@ -257,7 +264,7 @@ var Map = function (_React$Component) {
 
             if (this.state.map) {
                 this.refreshComponentFromProps();
-                // this.setupMapListenerHooks(); ?? This may not be necessary. Only on didMount.
+                this.setupMapListenerHooks(); // ?? This may not be necessary. Only on didMount.
             }
         }
     }, {
@@ -310,6 +317,7 @@ var Map = function (_React$Component) {
 }(_react2.default.Component);
 
 Map.propTypes = {
+    didMount: _react2.default.PropTypes.func,
     optionsConstructor: _react2.default.PropTypes.func,
     "api-key": _react2.default.PropTypes.string.isRequired,
     style: _react2.default.PropTypes.object,

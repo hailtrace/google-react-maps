@@ -26,6 +26,7 @@ import {refreshComponentFromProps, isValidMapListener} from '../utils/utils';
 * @property {object} mapOptions Optional. A google.maps.MapOptions object.
 *
 * @property {object} props
+* @property {function} props.onMount callback(map, maps) Get's called right after the component is done it's initial render. (Key for triggering outside events that require google maps api to be instantiated.)
 * @property {number} props.zoom
 * @property {google.maps.LatLngLiteral} props.center
 * @property {object} props.latLngBounds 
@@ -177,7 +178,13 @@ class Map extends React.Component {
                 map,
                 maps,
                 geocoder
-            }, this.refreshComponentFromProps);
+            }, () => {
+                this.refreshComponentFromProps();
+                if(typeof this.props.onMount === 'function') {
+                    this.props.onMount(this.getGoogleMap(), this.getGoogleMapsApi());
+                }
+            });
+
             this.setupMapListenerHooks();
     	}
 
@@ -192,7 +199,7 @@ class Map extends React.Component {
 
         if(this.state.map) {
             this.refreshComponentFromProps();
-            // this.setupMapListenerHooks(); ?? This may not be necessary. Only on didMount.
+            this.setupMapListenerHooks();// ?? This may not be necessary. Only on didMount.
         }
     }
     componentWillUnmount() {
@@ -225,6 +232,7 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
+    didMount : React.PropTypes.func,
     optionsConstructor : React.PropTypes.func,
 	"api-key" : React.PropTypes.string.isRequired,
 	style : React.PropTypes.object,

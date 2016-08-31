@@ -127,7 +127,6 @@ class Feature extends React.Component {
         console.error(new Error("You must put this <Feature /> component within the context of a <DataLayer /> Component."))
     }
     componentWillUnmount() {
-      console.error("Feature unmounting.");
       if(this.props.data)
         this.props.data.remove(this.state.feature);
 
