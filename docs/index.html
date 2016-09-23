@@ -105,7 +105,7 @@
 
 
     <section class="readme-section">
-        <article><h1>google-react-maps</h1><p>version 0.0.13</p>
+        <article><h1>google-react-maps</h1><p>version 1.0.38</p>
 <p>A new approach to the google maps api using react.</p>
 <p>To install <code>npm install google-react-maps</code></p>
 <p>Things you can import:<br><code>import {
@@ -119,7 +119,27 @@
 } 'google-react-maps';</code></p>
 <p>See main.js inside the git project to understand how to implement everything. (Uncomment some components to see everything)</p>
 <p>To run the dev mode... <code>webpack-dev-server</code> after doing a <code>npm install</code></p>
-<p>For a semi-complete documentation see <code>/docs</code></p></article>
+<p>For a semi-complete documentation see <code>/docs</code></p>
+<h2>Contributing Rules</h2><ul>
+<li>You are welcome to contribute!</li>
+<li>I will approve all changes that fit within the vision for this project. Make sure that you do not try to add specific-to-you changes that don't help enhance the general project. </li>
+<li>I will handle versioning and npm. We use <a href="https://docs.npmjs.com/getting-started/semantic-versioning">Semver</a></li>
+<li></li>
+</ul>
+<h2>To-dos</h2><p>Below are the list of things we need to get done. They don't necessarily need to happen in order.</p>
+<h3>Implementation</h3><p>For v2.0.0:</p>
+<ul>
+<li>Add ability for icons to change size depending on map zoom-level. (For instance when zoomed way out, I would like the icon to be slightly bigger than when zoomed all the way in.) <a href="https://developers.google.com/maps/documentation/javascript/markers#complex_icons">See this section of the google docs</a></li>
+<li>Add all possible GeoJSON shapes to the DataLayer component. (Polygon is the only implemented one right now.)</li>
+<li>Create all Shape components. <a href="https://developers.google.com/maps/documentation/javascript/shapes">See Shapes</a></li>
+<li>Add a CustomOverlay class/component that allows us to do things similar to InfoWindows but with completely custom styles. <a href="https://developers.google.com/maps/documentation/javascript/customoverlays">See Custom Overlays</a></li>
+</ul>
+<h3>Documentation</h3><ul>
+<li>Finish documenting exisiting features.</li>
+<li>Create a wiki for documenting here on github.</li>
+<li>Create example files and folders.</li>
+<li>Create testing environment and test components using mochajs or some other good framework. (My bad for not starting this as test driven.)</li>
+</ul></article>
     </section>
 
 

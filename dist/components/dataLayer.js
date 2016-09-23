@@ -55,8 +55,8 @@ var DataLayer = function (_React$Component) {
             var maps = this.props.maps;
 
             var bounds = new maps.LatLngBounds();
-            if (this.data) {
-                this.data.forEach(function (feature) {
+            if (this.state.data) {
+                this.state.data.forEach(function (feature) {
                     (0, _utils.processPoints)(feature.getGeometry(), bounds.extend, bounds);
                 });
                 map.fitBounds(bounds);

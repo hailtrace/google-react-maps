@@ -1,5 +1,5 @@
 # google-react-maps
-version 1.0.37
+version 1.0.38
 
 A new approach to the google maps api using react.
 
@@ -29,7 +29,6 @@ For a semi-complete documentation see `/docs`
 - You are welcome to contribute!
 - I will approve all changes that fit within the vision for this project. Make sure that you do not try to add specific-to-you changes that don't help enhance the general project. 
 - I will handle versioning and npm. We use [Semver](https://docs.npmjs.com/getting-started/semantic-versioning)
-- 
 
 ## To-dos
 
