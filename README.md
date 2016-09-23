@@ -22,7 +22,7 @@ See main.js inside the git project to understand how to implement everything. (U
 
 To run the dev mode... `webpack-dev-server` after doing a `npm install`
 
-### [Documentation](https://nomadgraphix.github.io/google-react-maps)
+[Documentation](https://nomadgraphix.github.io/google-react-maps)
 
 ##General Goals
 
