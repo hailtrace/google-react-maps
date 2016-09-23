@@ -229,7 +229,7 @@ var Map = function (_React$Component) {
 
             var initMapComponentWithLibrary = function initMapComponentWithLibrary(maps) {
 
-                window.maps = maps;
+                // window.maps = maps;
                 var mapOptions = _this3.getOptions(maps);
                 try {
 
@@ -255,7 +255,10 @@ var Map = function (_React$Component) {
             };
 
             if (this.props["api-key"]) {
-                if (!window.maps) (0, _googleMapsApi2.default)(this.props["api-key"], ['drawing', 'geometry', 'places'])().then(initMapComponentWithLibrary);else initMapComponentWithLibrary(window.maps);
+                // if(!window.maps)
+                (0, _googleMapsApi2.default)(this.props["api-key"], ['drawing', 'geometry', 'places'])().then(initMapComponentWithLibrary);
+                // else
+                // 	initMapComponentWithLibrary(window.maps);
             }
         }
     }, {

@@ -162,7 +162,7 @@ class Map extends React.Component {
 
     	var initMapComponentWithLibrary = (maps) => {
 
-    		window.maps = maps;
+    		// window.maps = maps;
     		var mapOptions = this.getOptions(maps);            
             try {
 
@@ -189,10 +189,10 @@ class Map extends React.Component {
     	}
 
     	if(this.props["api-key"]) {
-    		if(!window.maps)
+    		// if(!window.maps)
 		    	mapsapi(this.props["api-key"], ['drawing','geometry','places'])().then(initMapComponentWithLibrary);
-		    else
-		    	initMapComponentWithLibrary(window.maps);
+		    // else
+		    // 	initMapComponentWithLibrary(window.maps);
     	}
     }
     componentDidUpdate() {

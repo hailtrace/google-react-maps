@@ -25,8 +25,8 @@ class DataLayer extends React.Component {
     focus(){
         var {maps} = this.props;
         var bounds = new maps.LatLngBounds();
-        if(this.data) {
-            this.data.forEach((feature)=>{
+        if(this.state.data) {
+            this.state.data.forEach((feature)=>{
                 processPoints(feature.getGeometry(), bounds.extend, bounds);
             });
             map.fitBounds(bounds);     
