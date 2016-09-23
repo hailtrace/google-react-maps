@@ -38,7 +38,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 * See [LatLngLiteral object specification]{@link https://developers.google.com/maps/documentation/javascript/3.exp/reference#LatLngLiteral}
 * @class google.maps.LatLngLiteral
 * @memberof google.maps
-* 
+*
 * @property {number} lat
 * @property {number} lng
 */
@@ -54,7 +54,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 * @property {function} props.onMount callback(map, maps) Get's called right after the component is done it's initial render. (Key for triggering outside events that require google maps api to be instantiated.)
 * @property {number} props.zoom
 * @property {google.maps.LatLngLiteral} props.center
-* @property {object} props.latLngBounds 
+* @property {object} props.latLngBounds
 * @property {google.maps.LatLngLiteral} props.latLngBounds.sw
 * @property {google.maps.LatLngLiteral} props.latLngBounds.ne
 */
@@ -69,7 +69,7 @@ var Map = function (_React$Component) {
         _this.displayName = 'Map';
 
         var _div_id = "map_div_" + Math.floor(Date.now() * Math.random()).toString();
-        /** 
+        /**
         *   @property {object} state The Map component's internal state.
         *   @property {object} state.maps A google maps javascript api reference.
         *   @property {object} state._div_id The div id of this map.
@@ -125,7 +125,7 @@ var Map = function (_React$Component) {
         key: 'getOptions',
         value: function getOptions(maps) {
             var mapOptions = {
-                zoom: 4,
+                zoom: this.props.zoom || 4,
                 mapTypeId: maps.MapTypeId[!this.props.mapType ? "ROADMAP" : this.props.mapType],
                 data: null
             };
