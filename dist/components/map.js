@@ -124,7 +124,7 @@ var Map = function (_React$Component) {
         key: 'getOptions',
         value: function getOptions(maps) {
             var mapOptions = {
-                zoom: this.props.zoom,
+                zoom: this.props.zoom || 4,
                 mapTypeId: maps.MapTypeId[!this.props.mapType ? "ROADMAP" : this.props.mapType],
                 data: null
             };
