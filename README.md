@@ -24,6 +24,14 @@ To run the dev mode... `webpack-dev-server` after doing a `npm install`
 
 For a semi-complete documentation see `/docs`
 
+##General Goals
+
+So, the general goals for this project would be to see:
+
+- A truly component driven google maps api integration into react in which each component is a black-box (or not completely library interdependent). In theory, a component could be just as easily added to a "non-react or partial-react" implementation of Google maps. 
+- A useful mapping of react components that reflects the powerfully layered nature of the google maps api. ([See layers](https://developers.google.com/maps/documentation/javascript/layers))
+- A specifically engineered DataLayer component that maps to and edits any GeoJSON object in the react way. (state + action => new state) The DataLayer is a key for this project because we want specific control over minute pieces of a GeoJSON object. 
+
 ## Contributing Rules
 
 - You are welcome to contribute!
