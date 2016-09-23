@@ -120,11 +120,17 @@
 <p>See main.js inside the git project to understand how to implement everything. (Uncomment some components to see everything)</p>
 <p>To run the dev mode... <code>webpack-dev-server</code> after doing a <code>npm install</code></p>
 <p>For a semi-complete documentation see <code>/docs</code></p>
+<p>##General Goals</p>
+<p>So, the general goals for this project would be to see:</p>
+<ul>
+<li>A truly component driven google maps api integration into react in which each component is a black-box (or not completely library interdependent). In theory, a component could be just as easily added to a &quot;non-react or partial-react&quot; implementation of Google maps. </li>
+<li>A useful mapping of react components that reflects the powerfully layered nature of the google maps api. (<a href="https://developers.google.com/maps/documentation/javascript/layers">See layers</a>)</li>
+<li>A specifically engineered DataLayer component that maps to and edits any GeoJSON object in the react way. (state + action =&gt; new state) The DataLayer is a key for this project because we want specific control over minute pieces of a GeoJSON object. </li>
+</ul>
 <h2>Contributing Rules</h2><ul>
 <li>You are welcome to contribute!</li>
 <li>I will approve all changes that fit within the vision for this project. Make sure that you do not try to add specific-to-you changes that don't help enhance the general project. </li>
 <li>I will handle versioning and npm. We use <a href="https://docs.npmjs.com/getting-started/semantic-versioning">Semver</a></li>
-<li></li>
 </ul>
 <h2>To-dos</h2><p>Below are the list of things we need to get done. They don't necessarily need to happen in order.</p>
 <h3>Implementation</h3><p>For v2.0.0:</p>
