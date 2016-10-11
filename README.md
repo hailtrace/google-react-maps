@@ -1,5 +1,5 @@
 # google-react-maps
-version 1.0.38
+version 1.1.0
 
 A new approach to the google maps api using react.
 
@@ -13,6 +13,7 @@ import {
 	DataLayer,
 	Feature,
 	InfoWindow,
+  CustomOverlay,
 	Marker,
 	MapControl
 } 'google-react-maps';
@@ -49,7 +50,7 @@ For v2.0.0:
  - Add ability for icons to change size depending on map zoom-level. (For instance when zoomed way out, I would like the icon to be slightly bigger than when zoomed all the way in.) [See this section of the google docs](https://developers.google.com/maps/documentation/javascript/markers#complex_icons)
  - Add all possible GeoJSON shapes to the DataLayer component. (Polygon is the only implemented one right now.)
  - Create all Shape components. [See Shapes](https://developers.google.com/maps/documentation/javascript/shapes)
- - Add a CustomOverlay class/component that allows us to do things similar to InfoWindows but with completely custom styles. [See Custom Overlays](https://developers.google.com/maps/documentation/javascript/customoverlays)
+ - Add a CustomOverlay class/component that allows us to do things similar to InfoWindows but with completely custom styles. [See Custom Overlays](https://developers.google.com/maps/documentation/javascript/customoverlays) <---- Started this. First iteration done!
 
 
 ### Documentation

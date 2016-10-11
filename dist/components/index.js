@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.MarkerCluster = exports.Circle = exports.SearchBox = exports.MapControl = exports.Marker = exports.InfoWindow = exports.Feature = exports.DataLayer = exports.KmlLayer = exports.Map = exports.ControlPosition = undefined;
+exports.MarkerCluster = exports.Circle = exports.SearchBox = exports.MapControl = exports.Marker = exports.CustomOverlay = exports.InfoWindow = exports.Feature = exports.DataLayer = exports.KmlLayer = exports.Map = exports.ControlPosition = undefined;
 
 var _map = require('./map');
 
@@ -24,6 +24,10 @@ var _feature2 = _interopRequireDefault(_feature);
 var _infoWindow = require('./infoWindow');
 
 var _infoWindow2 = _interopRequireDefault(_infoWindow);
+
+var _customOverlay = require('./customOverlay');
+
+var _customOverlay2 = _interopRequireDefault(_customOverlay);
 
 var _marker = require('./marker');
 
@@ -60,6 +64,7 @@ exports.KmlLayer = _kmlLayer2.default;
 exports.DataLayer = _dataLayer2.default;
 exports.Feature = _feature2.default;
 exports.InfoWindow = _infoWindow2.default;
+exports.CustomOverlay = _customOverlay2.default;
 exports.Marker = _marker2.default;
 exports.MapControl = _mapControl2.default;
 exports.SearchBox = _searchBox2.default;
