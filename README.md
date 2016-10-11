@@ -6,7 +6,7 @@ A new approach to the google maps api using react.
 To install `npm install google-react-maps`
 
 Things you can import:
-`
+```javascript
 import {
 	Map, 
 	KmlLayer,
@@ -17,7 +17,7 @@ import {
 	Marker,
 	MapControl
 } 'google-react-maps';
-`
+```
 
 See main.js inside the git project to understand how to implement everything. (Uncomment some components to see everything)
 
