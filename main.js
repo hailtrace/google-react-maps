@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import {Map, DataLayer, Feature, InfoWindow, Marker, MarkerCluster, MapControl, SearchBox, Circle} from './src/components/index';
+import {Map, DataLayer, Feature, InfoWindow, CustomOverlay, Marker, MarkerCluster, MapControl, SearchBox, Circle} from './src/components/index';
 import {ControlPosition} from './src/utils/utils';
 import KmlLayer from './src/components/kmlLayer';
 import layers from './test-data/test-layers';
@@ -110,8 +110,13 @@ class App extends React.Component {
             		Zoom : <input type="number" onChange={e => this.setState({zoom : Number(e.target.value)})} value={this.state.zoom} />
                 </div>
                 <Map onClick={e => console.log(e)} api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" zoom={Number(this.state.zoom)} center={this.state.center} style={{ height:1000, width:1000}}>
+                    <CustomOverlay style={{background: "#fff", padding: "5px 10px"}} coords={this.state.center}>
+                        <h1>Custom Overlay!</h1>
+                        <p>This is the beginning of the custom overlay.</p>
+                        <p>You can now create your own custom react component-driven google maps overlays. (Woah, slow down charlie. You're going to fast.)</p>
+                    </CustomOverlay>
         		</Map>
-
+                
                 <h2>Simple Map with Custom Controls</h2>
 
                 <Map 

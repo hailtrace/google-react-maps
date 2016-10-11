@@ -3,6 +3,7 @@ import KmlLayer from './kmlLayer';
 import DataLayer from './dataLayer';
 import Feature from './feature';
 import InfoWindow from './infoWindow';
+import CustomOverlay from './customOverlay';
 import Marker from './marker';
 import MarkerCluster from './markerCluster';
 import MapControl from './mapControl';
@@ -19,6 +20,7 @@ export {
 	DataLayer,
 	Feature,
 	InfoWindow,
+	CustomOverlay,
 	Marker,
 	MapControl,
 	SearchBox,
