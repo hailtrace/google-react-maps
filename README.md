@@ -8,15 +8,15 @@ To install `npm install google-react-maps`
 Things you can import:
 ```javascript
 import {
-	Map, 
-	KmlLayer,
-	DataLayer,
-	Feature,
-	InfoWindow,
+  Map, 
+  KmlLayer,
+  DataLayer,
+  Feature,
+  InfoWindow,
   CustomOverlay,
-	Marker,
-	MapControl
-} 'google-react-maps';
+  Marker,
+  MapControl
+} from 'google-react-maps';
 ```
 
 See main.js inside the git project to understand how to implement everything. (Uncomment some components to see everything)
