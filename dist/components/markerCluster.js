@@ -53,7 +53,9 @@ var MarkerCluster = function (_React$Component) {
 
     _createClass(MarkerCluster, [{
         key: 'componentWillUpdate',
-        value: function componentWillUpdate() {}
+        value: function componentWillUpdate() {
+            this.state.MarkerClusterer.clearMarkers();
+        }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {

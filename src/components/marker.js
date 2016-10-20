@@ -48,6 +48,9 @@ class Marker extends React.Component {
     		console.error(new Error("<Marker /> components must be instantiated within a Map component. Please check your component's context."))
     	}
     }
+    componentWillUpdate() {
+
+    }
     getOptions() {
 		var options = {
 			position : this.props.coords,
@@ -68,6 +71,7 @@ class Marker extends React.Component {
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.marker) {
     		this.state.marker.setOptions(this.getOptions())
+            this.props.MarkerClusterer.addMarker(this.state.marker);
     	}
     }
     render() {

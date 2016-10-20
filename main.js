@@ -20,7 +20,8 @@ class App extends React.Component {
             },
             zoom : 4,
             customControls : [],
-            circleCenter : {lng: -100.44364929199219, lat: 30.058001435398296}
+            circleCenter : {lng: -100.44364929199219, lat: 30.058001435398296},
+            markerNumber : 10
         }
 
         this.removeLayer = this.removeLayer.bind(this);
@@ -105,7 +106,7 @@ class App extends React.Component {
         })
         return (
         	<div>
-        		<h1>Simple Map</h1>
+        		{/*<h1>Simple Map</h1>
                 <div>
             		Zoom : <input type="number" onChange={e => this.setState({zoom : Number(e.target.value)})} value={this.state.zoom} />
                 </div>
@@ -233,15 +234,16 @@ class App extends React.Component {
                             <h1>Test</h1>
                         </InfoWindow>
                     </Circle>
-                </Map>                
+                </Map>*/}
                 <h1>Simple Map with marker clusterer</h1>
+                <input type="number" value={this.state.markerNumber} onChange={e => this.setState({markerNumber : e.target.value})} />
                 <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height: 1000, width: 1000}}>
-                    <MarkerCluster>
+                    <MarkerCluster options={{gridSize: 50, maxZoom: 15}}>
                         {(()=>{
                             var markers = [];
-                            for (var i = 0; i < 5000; i++) {
+                            for (var i = 0; i < this.state.markerNumber; i++) {
                                 markers.push(
-                                    <Marker icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" coords={{lng: -100.44364929199219 + i / 100, lat: 30.058001435398296 + i / 100}}>
+                                    <Marker key={i} icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" coords={{lng: -100.44364929199219 + i / 100, lat: 30.058001435398296 + i / 100}}>
                                     </Marker>
 
                                 )

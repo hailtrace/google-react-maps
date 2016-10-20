@@ -23,6 +23,7 @@ class MarkerCluster extends React.Component {
         }
     }
     componentWillUpdate() {
+        this.state.MarkerClusterer.clearMarkers();
     }
     componentWillMount() {
     	if(this.props.map && this.props.maps) {

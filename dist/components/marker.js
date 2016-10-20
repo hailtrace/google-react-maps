@@ -78,6 +78,9 @@ var Marker = function (_React$Component) {
       }
     }
   }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {}
+  }, {
     key: 'getOptions',
     value: function getOptions() {
       var options = {
@@ -101,6 +104,7 @@ var Marker = function (_React$Component) {
     value: function componentDidUpdate(prevProps, prevState) {
       if (this.state.marker) {
         this.state.marker.setOptions(this.getOptions());
+        this.props.MarkerClusterer.addMarker(this.state.marker);
       }
     }
   }, {
