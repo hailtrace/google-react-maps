@@ -106,7 +106,7 @@ class App extends React.Component {
         })
         return (
         	<div>
-        		{/*<h1>Simple Map</h1>
+        		<h1>Simple Map</h1>
                 <div>
             		Zoom : <input type="number" onChange={e => this.setState({zoom : Number(e.target.value)})} value={this.state.zoom} />
                 </div>
@@ -234,10 +234,12 @@ class App extends React.Component {
                             <h1>Test</h1>
                         </InfoWindow>
                     </Circle>
-                </Map>*/}
+                </Map>
                 <h1>Simple Map with marker clusterer</h1>
-                <input type="number" value={this.state.markerNumber} onChange={e => this.setState({markerNumber : e.target.value})} />
-                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height: 1000, width: 1000}}>
+                <input type="number" value={this.state.markerNumber}  onChange={e => this.setState({markerNumber : e.target.value})} />
+                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" onbounds_changed={(bounds) => {
+                    console.log("Bounds changed! ", bounds);
+                }} style={{height: 1000, width: 1000}}>
                     <MarkerCluster options={{gridSize: 50, maxZoom: 15}}>
                         {(()=>{
                             var markers = [];

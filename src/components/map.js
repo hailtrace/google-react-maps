@@ -108,7 +108,7 @@ class Map extends React.Component {
         var {bounds} = this.props;
         return bounds ? !this.state.map.getLatLngBounds().equals(bounds) : false;
     }
-    boundsHandleChange() {
+    boundsHandleChange(test) {
         //TODO: Handle bounds change.
     }
     zoomPropDidChange() {
@@ -145,9 +145,18 @@ class Map extends React.Component {
                 if(/^on.*$/.test(prop)) {
                     var action = prop.slice(2, prop.length);
                     if(isValidMapListener(action)) {
-
-                        assemble(action.toLowerCase(), this.props[prop])
-
+                        switch(action.toLowerCase()) {
+                            case 'bounds_changed': 
+                                
+                                assemble(action.toLowerCase(), event => {
+                                    const bounds = map.getBounds()? {ne : map.getBounds().getNorthEast().toJSON(), sw : map.getBounds().getSouthWest().toJSON()} : null;
+                                    this.props[prop](bounds, event)
+                                });
+                                break;
+                            default:
+                                assemble(action.toLowerCase(), this.props[prop]);
+                                break;
+                        }
                     }
                     else {
                         console.warn(new Error("You tried adding " + prop + " which is not a valid action for a <Map /> component."));

@@ -158,7 +158,7 @@ var Map = function (_React$Component) {
         }
     }, {
         key: 'boundsHandleChange',
-        value: function boundsHandleChange() {
+        value: function boundsHandleChange(test) {
             //TODO: Handle bounds change.
         }
     }, {
@@ -213,8 +213,18 @@ var Map = function (_React$Component) {
                     if (/^on.*$/.test(prop)) {
                         var action = prop.slice(2, prop.length);
                         if ((0, _utils.isValidMapListener)(action)) {
+                            switch (action.toLowerCase()) {
+                                case 'bounds_changed':
 
-                            assemble(action.toLowerCase(), _this2.props[prop]);
+                                    assemble(action.toLowerCase(), function (event) {
+                                        var bounds = map.getBounds() ? { ne: map.getBounds().getNorthEast().toJSON(), sw: map.getBounds().getSouthWest().toJSON() } : null;
+                                        _this2.props[prop](bounds, event);
+                                    });
+                                    break;
+                                default:
+                                    assemble(action.toLowerCase(), _this2.props[prop]);
+                                    break;
+                            }
                         } else {
                             console.warn(new Error("You tried adding " + prop + " which is not a valid action for a <Map /> component."));
                         }
