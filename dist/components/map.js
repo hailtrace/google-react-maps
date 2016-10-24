@@ -211,16 +211,26 @@ var Map = function (_React$Component) {
 
                 props.forEach(function (prop) {
                     if (/^on.*$/.test(prop)) {
-                        var action = prop.slice(2, prop.length);
+                        var action = prop.slice(2, prop.length); //Remove the 'on' in front of the prop-name.
                         if ((0, _utils.isValidMapListener)(action)) {
                             switch (action.toLowerCase()) {
-                                case 'bounds_changed':
+                                case 'bounds_changed':case 'boundschanged':
 
-                                    assemble(action.toLowerCase(), function (event) {
+                                    assemble('bounds_changed', function (event) {
                                         var bounds = map.getBounds() ? { ne: map.getBounds().getNorthEast().toJSON(), sw: map.getBounds().getSouthWest().toJSON() } : null;
                                         _this2.props[prop](bounds, event);
                                     });
                                     break;
+
+                                case 'zoom_changed':case 'zoomchanged':
+                                    assemble('zoom_changed', function (event) {
+                                        var zoom = map.getZoom();
+                                        _this2.props[prop](zoom, event);
+                                    });
+                                //Put any `onEvent`s you don't want to convert into google map events.
+                                case 'mount':
+                                    break;
+
                                 default:
                                     assemble(action.toLowerCase(), _this2.props[prop]);
                                     break;

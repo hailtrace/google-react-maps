@@ -41,7 +41,9 @@ export function refreshComponentFromProps() {
 export function isValidMapListener(prop = "") {
 	prop = prop.toLowerCase();
 	switch(prop) {
- 		case "bounds_changed": 
+		case "mount":
+ 		case "bounds_changed":
+ 		case "boundschanged": 
  		case "center_changed": 
  		case "click": 
  		case "dblclick": 
@@ -59,7 +61,8 @@ export function isValidMapListener(prop = "") {
  		case "rightclick": 
  		case "tilesloaded": 
  		case "tilt_changed": 
- 		case "zoom_changed": 
+ 		case "zoom_changed":
+ 		case "zoomchanged": 
  			return true;
  		default:
  			return false;

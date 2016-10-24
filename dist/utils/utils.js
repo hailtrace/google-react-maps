@@ -56,7 +56,9 @@ function isValidMapListener() {
 
 	prop = prop.toLowerCase();
 	switch (prop) {
+		case "mount":
 		case "bounds_changed":
+		case "boundschanged":
 		case "center_changed":
 		case "click":
 		case "dblclick":
@@ -75,6 +77,7 @@ function isValidMapListener() {
 		case "tilesloaded":
 		case "tilt_changed":
 		case "zoom_changed":
+		case "zoomchanged":
 			return true;
 		default:
 			return false;
