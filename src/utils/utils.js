@@ -59,7 +59,7 @@ export function isValidMapListener(prop = "") {
  		case "rightclick": 
  		case "tilesloaded": 
  		case "tilt_changed": 
- 		case "zoom_change": 
+ 		case "zoom_changed": 
  			return true;
  		default:
  			return false;
