@@ -71,7 +71,9 @@ class Marker extends React.Component {
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.marker) {
     		this.state.marker.setOptions(this.getOptions())
-            this.props.MarkerClusterer.addMarker(this.state.marker);
+
+            if(this.props.MarkerClusterer)
+                this.props.MarkerClusterer.addMarker(this.state.marker);
     	}
     }
     render() {

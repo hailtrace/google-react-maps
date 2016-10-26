@@ -227,9 +227,6 @@ var Map = function (_React$Component) {
                                         var zoom = map.getZoom();
                                         _this2.props[prop](zoom, event);
                                     });
-                                //Put any `onEvent`s you don't want to convert into google map events.
-                                case 'mount':
-                                    break;
 
                                 default:
                                     assemble(action.toLowerCase(), _this2.props[prop]);
