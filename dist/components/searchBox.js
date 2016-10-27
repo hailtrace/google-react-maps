@@ -62,7 +62,7 @@ var SearchBox = function (_React$Component) {
 
         map.addListener('bounds_changed', function () {
           searchBox.setBounds(map.getBounds());
-          searchBox.onPlacesChanged(searchBox.getPlaces());
+          _this2.props.onPlacesChanged(searchBox.getPlaces());
         });
 
         searchBox.addListener('places_changed', function () {
