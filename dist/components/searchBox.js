@@ -62,6 +62,7 @@ var SearchBox = function (_React$Component) {
 
         map.addListener('bounds_changed', function () {
           searchBox.setBounds(map.getBounds());
+          searchBox.onPlacesChanged(searchBox.getPlaces());
         });
 
         searchBox.addListener('places_changed', function () {
@@ -127,7 +128,7 @@ var SearchBox = function (_React$Component) {
           _react2.default.createElement(
             Wrapper,
             null,
-            _react2.default.createElement('input', { type: 'text', ref: 'input', style: this.props.style, className: this.props.className })
+            _react2.default.createElement('input', { type: 'text', ref: 'input', placeholder: this.props.placeholder, style: this.props.style, className: this.props.className })
           )
         )
       );else return _react2.default.createElement(
@@ -136,7 +137,7 @@ var SearchBox = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { ref: 'child' },
-          _react2.default.createElement('input', { type: 'text', ref: 'input', style: this.props.style, className: this.props.className })
+          _react2.default.createElement('input', { type: 'text', ref: 'input', placeholder: this.props.placeholder, style: this.props.style, className: this.props.className })
         )
       );
     }
@@ -146,6 +147,7 @@ var SearchBox = function (_React$Component) {
 }(_react2.default.Component);
 
 SearchBox.PropTypes = {
+  placeholder: _react2.default.PropTypes.string,
   position: _react2.default.PropTypes.string.isRequired,
   wrapper: _react2.default.PropTypes.func,
   onPlacesChanged: _react2.default.PropTypes.func.isRequired

@@ -1,5 +1,5 @@
 # google-react-maps
-version 1.1.4
+version 1.1.7
 
 A new approach to the google maps api using react.
 

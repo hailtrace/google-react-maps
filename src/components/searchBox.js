@@ -26,6 +26,7 @@ class SearchBox extends React.Component {
 
 	    	map.addListener('bounds_changed', () => {
 	            searchBox.setBounds(map.getBounds());
+                searchBox.onPlacesChanged(searchBox.getPlaces());
 		    });
 
 			searchBox.addListener('places_changed', () => {
@@ -77,13 +78,14 @@ class SearchBox extends React.Component {
     render() {
     	var Wrapper = this.props.wrapper;
     	if(Wrapper)
-    		return <div ref="parent"><div ref="child"><Wrapper><input type="text" ref="input" style={this.props.style} className={this.props.className} /></Wrapper></div></div>
+    		return <div ref="parent"><div ref="child"><Wrapper><input type="text" ref="input" placeholder={this.props.placeholder} style={this.props.style} className={this.props.className} /></Wrapper></div></div>
     	else
-	        return <div ref="parent"><div ref="child"><input type="text" ref="input" style={this.props.style} className={this.props.className} /></div></div>;
+	        return <div ref="parent"><div ref="child"><input type="text" ref="input" placeholder={this.props.placeholder} style={this.props.style} className={this.props.className} /></div></div>;
     }
 }
 
 SearchBox.PropTypes = {
+    placeholder : React.PropTypes.string,
 	position : React.PropTypes.string.isRequired,
 	wrapper : React.PropTypes.func,
 	onPlacesChanged : React.PropTypes.func.isRequired

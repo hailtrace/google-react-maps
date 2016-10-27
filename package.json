@@ -1,6 +1,6 @@
 {
   "name": "google-react-maps",
-  "version": "1.1.5",
+  "version": "1.1.7",
   "description": "A more powerfully custom version of the Google Maps Javascript API built for React. Multiple Datalayer support. GEOJSON Enabled.",
   "main": "dist/components/index.js",
   "scripts": {
@@ -15,11 +15,29 @@
     "url": "https://github.com/NomadGraphix/google-react-maps"
   },
   "keywords": [
-    "ReactJS",
-    "Google",
-    "Maps",
-    "Javascript",
-    "API"
+    "SearchBox",
+    "InfoWindow",
+    "Directions",
+    "Circle",
+    "Polygon",
+    "Polyline",
+    "Marker",
+    "Map",
+    "GoogleMapsMixin",
+    "google maps",
+    "google map",
+    "google-maps",
+    "google-map",
+    "googlemaps",
+    "googlemap",
+    "places",
+    "place",
+    "maps",
+    "map",
+    "google",
+    "react-component",
+    "React",
+    "React.js"
   ],
   "author": "Austin N. Hunt",
   "license": "ISC",
