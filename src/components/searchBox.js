@@ -11,6 +11,9 @@ class SearchBox extends React.Component {
         }
         this.postRender = this.postRender.bind(this);
         this.preRender = this.preRender.bind(this);
+        this.boundsListener = null;
+        this.placesListener = null;
+        this.timer = null;
     }
     componentDidMount() {
    	 this.postRender();
@@ -22,13 +25,37 @@ class SearchBox extends React.Component {
 	    	var container = ReactDom.findDOMNode(this.refs.child);
 	    	var searchBox = new maps.places.SearchBox(input);
 	    	
+            this.timer = null;
 
+            if(this.boundsListener)
+                this.boundsListener.remove();
+            if(this.placesListener)
+                this.placesListener.remove();
 
-	    	map.addListener('bounds_changed', () => {
-	            searchBox.setBounds(map.getBounds());
+	    	this.boundsListener = map.addListener('bounds_changed', () => {
+                if(this.timer) {
+                    clearTimeout(this.timer);
+                }
+                this.timer = setTimeout(() => {
+                    const map_bounds = map.getBounds();
+                    searchBox.setBounds(map_bounds);
+                    
+                    if(typeof this.props.onPlacesChanged === 'function') {
+                        const query = this.refs.input.value;
+                        const service = new maps.places.PlacesService(map);
+                        service.textSearch({
+                            query,
+                            bounds : map_bounds
+                        }, (places, status) => {
+                            if(status == maps.places.PlacesServiceStatus.OK) {
+                                this.props.onPlacesChanged(places);
+                            }
+                        });
+                    }
+                }, 300);
 		    });
 
-			searchBox.addListener('places_changed', () => {
+			this.placesListener = searchBox.addListener('places_changed', () => {
                if(typeof this.props.onPlacesChanged === 'function')
 	               this.props.onPlacesChanged(searchBox.getPlaces());
             });

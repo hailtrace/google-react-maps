@@ -1,5 +1,5 @@
 # google-react-maps
-version 1.1.9
+version 1.1.10
 
 A new approach to the google maps api using react.
 
@@ -15,8 +15,60 @@ import {
   InfoWindow,
   CustomOverlay,
   Marker,
-  MapControl
+  MapControl,
+  SearchBox
 } from 'google-react-maps';
+```
+
+#Usage
+
+Using the map is fairly simple. Most commonly you would set it up like this:
+
+```javascript
+import React from 'react';
+
+class App extends React.Component {
+  render() {
+    return (
+      <Map 
+        api-key='your api url'
+        onMount={(map, maps) => {
+          this.map = map; //Store the google map instance for custom actions. (Outside the react components.)
+          this.maps = maps; //Store a reference to the google maps javascript api in case we need some of it's helper methods.
+        }}
+        optionsConstructor={function(maps) {
+          //Options Constructor always has a this context of the options object. To override the default options do the following:
+          Object.assign(this, {
+            zoom : 4,
+            mapTypeId : maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true,
+            zoomControl : true,
+            zoomControlOptions : {
+                position: maps.ControlPosition.LEFT_CENTER
+            },
+            keyboardShortcuts : true,
+            panControl: true,
+            panControlOptions : {
+                position : maps.ControlPosition.BOTTOM_RIGHT
+            },
+            mapTypeId : maps.MapTypeId.HYBRID,
+            mapTypeControl : true,
+            mapTypeControlOptions : {
+                position: maps.ControlPosition.LEFT_BOTTOM
+            },
+            fullscreenControlOptions : {
+                position: maps.ControlPosition.RIGHT_BOTTOM
+            },
+            fullscreenControl: true
+          });
+        }}
+        >
+        //Any components passed as children get the maps and map props passed to them.
+      </Map>
+    )
+  }
+}
+
 ```
 
 See main.js inside the git project to understand how to implement everything. (Uncomment some components to see everything)
