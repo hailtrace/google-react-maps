@@ -26,7 +26,6 @@ class SearchBox extends React.Component {
 
 	    	map.addListener('bounds_changed', () => {
 	            searchBox.setBounds(map.getBounds());
-                this.props.onPlacesChanged(searchBox.getPlaces());
 		    });
 
 			searchBox.addListener('places_changed', () => {
