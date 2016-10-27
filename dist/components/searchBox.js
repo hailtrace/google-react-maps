@@ -79,14 +79,14 @@ var SearchBox = function (_React$Component) {
                         if (typeof _this2.props.onPlacesChanged === 'function') {
                             var query = _this2.refs.input.value;
                             var service = new maps.places.PlacesService(map);
-                            service.textSearch({
+                            query ? service.textSearch({
                                 query: query,
                                 bounds: map_bounds
                             }, function (places, status) {
                                 if (status == maps.places.PlacesServiceStatus.OK) {
                                     _this2.props.onPlacesChanged(places);
                                 }
-                            });
+                            }) : '';
                         }
                     }, 300);
                 });

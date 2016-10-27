@@ -43,14 +43,14 @@ class SearchBox extends React.Component {
                     if(typeof this.props.onPlacesChanged === 'function') {
                         const query = this.refs.input.value;
                         const service = new maps.places.PlacesService(map);
-                        service.textSearch({
+                        query ? service.textSearch({
                             query,
                             bounds : map_bounds
                         }, (places, status) => {
                             if(status == maps.places.PlacesServiceStatus.OK) {
                                 this.props.onPlacesChanged(places);
                             }
-                        });
+                        }) : '';
                     }
                 }, 300);
 		    });

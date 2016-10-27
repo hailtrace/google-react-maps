@@ -1,5 +1,5 @@
 # google-react-maps
-version 1.1.10
+version 1.1.11
 
 A new approach to the google maps api using react.
 
@@ -20,7 +20,7 @@ import {
 } from 'google-react-maps';
 ```
 
-#Usage
+# Usage
 
 Using the map is fairly simple. Most commonly you would set it up like this:
 
