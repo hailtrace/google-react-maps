@@ -23,7 +23,7 @@ class DataLayer extends React.Component {
     }
     /** Focus the map on this dataLayer's features. */
     focus(){
-        var {maps} = this.props;
+        var {maps,map} = this.props;
         var bounds = new maps.LatLngBounds();
         if(this.state.data) {
             this.state.data.forEach((feature)=>{
