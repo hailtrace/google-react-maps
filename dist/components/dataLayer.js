@@ -52,7 +52,9 @@ var DataLayer = function (_React$Component) {
     _createClass(DataLayer, [{
         key: 'focus',
         value: function focus() {
-            var maps = this.props.maps;
+            var _props = this.props;
+            var maps = _props.maps;
+            var map = _props.map;
 
             var bounds = new maps.LatLngBounds();
             if (this.state.data) {
@@ -65,9 +67,9 @@ var DataLayer = function (_React$Component) {
     }, {
         key: 'initDataLayer',
         value: function initDataLayer() {
-            var _props = this.props;
-            var map = _props.map;
-            var maps = _props.maps;
+            var _props2 = this.props;
+            var map = _props2.map;
+            var maps = _props2.maps;
 
 
             var dataOptions = {
