@@ -147,18 +147,31 @@ var Map = function (_React$Component) {
     }, {
         key: 'centerHandleChange',
         value: function centerHandleChange() {
-            this.state.map.setCenter(this.props.center);
+            var center = this.state.map.getCenter();
+            if (this.props.center.lat != center.lat && this.props.center.lng != center.lng) {
+                this.state.map.setCenter(this.props.center);
+            }
         }
     }, {
         key: 'boundsPropDidChange',
         value: function boundsPropDidChange() {
             var bounds = this.props.bounds;
 
-            return bounds ? !this.state.map.getLatLngBounds().equals(bounds) : false;
+            if (bounds && bounds.sw && bounds.ne) {
+                bounds = new this.state.maps.LatLngBounds(bounds.sw, bounds.ne);
+            }
+            return bounds ? !this.state.map.getBounds().equals(bounds) : false;
         }
     }, {
         key: 'boundsHandleChange',
-        value: function boundsHandleChange(test) {
+        value: function boundsHandleChange() {
+            console.log("Bounds Handle Change");
+            var bounds = this.props.bounds;
+
+            if (bounds && bounds.sw && bounds.ne) {
+                bounds = new this.state.maps.LatLngBounds(bounds.sw, bounds.ne);
+                this.state.map.panToBounds(bounds);
+            }
             //TODO: Handle bounds change.
         }
     }, {
@@ -221,7 +234,12 @@ var Map = function (_React$Component) {
                                         _this2.props[prop](bounds, event);
                                     });
                                     break;
-
+                                case 'center_changed':case 'centerchanged':
+                                    assemble('center_changed', function (event) {
+                                        var center = map.getCenter();
+                                        _this2.props[prop](center, event);
+                                    });
+                                    break;
                                 case 'zoom_changed':case 'zoomchanged':
                                     assemble('zoom_changed', function (event) {
                                         var zoom = map.getZoom();
@@ -233,7 +251,9 @@ var Map = function (_React$Component) {
                                     break;
                             }
                         } else {
-                            console.warn(new Error("You tried adding " + prop + " which is not a valid action for a <Map /> component."));
+                            if (action.toLowerCase() !== 'mount') {
+                                console.warn(new Error("You tried adding " + prop + " which is not a valid action for a <Map /> component."));
+                            }
                         }
                     }
                 });
@@ -254,6 +274,10 @@ var Map = function (_React$Component) {
                     var map = new maps.Map(_reactDom2.default.findDOMNode(_this3.refs.map), mapOptions);
 
                     map.setCenter(!_this3.props.center ? new maps.LatLng(39.5, -98.35) : new maps.LatLng(_this3.props.center.lat, _this3.props.center.lng));
+                    if (_this3.props.bounds && _this3.props.bounds.sw && _this3.props.bounds.ne) {
+                        var bounds = new maps.LatLngBounds(_this3.props.bounds.sw, _this3.props.bounds.ne);
+                        map.panToBounds(bounds);
+                    }
                 } catch (e) {
                     console.error(e);
                 }

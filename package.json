@@ -1,6 +1,6 @@
 {
   "name": "google-react-maps",
-  "version": "1.1.12",
+  "version": "1.1.23",
   "description": "A more powerfully custom version of the Google Maps Javascript API built for React. Multiple Datalayer support. GEOJSON Enabled.",
   "main": "dist/components/index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {mapChildren} from '../utils/utils';
-/** Defines a circle shape in the map. Relates to google.maps.Circle class. 
+/** Defines a circle shape in the map. Relates to google.maps.Circle class.
 * @property {object} props
 * @property {number} props.radius
 * @property {object} props.center
@@ -43,12 +43,12 @@ class Circle extends React.Component {
     		});
     		maps.event.addListener(circle, 'click', e => {
     			if(typeof this.props.onClick === 'function')
-    				this.props.onClick({coords : e.latLng.toJSON()});
+    				this.props.onClick(Object.assign({coords : circle.getCenter().toJSON()},e));
     		});
-    		maps.event.addListener(circle, 'rightclick', ({latLng}) => 
+    		maps.event.addListener(circle, 'rightclick', ({latLng}) =>
     			typeof this.props.onRightClick === 'function' ? this.props.onRightClick({coords:latLng.toJSON()}) : f => f);
     	}
-    	else 
+    	else
     		console.error(new Error("You must pass maps and map to this component. Otherwise, run it inside a map component."));
     }
     componentDidUpdate(prevProps, prevState) {
@@ -63,10 +63,10 @@ class Circle extends React.Component {
     }
     componentWillMount() {
     	var {
-    		map, 
+    		map,
     		maps,
     	} = this.props;
-    	
+
     	if(map && maps) {
     		var CircleOptions = Object.assign({}, this.props, {maps : undefined});
     		var circle = new maps.Circle(CircleOptions);

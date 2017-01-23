@@ -20,7 +20,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/** Defines a circle shape in the map. Relates to google.maps.Circle class. 
+/** Defines a circle shape in the map. Relates to google.maps.Circle class.
 * @property {object} props
 * @property {number} props.radius
 * @property {object} props.center
@@ -78,7 +78,7 @@ var Circle = function (_React$Component) {
                     if (typeof _this2.props.onCenterChange === 'function') _this2.props.onCenterChange(circle.getCenter().toJSON());
                 });
                 maps.event.addListener(circle, 'click', function (e) {
-                    if (typeof _this2.props.onClick === 'function') _this2.props.onClick({ coords: e.latLng.toJSON() });
+                    if (typeof _this2.props.onClick === 'function') _this2.props.onClick(Object.assign({ coords: circle.getCenter().toJSON() }, e));
                 });
                 maps.event.addListener(circle, 'rightclick', function (_ref) {
                     var latLng = _ref.latLng;
