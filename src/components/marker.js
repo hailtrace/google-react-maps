@@ -44,7 +44,7 @@ class Marker extends React.Component {
 	    		});
         if(typeof this.props.onDragEnd === 'function')
           this.props.maps.event.addListener(marker, 'dragend', e=> {
-            this.prop.onDragEnd(e.latLng.toJSON(), e);
+            this.props.onDragEnd(e.latLng.toJSON(), e);
           })
     	}
     	else {

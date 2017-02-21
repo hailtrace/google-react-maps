@@ -72,6 +72,9 @@ var Marker = function (_React$Component) {
         if (typeof this.props.onClick === 'function') this.props.maps.event.addListener(marker, 'click', function (e) {
           if (_this2.props.onClick) _this2.props.onClick({ coords: marker.getPosition().toJSON() });
         });
+        if (typeof this.props.onDragEnd === 'function') this.props.maps.event.addListener(marker, 'dragend', function (e) {
+          _this2.prop.onDragEnd(e.latLng.toJSON(), e);
+        });
       } else {
         // Whoah boy! We need a map bigly.
         console.error(new Error("<Marker /> components must be instantiated within a Map component. Please check your component's context."));
