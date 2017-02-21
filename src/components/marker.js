@@ -27,11 +27,11 @@ class Marker extends React.Component {
     componentWillMount() {
     	if(this.props.map && this.props.maps) {
     		var {map,maps, MarkerClusterer} = this.props;
-    		
+
     		var marker = new maps.Marker(this.getOptions());
 
     		marker.setMap(this.props.map);
-    		
+
     		this.setState({marker});
 
     		if(MarkerClusterer)
@@ -42,6 +42,10 @@ class Marker extends React.Component {
 	    			if(this.props.onClick)
 	    				this.props.onClick({coords : marker.getPosition().toJSON()})
 	    		});
+        if(typeof this.props.onDragEnd === 'function')
+          this.props.maps.event.addListener(marker, 'dragend', e=> {
+            this.prop.onDragEnd(e.latLng.toJSON(), e);
+          })
     	}
     	else {
     		// Whoah boy! We need a map bigly.
@@ -66,7 +70,7 @@ class Marker extends React.Component {
 			this.state.marker.setMap(null);
 		}
 		this.setState({marker : null});
-		
+
     }
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.marker) {
