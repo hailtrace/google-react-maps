@@ -185,9 +185,13 @@ class Feature extends React.Component {
         var properties = geoJson.properties;
         var polygon = new maps.Data.Polygon([latLngs]);
         return polygon;
-      // case "Point": //TODO: Add all the types. 
+      case "Point":
+        var latLng = new maps.LatLng({ lng: geoJson.geometry.coordinates[0], lat: geoJson.geometry.coordinates[1] })
+        var properties = geoJson.properties;
+        var point = new maps.Data.point(latLng)
+        return point;
       default:
-        console.warn("You cannot use anything other than Polygons for features currently.");
+        console.warn("You cannot use anything other than Polygons or Points for features currently.");
     }
     return null;
   }
