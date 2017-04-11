@@ -47,10 +47,10 @@ class MarkerCluster extends React.Component {
     	}
 	    this.setState({MarkerClusterer : null})
     }
-    // componentDidUpdate() {
-    	// if(this.state.MarkerClusterer)
-    	// 	this.state.MarkerClusterer.repaint();
-    // }
+    componentDidUpdate() {
+    	if(this.state.MarkerClusterer)
+    		this.state.MarkerClusterer.repaint();
+    }
     render() {
     	var children = [];
     	var {map, maps} = this.props;

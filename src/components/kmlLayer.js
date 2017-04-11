@@ -40,9 +40,8 @@ class KmlLayer extends React.Component {
 	    	this.state.KmlLayer.setMap(null);
     }
     render() {
-    	if(this.state.KmlLayer)
+    	if(this.state.KmlLayer && this.props.url != this.state.KmlLayer.url)
 	    	this.state.KmlLayer.setUrl(this.props.url);
-	    console.log("KML Layer Rendered.")
         return <div>KmlLayer</div>;
     }
 }

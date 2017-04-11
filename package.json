@@ -4,11 +4,11 @@
   "description": "A more powerfully custom version of the Google Maps Javascript API built for React. Multiple Datalayer support. GEOJSON Enabled.",
   "main": "dist/components/index.js",
   "scripts": {
-    "prepublish": "npm run gen-docs && babel ./src --out-dir ./dist --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports",
+    "prepublish": "npm run gen-docs && git add dist/* && git commit -m 'Updated docs.' && babel ./src --out-dir ./dist --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports",
     "test": "jest",
-    "start-dev": "open -a \"Google Chrome.app\" \"http://localhost:8080\" && webpack-dev-server",
-    "gen-docs" : "npm run clear-docs && jsdoc -c ./docs.config.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src",
-    "clear-docs" : "rm -r ./docs"
+    "start-dev": "open -a \"Google Chrome.app\" \"http://localhost:8082\" && node_modules/.bin/webpack-dev-server",
+    "gen-docs": "npm run clear-docs && jsdoc -c ./docs.config.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src",
+    "clear-docs": "rm -r ./docs"
   },
   "repository": {
     "type": "git",
@@ -58,9 +58,9 @@
     "babel-preset-react-hmre": "^1.1.1",
     "jsdoc": "^3.4.0",
     "nodemon": "^1.10.0",
-    "webpack": "^1.13.1",
+    "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-dev-server": "^1.14.1",
+    "webpack-dev-server": "^1.16.3",
     "webpack-hot-middleware": "^2.12.2"
   }
 }

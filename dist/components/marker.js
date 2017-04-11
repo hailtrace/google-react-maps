@@ -73,7 +73,7 @@ var Marker = function (_React$Component) {
           if (_this2.props.onClick) _this2.props.onClick({ coords: marker.getPosition().toJSON() });
         });
         if (typeof this.props.onDragEnd === 'function') this.props.maps.event.addListener(marker, 'dragend', function (e) {
-          _this2.prop.onDragEnd(e.latLng.toJSON(), e);
+          _this2.props.onDragEnd(e.latLng.toJSON(), e);
         });
       } else {
         // Whoah boy! We need a map bigly.

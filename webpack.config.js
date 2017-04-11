@@ -6,7 +6,6 @@ var presets = ['react','es2015'];
 var config;
 
 if(process.env.NODE_ENV != 'production') {
-	app.push('webpack-hot-middleware/client');
 
 	plugins = [
 	new webpack.optimize.OccurrenceOrderPlugin(),
@@ -37,6 +36,7 @@ var config = {
 		publicPath : '/dist'
 	},
 	devServer: {
+		port: 8082,
 		inline: true,
 		contentBase: './'
 	},

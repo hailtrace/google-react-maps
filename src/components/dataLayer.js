@@ -127,7 +127,6 @@ class DataLayer extends React.Component {
         }
     }
     componentWillMount() {
-    	console.log("DL: componentWillMount",this.props)
 		if(this.props.maps && this.props.map) {
 			this.initDataLayer();
 			this.checkPropVisibility(this.props);
@@ -136,25 +135,20 @@ class DataLayer extends React.Component {
 			console.error(new Error("You must put this compenent in a <Map /> context component or provide the maps and map props manually."))
     }
     componentWillUnmount() {
-    	console.log("DL: componentWillUnmount");
     	this.state.data.setMap(null);
     	this.setState({data : null})
     }
     componentDidUpdate(prevProps, prevState) {
-   		console.log("DL: componentDidUpdate", prevProps,prevState);
     }
     componentWillReceiveProps(nextProps) {
-    	console.log("DL: componentWillReceiveProps", nextProps, this.props);
     	if(typeof nextProps.visible !== 'undefined') {
 	   		this.checkPropVisibility(nextProps);
     	}
     }
    	shouldComponentUpdate(nextProps, nextState) {
-   		console.log("DL: shouldComponentUpdate", nextProps, nextState);
    		return true;
    	}
    	componentWillUpdate(nextProps, nextState) {
-   	    console.log("DL: componentWillUpdate", nextProps, nextState);
    	}
     render() {
     	var children = []
@@ -167,7 +161,6 @@ class DataLayer extends React.Component {
 	    		data : this.state.data
 	    	}));
     	}
-    	console.log("Rendered DataLayer");
         return <div>{children}</div>;
     }
 }
