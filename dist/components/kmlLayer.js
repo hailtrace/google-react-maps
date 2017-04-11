@@ -67,8 +67,7 @@ var KmlLayer = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            if (this.state.KmlLayer) this.state.KmlLayer.setUrl(this.props.url);
-            console.log("KML Layer Rendered.");
+            if (this.state.KmlLayer && this.props.url != this.state.KmlLayer.url) this.state.KmlLayer.setUrl(this.props.url);
             return _react2.default.createElement(
                 'div',
                 null,

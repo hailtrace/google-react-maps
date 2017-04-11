@@ -159,7 +159,6 @@ var DataLayer = function (_React$Component) {
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            console.log("DL: componentWillMount", this.props);
             if (this.props.maps && this.props.map) {
                 this.initDataLayer();
                 this.checkPropVisibility(this.props);
@@ -168,19 +167,15 @@ var DataLayer = function (_React$Component) {
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            console.log("DL: componentWillUnmount");
             this.state.data.setMap(null);
             this.setState({ data: null });
         }
     }, {
         key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
-            console.log("DL: componentDidUpdate", prevProps, prevState);
-        }
+        value: function componentDidUpdate(prevProps, prevState) {}
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            console.log("DL: componentWillReceiveProps", nextProps, this.props);
             if (typeof nextProps.visible !== 'undefined') {
                 this.checkPropVisibility(nextProps);
             }
@@ -188,14 +183,11 @@ var DataLayer = function (_React$Component) {
     }, {
         key: 'shouldComponentUpdate',
         value: function shouldComponentUpdate(nextProps, nextState) {
-            console.log("DL: shouldComponentUpdate", nextProps, nextState);
             return true;
         }
     }, {
         key: 'componentWillUpdate',
-        value: function componentWillUpdate(nextProps, nextState) {
-            console.log("DL: componentWillUpdate", nextProps, nextState);
-        }
+        value: function componentWillUpdate(nextProps, nextState) {}
     }, {
         key: 'render',
         value: function render() {
@@ -213,7 +205,6 @@ var DataLayer = function (_React$Component) {
                     });
                 });
             }
-            console.log("Rendered DataLayer");
             return _react2.default.createElement(
                 'div',
                 null,
