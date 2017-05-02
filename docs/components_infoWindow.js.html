@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Google React Maps Source: components/infoWindow.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cosmo.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Google React Maps</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="google.maps.html">google.maps</a></li><li><a href="Utils.html">Utils</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Circle.html">Circle</a></li><li><a href="Cluster.html">Cluster</a></li><li><a href="ClusterIconInfo.html">ClusterIconInfo</a></li><li><a href="ClusterIconStyle.html">ClusterIconStyle</a></li><li><a href="Feature.html">Feature</a></li><li><a href="google.maps.LatLngLiteral.html">google.maps.LatLngLiteral</a></li><li><a href="Map.html">Map</a></li><li><a href="Map.InfoWindow.html">Map.InfoWindow</a></li><li><a href="Map.Marker.html">Map.Marker</a></li><li><a href="Map.MarkerCluster.html">Map.MarkerCluster</a></li><li><a href="MapControl.html">MapControl</a></li><li><a href="MarkerClusterer.html">MarkerClusterer</a></li><li><a href="MarkerClustererOptions.html">MarkerClustererOptions</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="MarkerClusterer.html#event:click">MarkerClusterer#event:click</a></li><li><a href="MarkerClusterer.html#event:clusteringbegin">MarkerClusterer#event:clusteringbegin</a></li><li><a href="MarkerClusterer.html#event:clusteringend">MarkerClusterer#event:clusteringend</a></li><li><a href="MarkerClusterer.html#event:mouseout">MarkerClusterer#event:mouseout</a></li><li><a href="MarkerClusterer.html#event:mouseover">MarkerClusterer#event:mouseover</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#processPoints">processPoints</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: components/infoWindow.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">import React from 'react';
+import ReactDom from 'react-dom';
+
+/** The component designed to implement the google.maps.InfoWindow class. This component can be the child of either the `&lt;Map />` or `&lt;Marker />` components, but if you decide to put it within the `&lt;Map />` component you must set its coordinate property so that it has an anchor point.
+* @memberof Map
+* 
+* @property {object} props
+* @property {google.maps} props.maps Required.
+* @property {google.maps.Map} props.map Required.
+* @property {google.maps.MVCObject} props.anchor Required if coordinates aren't provided.
+* @property {object} props.coords Required if anchor isn't provided.
+* @property {number} props.coords.lng
+* @property {number} props.coords.lat
+* @property {bool} props.disableAutopan
+* @property {number} props.maxWidth
+* @property {object} props.pixelOffset
+* @property {object} props.pixelOffset.width
+* @property {object} props.pixelOffset.height
+* @property {google.maps.InfoWindowOptions} props.options These will overwrite any of the convenience props above. See [google.maps.InfoWindowOptions]{@link https://developers.google.com/maps/documentation/javascript/3.exp/reference#InfoWindowOptions} documentation for all the options.
+* @property {bool} props.open Allows you to open and close a window without fully unmounting it.
+* @property {object} state
+* @property {google.maps.InfoWindow} state.infoWindow The internal instance of the infoWindow.
+* @property {function} props.onCloseClick Use this to listen for the close click event. When someone tries to close the infowindow. Implement closing.
+*/
+
+class InfoWindow extends React.Component {
+    constructor(props) {
+        super(props);
+        this.displayName = 'InfoWindow';
+        this.state = {
+        	infoWindow : null,
+        	anchor : null
+        }
+
+        this.loadInfoWindowContent = this.loadInfoWindowContent.bind(this);
+        this.node = null;
+    }
+    componentWillMount() {
+    	  var {maps, map, anchor, coords} = this.props;
+          if(maps &amp;&amp; map) {
+          	var options = {
+          		position : anchor? undefined : coords
+          	}          	
+          	var infoWindow = new maps.InfoWindow(options)
+          	if(this.props.open)
+	          	infoWindow.open(map, anchor);
+	        else
+	        	infoWindow.close()
+          	//Don't let the infowindow do it's default thing when a user tries to close it.
+    		maps.event.addListener(infoWindow, 'closeclick', e => {
+	    		if(typeof this.props.onCloseClick === 'function')
+	    			this.props.onCloseClick(e);
+    		});
+
+          	this.setState({infoWindow, anchor})
+          }
+          else {
+          	console.error("InfoWindow must live inside of a &lt;Map /> component context.")
+          }
+    }
+	/** Load rendered children into infoWindow.
+	* @return {undefined} 
+	*/
+    loadInfoWindowContent() {
+    	if(this.state.infoWindow) {
+
+	    	this.node = ReactDom.findDOMNode(this.refs.infoWindowChildren);
+    		this.state.infoWindow.setContent(this.node); //Set infowindow content
+
+    	}
+
+    }
+    /** Place rendered children back into their normal location to await their destruction.
+    * @return {undefined}
+    */
+    cleanInfoWindowContentForUnmount() {
+    	//Undo our previous dom manipulation.
+      	var parent = ReactDom.findDOMNode(this);
+      	var child = this.node;
+      	parent.appendChild(child);
+    }
+    componentDidMount() {
+
+    	this.loadInfoWindowContent()
+    }
+    componentWillUnmount() {
+    	if(this.state.infoWindow)
+	    	this.state.infoWindow.open(null);
+        this.setState({infoWindow : null});
+        this.cleanInfoWindowContentForUnmount();
+
+    }
+    componentDidUpdate(prevProps, prevState) {
+    	if(this.state.infoWindow) {
+    		if(this.props.open &amp;&amp; !prevProps.open)
+		      	this.state.infoWindow.open(this.props.map, this.state.anchor);
+	    	else if(!this.props.open &amp;&amp; prevProps.open)
+	    		this.state.infoWindow.close();
+    	}
+
+    	if(!this.node)
+	    	this.loadInfoWindowContent();
+    	
+    	var {coords} = this.props;
+		
+		if(!prevProps.coords || (coords.lat != prevProps.coords.lat &amp;&amp; coords.lng != prevProps.coords.lng))
+			this.state.infoWindow.setPosition(this.props.coords);
+
+    }
+    render() {
+
+        return &lt;div>&lt;div ref="infoWindowChildren">{this.props.children}&lt;/div>&lt;/div>;
+    }
+}
+
+InfoWindow.propTypes = {
+	maps : React.PropTypes.object,
+	map : React.PropTypes.object,
+	coords : React.PropTypes.shape({
+		lat : React.PropTypes.number.isRequired,
+		lng : React.PropTypes.number.isRequired
+	}),
+	onCloseClick : React.PropTypes.func
+}
+
+export default InfoWindow;
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	This is a Austin Hunt project.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on Tue May 2nd 2017
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
