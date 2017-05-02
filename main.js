@@ -22,9 +22,9 @@ class App extends React.Component {
             customControls : [],
             circleCenter : {lng: -100.44364929199219, lat: 30.058001435398296},
             markerNumber : 10,
-            bounds : JSON.parse(localStorage.getItem('bounds')) || null
         }
 
+        this.bounds = JSON.parse(localStorage.getItem('bounds')) || null;
         this.removeLayer = this.removeLayer.bind(this);
         this.toggleVisibility = this.toggleVisibility.bind(this);
         console.log("Test Data Layers: ", layers);
@@ -67,7 +67,7 @@ class App extends React.Component {
         this.setState({layers});
     }
     //Test: What happens when an individual coordinate in the geoJson features gets edited.
-    //Expected Result: The <Feature /> components each internally figure out whether or not they should update their geometry. 
+    //Expected Result: The <Feature /> components each internally figure out whether or not they should update their geometry.
     simulateFeatureCoordinateEdit() {
         var layers = this.state.layers.slice();
         layers[0].geoJson.features[0].geometry.coordinates[0].forEach((coordinate, index) => {
@@ -119,18 +119,18 @@ class App extends React.Component {
                         <p>You can now create your own custom react component-driven google maps overlays. (Woah, slow down charlie. You're going to fast.)</p>
                     </CustomOverlay>
         		</Map>
-                
+
                 <h2>Simple Map with Custom Controls</h2>
 
-                <Map 
-                    api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" 
-                    zoom={Number(this.state.zoom)} 
-                    center={this.state.center} 
+                <Map
+                    api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw"
+                    zoom={Number(this.state.zoom)}
+                    center={this.state.center}
                     style={{ height:1000, width:1000}}
                     controls={controls}
                     >
-                    
-                </Map>                
+
+                </Map>
 
         		<h2>Simple Map with Data Layers</h2>
                 {(()=>{
@@ -141,18 +141,18 @@ class App extends React.Component {
         		<Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:500, width:500}}>
                     {this.state.layers.map((layer, layerIndex) => {
                         return <DataLayer onClick={e => console.log(e.id, e.coords)} zIndex={layerIndex + 1} key={layerIndex} visible={layer.visible}>
-                            {layer.geoJson.features.map((feature, featureIndex) => 
-                                <Feature 
-                                    editable={true} 
-                                    id={feature._id} 
+                            {layer.geoJson.features.map((feature, featureIndex) =>
+                                <Feature
+                                    editable={true}
+                                    id={feature._id}
                                     onChange={geoJson => {
                                         geoJson._id = feature._id; //Preserve my database _ids
                                         this.mutateFeature(geoJson, layerIndex, featureIndex);
-                                    }} 
+                                    }}
                                     onClick={(id, coords) => {
                                         console.log("Feature clicked: ", id, coords);
                                     }}
-                                    key={featureIndex} 
+                                    key={featureIndex}
                                     geoJson={feature} />
                             )}
                         </DataLayer>
@@ -174,7 +174,7 @@ class App extends React.Component {
                         KmlUrls
                     });
                 }}>Add</button>
-                
+
                 {(()=>{
                     if(this.state.KmlUrls.length > 0)
                         return (
@@ -208,7 +208,7 @@ class App extends React.Component {
                     {(()=>{
                         if(this.state.showInfoWindow)
                             return (
-                                
+
                                     <InfoWindow open={this.state.show_geocode_infowindow} onCloseClick={e => this.setState({show_geocode_infowindow : false})} coords={this.state.geocode_infowindow_coords}>
                                         <div>This is a regular old infowindow. {this.state.showInfoWindow}</div>
                                         <div>With components rendered inside of it.</div>
@@ -219,18 +219,18 @@ class App extends React.Component {
                     <Marker coords={{lng: -117.44364929199219, lat: 40.058001435398296}}>
                         <InfoWindow open={this.state.showInfoWindow}>
                             <div>This is a component within a marker.{this.state.showInfoWindow.toString()}</div>
-                        </InfoWindow> 
+                        </InfoWindow>
                     </Marker>
                     <Marker icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" coords={{lng: -100.44364929199219, lat: 30.058001435398296}}>
                         <InfoWindow open={true}>
                             <div>This marker has an icon image.</div>
-                        </InfoWindow> 
+                        </InfoWindow>
                     </Marker>
 
 
                 </Map>
                 <h1>Simple Map with shapes</h1>
-                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" bounds={this.state.bounds} style={{height: 500, width: 500}}>
+                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" bounds={this.bounds} style={{height: 500, width: 500}}>
                     <Circle editable={true} fillColor="#fff" strokeColor="#112233" radius={500000} center={this.state.circleCenter} onCenterChange={coords => {console.log(coords); this.setState({circleCenter : coords});}} onRadiusChange={radius => {}}>
                         <InfoWindow open={true}>
                             <h1>Test</h1>
@@ -239,8 +239,8 @@ class App extends React.Component {
                 </Map>
                 <h1>Simple Map with marker clusterer</h1>
                 <input type="number" value={this.state.markerNumber}  onChange={e => this.setState({markerNumber : e.target.value})} />
-                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" bounds={this.state.bounds} onbounds_changed={(bounds) => {
-                    this.setState({bounds});
+                <Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" bounds={this.bounds} onbounds_changed={(bounds) => {
+                    this.bounds = bounds
                     localStorage.setItem('bounds', JSON.stringify(bounds));
                 }} style={{height: 500, width: 500}}>
                     <MarkerCluster options={{gridSize: 50, maxZoom: 15}}>
@@ -252,8 +252,8 @@ class App extends React.Component {
                                     </Marker>
 
                                 )
-                            };  
-                            return markers;      
+                            };
+                            return markers;
                         })()}
 
                     </MarkerCluster>

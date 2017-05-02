@@ -43,13 +43,13 @@ var config = {
 	module: {
 		plugins : ["transform-class-properties"],
 		loaders : [
-			{ 
-				test : /\.css$/, 
+			{
+				test : /\.css$/,
 				loader: 'css-loader'
 			},
 			{
-				test : /(\.js|\.jsx)/, 
-				exclude: /node_modules/, 
+				test : /(\.js|\.jsx)/,
+				exclude: /node_modules/,
 				loader: "babel-loader",
 				query : {
 					presets : presets
