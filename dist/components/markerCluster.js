@@ -42,7 +42,7 @@ var MarkerCluster = function (_React$Component) {
     function MarkerCluster(props) {
         _classCallCheck(this, MarkerCluster);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MarkerCluster).call(this, props));
+        var _this = _possibleConstructorReturn(this, (MarkerCluster.__proto__ || Object.getPrototypeOf(MarkerCluster)).call(this, props));
 
         _this.displayName = 'MarkerCluster';
         _this.state = {
@@ -54,7 +54,7 @@ var MarkerCluster = function (_React$Component) {
     _createClass(MarkerCluster, [{
         key: 'componentWillUpdate',
         value: function componentWillUpdate() {
-            this.state.MarkerClusterer.clearMarkers();
+            //Silence is golden.
         }
     }, {
         key: 'componentWillMount',
@@ -92,9 +92,9 @@ var MarkerCluster = function (_React$Component) {
             var _this2 = this;
 
             var children = [];
-            var _props = this.props;
-            var map = _props.map;
-            var maps = _props.maps;
+            var _props = this.props,
+                map = _props.map,
+                maps = _props.maps;
 
             if (this.props.map && this.props.maps && this.state.MarkerClusterer) children = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {

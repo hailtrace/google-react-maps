@@ -28,7 +28,7 @@ var SearchBox = function (_React$Component) {
     function SearchBox(props) {
         _classCallCheck(this, SearchBox);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SearchBox).call(this, props));
+        var _this = _possibleConstructorReturn(this, (SearchBox.__proto__ || Object.getPrototypeOf(SearchBox)).call(this, props));
 
         _this.displayName = 'SearchBox';
         _this.state = {
@@ -53,10 +53,10 @@ var SearchBox = function (_React$Component) {
         value: function postRender() {
             var _this2 = this;
 
-            var _props = this.props;
-            var map = _props.map;
-            var maps = _props.maps;
-            var position = _props.position;
+            var _props = this.props,
+                map = _props.map,
+                maps = _props.maps,
+                position = _props.position;
 
             if (map && maps) {
                 var input = _reactDom2.default.findDOMNode(this.refs.input);
@@ -109,10 +109,10 @@ var SearchBox = function (_React$Component) {
     }, {
         key: 'preRender',
         value: function preRender() {
-            var _props2 = this.props;
-            var map = _props2.map;
-            var maps = _props2.maps;
-            var position = _props2.position;
+            var _props2 = this.props,
+                map = _props2.map,
+                maps = _props2.maps,
+                position = _props2.position;
             var internalPosition = this.state.internalPosition;
 
             map.controls[maps.ControlPosition[position]].removeAt(internalPosition);

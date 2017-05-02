@@ -39,7 +39,7 @@ var MapControl = function (_React$Component) {
   function MapControl(props) {
     _classCallCheck(this, MapControl);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MapControl).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MapControl.__proto__ || Object.getPrototypeOf(MapControl)).call(this, props));
 
     _this.displayName = 'MapControl';
     _this.cleanMapControlContent = _this.cleanMapControlContent.bind(_this);
@@ -56,10 +56,10 @@ var MapControl = function (_React$Component) {
   }, {
     key: 'loadMapControlContent',
     value: function loadMapControlContent() {
-      var _props = this.props;
-      var maps = _props.maps;
-      var map = _props.map;
-      var position = _props.position;
+      var _props = this.props,
+          maps = _props.maps,
+          map = _props.map,
+          position = _props.position;
 
       var children = _reactDom2.default.findDOMNode(this.refs.controlChildren);
       children.index = typeof this.props.index !== 'undefined' ? this.props.index : 1;

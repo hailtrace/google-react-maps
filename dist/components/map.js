@@ -64,7 +64,7 @@ var Map = function (_React$Component) {
     function Map(props) {
         _classCallCheck(this, Map);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Map).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, props));
 
         _this.displayName = 'Map';
 
@@ -137,9 +137,9 @@ var Map = function (_React$Component) {
     }, {
         key: 'centerPropDidChange',
         value: function centerPropDidChange() {
-            var _state = this.state;
-            var maps = _state.maps;
-            var map = _state.map;
+            var _state = this.state,
+                maps = _state.maps,
+                map = _state.map;
             var center = this.props.center;
 
             if (center) return !new maps.LatLng(center.lat, center.lng).equals(map.getCenter());else return false;
@@ -211,9 +211,9 @@ var Map = function (_React$Component) {
         value: function setupMapListenerHooks() {
             var _this2 = this;
 
-            var _state2 = this.state;
-            var maps = _state2.maps;
-            var map = _state2.map;
+            var _state2 = this.state,
+                maps = _state2.maps,
+                map = _state2.map;
 
             if (maps && map) {
                 this.removeListeners();

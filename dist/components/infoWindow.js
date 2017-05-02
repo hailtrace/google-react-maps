@@ -50,7 +50,7 @@ var InfoWindow = function (_React$Component) {
    function InfoWindow(props) {
       _classCallCheck(this, InfoWindow);
 
-      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InfoWindow).call(this, props));
+      var _this = _possibleConstructorReturn(this, (InfoWindow.__proto__ || Object.getPrototypeOf(InfoWindow)).call(this, props));
 
       _this.displayName = 'InfoWindow';
       _this.state = {
@@ -68,11 +68,11 @@ var InfoWindow = function (_React$Component) {
       value: function componentWillMount() {
          var _this2 = this;
 
-         var _props = this.props;
-         var maps = _props.maps;
-         var map = _props.map;
-         var anchor = _props.anchor;
-         var coords = _props.coords;
+         var _props = this.props,
+             maps = _props.maps,
+             map = _props.map,
+             anchor = _props.anchor,
+             coords = _props.coords;
 
          if (maps && map) {
             var options = {

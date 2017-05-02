@@ -32,7 +32,7 @@ var Feature = function (_React$Component) {
   function Feature(props) {
     _classCallCheck(this, Feature);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Feature).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Feature.__proto__ || Object.getPrototypeOf(Feature)).call(this, props));
 
     _this.displayName = 'Feature';
 
@@ -232,9 +232,9 @@ var Feature = function (_React$Component) {
   }, {
     key: 'getGeometryForFeature',
     value: function getGeometryForFeature(geoJson) {
-      var _props = this.props;
-      var map = _props.map;
-      var maps = _props.maps;
+      var _props = this.props,
+          map = _props.map,
+          maps = _props.maps;
 
       switch (geoJson.geometry.type) {
         case "Polygon":
@@ -258,9 +258,9 @@ var Feature = function (_React$Component) {
   }, {
     key: 'generateFeatureFromGeoJson',
     value: function generateFeatureFromGeoJson(geoJson) {
-      var _props2 = this.props;
-      var map = _props2.map;
-      var maps = _props2.maps;
+      var _props2 = this.props,
+          map = _props2.map,
+          maps = _props2.maps;
 
       var geometry = this.getGeometryForFeature(geoJson);
       var feature = new maps.Data.Feature({

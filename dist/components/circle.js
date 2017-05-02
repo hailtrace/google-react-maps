@@ -36,7 +36,7 @@ var Circle = function (_React$Component) {
     function Circle(props) {
         _classCallCheck(this, Circle);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Circle).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Circle.__proto__ || Object.getPrototypeOf(Circle)).call(this, props));
 
         _this.displayName = 'Circle';
         _this.setupListeners = _this.setupListeners.bind(_this);
@@ -66,9 +66,9 @@ var Circle = function (_React$Component) {
             var _this2 = this;
 
             var circle = this.state.circle;
-            var _props = this.props;
-            var maps = _props.maps;
-            var map = _props.map;
+            var _props = this.props,
+                maps = _props.maps,
+                map = _props.map;
 
             if (maps && circle) {
                 maps.event.addListener(circle, 'radius_changed', function (e) {
@@ -101,9 +101,9 @@ var Circle = function (_React$Component) {
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _props2 = this.props;
-            var map = _props2.map;
-            var maps = _props2.maps;
+            var _props2 = this.props,
+                map = _props2.map,
+                maps = _props2.maps;
 
 
             if (map && maps) {
@@ -138,9 +138,9 @@ var Circle = function (_React$Component) {
     return Circle;
 }(_react2.default.Component);
 
-var _React$PropTypes = _react2.default.PropTypes;
-var number = _React$PropTypes.number;
-var shape = _React$PropTypes.shape;
+var _React$PropTypes = _react2.default.PropTypes,
+    number = _React$PropTypes.number,
+    shape = _React$PropTypes.shape;
 
 
 Circle.propTypes = {

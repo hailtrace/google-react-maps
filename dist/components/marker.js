@@ -38,7 +38,7 @@ var Marker = function (_React$Component) {
   function Marker(props) {
     _classCallCheck(this, Marker);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Marker).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Marker.__proto__ || Object.getPrototypeOf(Marker)).call(this, props));
 
     _this.displayName = 'Marker';
     _this.state = {
@@ -55,10 +55,10 @@ var Marker = function (_React$Component) {
       var _this2 = this;
 
       if (this.props.map && this.props.maps) {
-        var _props = this.props;
-        var map = _props.map;
-        var maps = _props.maps;
-        var MarkerClusterer = _props.MarkerClusterer;
+        var _props = this.props,
+            map = _props.map,
+            maps = _props.maps,
+            MarkerClusterer = _props.MarkerClusterer;
 
 
         var marker = new maps.Marker(this.getOptions());

@@ -26,7 +26,7 @@ var DataLayer = function (_React$Component) {
     function DataLayer(props) {
         _classCallCheck(this, DataLayer);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DataLayer).call(this, props));
+        var _this = _possibleConstructorReturn(this, (DataLayer.__proto__ || Object.getPrototypeOf(DataLayer)).call(this, props));
 
         _this.displayName = 'DataLayer';
         _this.state = {
@@ -52,9 +52,9 @@ var DataLayer = function (_React$Component) {
     _createClass(DataLayer, [{
         key: 'focus',
         value: function focus() {
-            var _props = this.props;
-            var maps = _props.maps;
-            var map = _props.map;
+            var _props = this.props,
+                maps = _props.maps,
+                map = _props.map;
 
             var bounds = new maps.LatLngBounds();
             if (this.state.data) {
@@ -67,9 +67,9 @@ var DataLayer = function (_React$Component) {
     }, {
         key: 'initDataLayer',
         value: function initDataLayer() {
-            var _props2 = this.props;
-            var map = _props2.map;
-            var maps = _props2.maps;
+            var _props2 = this.props,
+                map = _props2.map,
+                maps = _props2.maps;
 
 
             var dataOptions = {

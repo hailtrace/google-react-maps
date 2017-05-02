@@ -39,7 +39,7 @@ var CustomOverlay = function (_React$Component) {
   function CustomOverlay(props) {
     _classCallCheck(this, CustomOverlay);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CustomOverlay).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CustomOverlay.__proto__ || Object.getPrototypeOf(CustomOverlay)).call(this, props));
 
     _this.displayName = 'CustomOverlay';
     var maps = _this.props.maps;
@@ -82,9 +82,9 @@ var CustomOverlay = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var _props = this.props;
-      var maps = _props.maps;
-      var map = _props.map;
+      var _props = this.props,
+          maps = _props.maps,
+          map = _props.map;
 
       try {
         this.overlay = new GMCustomOverlay(_reactDom2.default.findDOMNode(this.refs['custom-overlay']), this.props.map);

@@ -24,7 +24,7 @@ var KmlLayer = function (_React$Component) {
     function KmlLayer(props) {
         _classCallCheck(this, KmlLayer);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(KmlLayer).call(this, props));
+        var _this = _possibleConstructorReturn(this, (KmlLayer.__proto__ || Object.getPrototypeOf(KmlLayer)).call(this, props));
 
         _this.displayName = 'KmlLayer';
         _this.state = {
@@ -37,14 +37,14 @@ var KmlLayer = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             if (this.props.map && this.props.maps) {
-                var _props = this.props;
-                var map = _props.map;
-                var maps = _props.maps;
-                var zIndex = _props.zIndex;
-                var preserveViewport = _props.preserveViewport;
-                var screenOverlays = _props.screenOverlays;
-                var suppressInfoWindows = _props.suppressInfoWindows;
-                var url = _props.url;
+                var _props = this.props,
+                    map = _props.map,
+                    maps = _props.maps,
+                    zIndex = _props.zIndex,
+                    preserveViewport = _props.preserveViewport,
+                    screenOverlays = _props.screenOverlays,
+                    suppressInfoWindows = _props.suppressInfoWindows,
+                    url = _props.url;
 
 
                 var KmlLayer = new maps.KmlLayer({

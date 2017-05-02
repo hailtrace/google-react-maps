@@ -22,9 +22,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 * @memberof Utils
 */
 function mapChildren(props, thisArg) {
-	var _arguments$props = arguments[arguments.length - 1].props;
-	var map = _arguments$props.map;
-	var maps = _arguments$props.maps;
+	var _arguments$props = arguments[arguments.length - 1].props,
+	    map = _arguments$props.map,
+	    maps = _arguments$props.maps;
 
 	if (arguments.length > 0) props = Object.assign.apply(Object, [{}].concat(_toConsumableArray(Array.prototype.slice.call(arguments, 0, arguments.length - 1))));
 	return _react2.default.Children.map(thisArg.props.children, function (child) {
@@ -52,7 +52,7 @@ function refreshComponentFromProps() {
 }
 
 function isValidMapListener() {
-	var prop = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+	var prop = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 	prop = prop.toLowerCase();
 	switch (prop) {

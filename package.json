@@ -4,7 +4,7 @@
   "description": "A more powerfully custom version of the Google Maps Javascript API built for React. Multiple Datalayer support. GEOJSON Enabled.",
   "main": "dist/components/index.js",
   "scripts": {
-    "prepublish": "npm run gen-docs && git add dist/* && git commit -m 'Updated docs.' && babel ./src --out-dir ./dist --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports",
+    "prepublish": "babel ./src --out-dir ./dist --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports",
     "test": "jest",
     "start-dev": "open -a \"Google Chrome.app\" \"http://localhost:8082\" && node_modules/.bin/webpack-dev-server",
     "gen-docs": "npm run clear-docs && jsdoc -c ./docs.config.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src",
