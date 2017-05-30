@@ -31,11 +31,16 @@ class Marker extends React.Component {
     		var marker = new maps.Marker(this.getOptions());
 
     		marker.setMap(this.props.map);
+        const {opacity} = this.props;
+        if(opacity != null && !isNaN(Number(opacity))) {
+          marker.setOpacity(this.props.opacity);
+        }
 
     		this.setState({marker});
 
-    		if(MarkerClusterer)
-    			MarkerClusterer.addMarker(marker);
+    		if(MarkerClusterer) {
+          MarkerClusterer.addMarker(marker);
+        }
 
     		if(typeof this.props.onClick === 'function')
 	    		this.props.maps.event.addListener(marker, 'click', e => {
