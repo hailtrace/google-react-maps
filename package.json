@@ -4,9 +4,9 @@
   "description": "A more powerfully custom version of the Google Maps Javascript API built for React. Multiple Datalayer support. GEOJSON Enabled.",
   "main": "dist/components/index.js",
   "scripts": {
-    "prepublish": "babel ./src --out-dir ./dist --source-maps --presets es2015,react --plugins babel-plugin-add-module-exports",
+    "prepublish": "babel ./src --out-dir ./dist --source-maps --presets react,es2015 --plugins add-module-exports",
     "test": "jest",
-    "start-dev": "open -a \"Google Chrome.app\" \"http://localhost:8082\" && node_modules/.bin/webpack-dev-server",
+    "start-dev": "node_modules/.bin/webpack-dev-server",
     "gen-docs": "npm run clear-docs && jsdoc -c ./docs.config.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src",
     "clear-docs": "rm -r ./docs"
   },
@@ -49,12 +49,15 @@
     "css-loader": "^0.23.1",
     "google-maps-api": "^2.0.1",
     "marker-clusterer-plus": "^2.1.4",
+    "markerwithlabel": "^2.0.0",
     "react": "^15.3.0",
+    "react-dom": "^15.6.1",
     "webpack": "^1.13.1",
     "webpack-hot-middleware": "^2.12.2"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-hmre": "^1.1.1",
     "ink-docstrap": "^1.3.0",
     "jsdoc": "^3.4.0",

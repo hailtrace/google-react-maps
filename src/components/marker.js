@@ -1,7 +1,8 @@
 import React from 'react';
-
+import MarkerWithLabel from 'markerwithlabel';
 /**
 * The component designed to implement the google.maps.Marker from the javascript api. <Marker /> components live within the context of any <Map /> component.
+* The Marker class is extended by [Marker With Label]{@link https://github.com/googlemaps/v3-utility-library/tree/master/markerwithlabel} see [npm package here]{@link https://www.npmjs.com/package/markerwithlabel}.
 * @memberof Map
 * @property {object} state
 * @property {google.maps.Marker} state.Marker
@@ -28,7 +29,7 @@ class Marker extends React.Component {
     	if(this.props.map && this.props.maps) {
     		var {map,maps, MarkerClusterer} = this.props;
 
-    		var marker = new maps.Marker(this.getOptions());
+    		var marker = new (MarkerWithLabel(maps))(this.getOptions());
 
     		marker.setMap(this.props.map);
         const {opacity} = this.props;
@@ -63,7 +64,6 @@ class Marker extends React.Component {
     getOptions() {
 		var options = {
 			position : this.props.coords,
-			// map : this.props.map,
 			icon : this.props.icon ? this.props.icon : undefined
 		}
 		if(this.props.options)
