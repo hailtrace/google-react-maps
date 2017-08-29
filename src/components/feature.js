@@ -258,8 +258,10 @@ class Feature extends React.Component {
     //resets the geometry to match the geojson.
     var resetGeometry = f => {
       // this.removeListeners(() => {
+      this.removeListeners();
       var geometry = this.getGeometryForFeature(geoJson);
       this.state.feature.setGeometry(geometry);
+      this.initListeners();
       // console.log("F: refreshed geometry for id: ", this.props.id);
       // this.initListeners(); //Restart the listening on this geometry.
       // }); //Stop all listening on this geometry.
