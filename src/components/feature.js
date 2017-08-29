@@ -153,7 +153,7 @@ class Feature extends React.Component {
           //Select the point. (Used in fastEditing mode.)
           this.selectPoint(event.latLng);
 
-          event.stop();
+          // event.stop();
           var coords = event.latLng.toJSON()
           coords[0] = coords.lng;
           coords[1] = coords.lat;
@@ -178,6 +178,10 @@ class Feature extends React.Component {
 
     this.addListener(this.props.maps.event.addListener(this.props.map, 'click', ({latLng}) => this.addPoint(latLng)));
     this.addListener(this.props.maps.event.addListener(this.props.map, 'rightclick', () => this.deletePoint(this.state.selected_point)));
+    this.addListener(this.props.data.addListener('click', event => {
+      const { latLng } = event;
+      this.addPoint(latLng);
+    }))
   }
   removeListeners(callback) {
     this.listeners.forEach(listener => listener.remove());
