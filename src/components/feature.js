@@ -13,9 +13,9 @@ class Feature extends React.Component {
     this.state = {
       selected_point: null,
       feature: null,
-      listeners: [],
       geoJson: null
     }
+    this.listeners = [];
 
     //Editor helper functions
     this.addPoint = this.addPoint.bind(this);
@@ -163,31 +163,30 @@ class Feature extends React.Component {
         }
       }));
 
-    if (typeof this.props.onRightClick === 'function')
-      this.addListener(this.props.data.addListener('rightclick', (event) => {
-        var { feature } = event;
-        if (feature.getId() == this.state.feature.getId()) {
-          event.stop();
-          var coords = event.latLng.toJSON()
-          coords[0] = coords.lng;
-          coords[1] = coords.lat;
+    this.addListener(this.props.data.addListener('rightclick', (event) => {
+      var { feature } = event;
+      if (feature.getId() == this.state.feature.getId()) {
+        event.stop();
+        var coords = event.latLng.toJSON()
+        coords[0] = coords.lng;
+        coords[1] = coords.lat;
 
-          if (this.props.onRightClick)
-            this.props.onRightClick(Object.assign({}, event, { id: this.props.id, coords, geoJson: this.state.geoJson }));
-        }
-      }));
+        if (this.props.onRightClick)
+          this.props.onRightClick(Object.assign({}, event, { id: this.props.id, coords, geoJson: this.state.geoJson }));
+      }
+    }));
 
     this.addListener(this.props.maps.event.addListener(this.props.map, 'click', ({latLng}) => this.addPoint(latLng)));
     this.addListener(this.props.maps.event.addListener(this.props.map, 'rightclick', () => this.deletePoint(this.state.selected_point)));
   }
   removeListeners(callback) {
-    this.state.listeners.forEach(listener => listener.remove());
-    this.setState({ listeners: [] }, callback ? callback : () => { });
+    this.listeners.forEach(listener => listener.remove());
+    this.listeners = [];
   }
   addListener(listener, callback) {
-    var listeners = this.state.listeners.slice();
+    var listeners = this.listeners.slice();
     listeners.push(listener);
-    this.setState({ listeners }, callback ? callback : () => { });
+    this.listeners = listeners;
   }
   ///--------------------------------Lifecycle Methods-----------------------------------///
   componentWillReceiveProps(nextProps) {
@@ -200,11 +199,11 @@ class Feature extends React.Component {
     // console.log("Feature will recieve props.");
   }
   componentWillUpdate(nextProps, nextState) {
-    // console.log("F: componentWillUpdate")
+    this.removeListeners();
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  // 	return false;
-  // }
+  componentDidUpdate() {
+    this.initListeners();
+  }
   componentDidMount() {
     // console.log("F: componentDidMount")
     if (this.props.data) {
