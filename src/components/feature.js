@@ -87,9 +87,6 @@ class Feature extends React.Component {
     return false;
   }
   selectPoint(latLng) {
-    if(this.state.selected_point && this.state.selected_point.lat() == latLng.lat() && this.state.selected_point.lng() == latLng.lng()) {
-      return this.setState({ selected_point: null });
-    }
     if(this.findPoint(latLng)) {
       this.setState({ selected_point: latLng });
     }
