@@ -39,7 +39,7 @@ class Feature extends React.Component {
   addPoint(latLng) {
     const { feature } = this.state;
     const { editable, fastEditing } = this.props;
-    const point = this.findPoint(this.state.selected_point);
+    const point = this.state.selected_point ? this.state.selected_point : null;
     if(!feature || !latLng || !point || !editable || !fastEditing) {
       return;
     }
@@ -54,7 +54,7 @@ class Feature extends React.Component {
           ...pointArray.slice(point.index + 1, pointArray.length)
         ]]);
         feature.setGeometry(newGeometry);
-        this.setState({ selected_point: latLng });
+        this.setState({ selected_point: { index: point.index + 1, latLng } });
         break;
       }
     }
@@ -87,14 +87,15 @@ class Feature extends React.Component {
     return false;
   }
   selectPoint(latLng) {
-    if(this.findPoint(latLng)) {
-      this.setState({ selected_point: latLng });
+    const foundPoint = this.findPoint(latLng);
+    if(foundPoint) {
+      this.setState({ selected_point: foundPoint });
     }
   }
   deletePoint(latLng) {
     const { feature } = this.state;
     const { editable, fastEditing } = this.props;
-    const point = this.findPoint(this.state.selected_point);
+    const point = this.state.selected_point;
 
     if(!feature || !latLng || !point || !editable || !fastEditing) {
       return;
