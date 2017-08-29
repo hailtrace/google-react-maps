@@ -140,9 +140,10 @@ class App extends React.Component {
                 <button onClick={this.simulateFeatureCoordinateEdit}>Simulate External Map Change</button>
         		<Map api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw" style={{height:500, width:500}}>
                     {this.state.layers.map((layer, layerIndex) => {
-                        return <DataLayer onClick={e => console.log(e.id, e.coords)} zIndex={layerIndex + 1} key={layerIndex} visible={layer.visible}>
+                        return <DataLayer onCreate={e => console.log('Creating: ', e)} drawingMode={'Polygon'} onClick={e => console.log(e.id, e.coords)} zIndex={layerIndex + 1} key={layerIndex} visible={layer.visible}>
                             {layer.geoJson.features.map((feature, featureIndex) =>
                                 <Feature
+                                    fastEditing={true}
                                     editable={true}
                                     id={feature._id}
                                     onChange={geoJson => {

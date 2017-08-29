@@ -2,7 +2,7 @@ import React from 'react';
 import { GeoJSON } from '../utils/utils';
 window.GeoJSON = GeoJSON;
 
-//Rational: This component emulates the google Data.Feature. 
+//Rational: This component emulates the google Data.Feature.
 //It lives in the context of a <DataLayer /> Component and interfaces with it's Data object that has been passed as prop to it.
 /** The component that handles individual features within a data layer. */
 class Feature extends React.Component {
@@ -11,10 +11,17 @@ class Feature extends React.Component {
     this.displayName = 'Feature';
 
     this.state = {
+      selected_point: null,
       feature: null,
       listeners: [],
       geoJson: null
     }
+
+    //Editor helper functions
+    this.addPoint = this.addPoint.bind(this);
+    this.findPoint = this.findPoint.bind(this);
+    this.selectPoint = this.selectPoint.bind(this);
+    this.deletePoint = this.deletePoint.bind(this);
 
     this.initListeners = this.initListeners.bind(this);
     this.addListener = this.addListener.bind(this);
@@ -25,6 +32,104 @@ class Feature extends React.Component {
     this.updateFeatureGeometry = this.updateFeatureGeometry.bind(this);
     this.getGeometryForFeature = this.getGeometryForFeature.bind(this);
     this.generateFeatureFromGeoJson = this.generateFeatureFromGeoJson.bind(this);
+  }
+  ///--------------------------------Editor Helper Methods-----------------------------------///
+  addPoint(latLng) {
+    const { feature } = this.state;
+    const { editable, fastEditing } = this.props;
+    const point = this.findPoint(this.state.selected_point);
+    if(!feature || !latLng || !point || !editable || !fastEditing) {
+      return;
+    }
+
+    const type = feature.getGeometry().getType();
+    switch(type) {
+      case 'Polygon': {
+        const pointArray = feature.getGeometry().getAt(0).getArray();
+        const newGeometry = new this.props.maps.Data.Polygon([[
+          ...pointArray.slice(0, point.index + 1),
+          latLng,
+          ...pointArray.slice(point.index + 1, pointArray.length)
+        ]]);
+        feature.setGeometry(newGeometry);
+        this.setState({ selected_point: latLng });
+        break;
+      }
+    }
+
+  }
+  findPoint(latLng) {
+    const { feature } = this.state;
+
+    if(!feature || !latLng) {
+      return false;
+    }
+
+    switch (feature.getGeometry().getType()) {
+      case 'Polygon': {
+        const geometry = feature.getGeometry();
+        const linearRing = geometry.getAt(0);
+        const pointArray = linearRing.getArray();
+        for(let i = 0; i < pointArray.length; i++) {
+          let point = pointArray[i];
+          if(point.lat() == latLng.lat() && point.lng() == latLng.lng()) {
+            //Match found!
+            return { index: i, latLng: point };
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    return false;
+  }
+  selectPoint(latLng) {
+    if(this.state.selected_point && this.state.selected_point.lat() == latLng.lat() && this.state.selected_point.lng() == latLng.lng()) {
+      return this.setState({ selected_point: null });
+    }
+    if(this.findPoint(latLng)) {
+      this.setState({ selected_point: latLng });
+    }
+  }
+  deletePoint(latLng) {
+    const { feature } = this.state;
+    const { editable, fastEditing } = this.props;
+    const point = this.findPoint(this.state.selected_point);
+
+    if(!feature || !latLng || !point || !editable || !fastEditing) {
+      return;
+    }
+
+    const type = feature.getGeometry().getType();
+    switch(type) {
+      case 'Polygon': {
+        const pointArray = feature.getGeometry().getAt(0).getArray();
+
+        if(pointArray.length - 1 < 3) {
+          if(this.props.onDelete) {
+            this.props.onDelete(this.state.geoJson);
+          }
+          return;
+        }
+
+        const newGeometry = new this.props.maps.Data.Polygon([[
+          ...pointArray.slice(0, point.index),
+          ...pointArray.slice(point.index + 1, pointArray.length)
+        ]]);
+
+        feature.setGeometry(newGeometry);
+
+        if(point.index - 1 > -1) {
+          this.selectPoint(pointArray[point.index - 1]);
+        }
+        else {
+          this.selectPoint(pointArray[0])
+        }
+        break;
+      }
+    }
+
   }
   ///--------------------------------Listener Management Methods-----------------------------------///
   initListeners() {
@@ -45,6 +150,9 @@ class Feature extends React.Component {
       this.addListener(this.props.data.addListener('click', (event) => {
         var { feature } = event;
         if (feature.getId() == this.state.feature.getId()) {
+          //Select the point. (Used in fastEditing mode.)
+          this.selectPoint(event.latLng);
+
           event.stop();
           var coords = event.latLng.toJSON()
           coords[0] = coords.lng;
@@ -68,6 +176,9 @@ class Feature extends React.Component {
             this.props.onRightClick(Object.assign({}, event, { id: this.props.id, coords, geoJson: this.state.geoJson }));
         }
       }));
+
+    this.addListener(this.props.maps.event.addListener(this.props.map, 'click', ({latLng}) => this.addPoint(latLng)));
+    this.addListener(this.props.maps.event.addListener(this.props.map, 'rightclick', () => this.deletePoint(this.state.selected_point)));
   }
   removeListeners(callback) {
     this.state.listeners.forEach(listener => listener.remove());
@@ -171,10 +282,10 @@ class Feature extends React.Component {
             };
           }
           break;
-        case "Point": 
+        case "Point":
           var currGeoJson = this.state.geoJson;
-          if (currGeoJson.geometry.coordinates[0] != geoJson.geometry.coordinates[0] || 
-          currGeoJson.geometry.coordinates[1] != geoJson.geometry.coordinates[1]) {              
+          if (currGeoJson.geometry.coordinates[0] != geoJson.geometry.coordinates[0] ||
+          currGeoJson.geometry.coordinates[1] != geoJson.geometry.coordinates[1]) {
             resetGeometry();
             break;
           }
@@ -229,7 +340,6 @@ class Feature extends React.Component {
   render() {
     if (this.props.data && this.state.feature) {
       this.checkPropEditable(this.props);
-
     }
     // console.log("F: feature Rendered");
     return <noscript />;
@@ -237,11 +347,14 @@ class Feature extends React.Component {
 }
 
 Feature.propTypes = {
+  editable: React.PropTypes.bool,
+  fastEditing: React.PropTypes.bool, //This mode enables point creation by right clicking on the map.
   maps: React.PropTypes.object,
   map: React.PropTypes.object,
   data: React.PropTypes.object,
   geoJson: React.PropTypes.object.isRequired,
   id: React.PropTypes.string.isRequired,
+  onDelete: React.PropTypes.func,
   onChange: React.PropTypes.func,
   onClick: React.PropTypes.func
 }
