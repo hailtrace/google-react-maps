@@ -32,7 +32,7 @@ class Feature extends React.Component {
     this.updateFeatureGeometry = this.updateFeatureGeometry.bind(this);
     this.getGeometryForFeature = this.getGeometryForFeature.bind(this);
     this.generateFeatureFromGeoJson = this.generateFeatureFromGeoJson.bind(this);
-    this.updateStyles = this.updateStyles.bind(this);
+    this.updateProperties = this.updateProperties.bind(this);
 
   }
   ///--------------------------------Editor Helper Methods-----------------------------------///
@@ -199,8 +199,8 @@ class Feature extends React.Component {
     // console.log("F: componentWillRecieveProps");
     if (nextProps.data && this.state.feature) {
       this.checkPropEditable(nextProps);
+      this.updateProperties(nextProps.geoJson.properties);
       this.updateFeatureGeometry(nextProps.geoJson)
-
     }
     // console.log("Feature will recieve props.");
   }
@@ -250,9 +250,9 @@ class Feature extends React.Component {
   }
 
   ///--------------------------------Google Data.Feature Managmenent Methods-----------------------------------///
-  updateStyles() {
-    const styles = this.props.featureStyleFactory(this.state.feature);
-    this.props.data.overrideStyle(this.state.feature, styles)
+  updateProperties(properties) {
+    const names = Object.keys(properties);
+    names.forEach(name => this.state.feature.setProperty(name, properties[name]));
   }
   updateFeatureGeometry(geoJson) {
     //resets the geometry to match the geojson.
@@ -348,7 +348,6 @@ class Feature extends React.Component {
 
   render() {
     if (this.props.data && this.state.feature) {
-      this.updateStyles();
       this.checkPropEditable(this.props);
     }
     // console.log("F: feature Rendered");
