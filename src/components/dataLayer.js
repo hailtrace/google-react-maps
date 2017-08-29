@@ -116,7 +116,7 @@ class DataLayer extends React.Component {
         if(!strokeColor)
           strokeColor = fillColor;
 
-        zIndex = zIndex? zIndex : 10;
+        zIndex = typeof zIndex === 'number' ? zIndex : 10;
 
         if(this.props.zIndex)
           zIndex = zIndex + (10000 * this.props.zIndex) //TODO: Find a better way to separate out layer zIndexes. Right now we are defautling to 10000K features in a GeoJson schema. It works, but there should be a better way.
@@ -127,7 +127,7 @@ class DataLayer extends React.Component {
               strokeWeight : 1,
               strokeColor,
               fillColor,
-              fillOpacity
+              fillOpacity,
             } //Potential Enhancement: Polyoptions could have different defaults. For now, we will leave this.
 
             if(typeof visible !== 'undefined')
@@ -191,7 +191,8 @@ class DataLayer extends React.Component {
         children = React.Children.map(this.props.children, child => React.cloneElement(child, {
           maps : this.props.maps,
           map : this.props.map,
-          data : this.state.data
+          data : this.state.data,
+          featureStyleFactory: this.styleFeatures
         }));
       }
         return <div>{children}</div>;

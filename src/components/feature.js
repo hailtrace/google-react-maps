@@ -32,6 +32,8 @@ class Feature extends React.Component {
     this.updateFeatureGeometry = this.updateFeatureGeometry.bind(this);
     this.getGeometryForFeature = this.getGeometryForFeature.bind(this);
     this.generateFeatureFromGeoJson = this.generateFeatureFromGeoJson.bind(this);
+    this.updateStyles = this.updateStyles.bind(this);
+
   }
   ///--------------------------------Editor Helper Methods-----------------------------------///
   addPoint(latLng) {
@@ -248,6 +250,10 @@ class Feature extends React.Component {
   }
 
   ///--------------------------------Google Data.Feature Managmenent Methods-----------------------------------///
+  updateStyles() {
+    const styles = this.props.featureStyleFactory(this.state.feature);
+    this.props.data.overrideStyle(this.state.feature, styles)
+  }
   updateFeatureGeometry(geoJson) {
     //resets the geometry to match the geojson.
     var resetGeometry = f => {
@@ -342,6 +348,7 @@ class Feature extends React.Component {
 
   render() {
     if (this.props.data && this.state.feature) {
+      this.updateStyles();
       this.checkPropEditable(this.props);
     }
     // console.log("F: feature Rendered");

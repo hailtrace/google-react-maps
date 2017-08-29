@@ -72,6 +72,7 @@ class App extends React.Component {
         var layers = this.state.layers.slice();
         layers[0].geoJson.features[0].geometry.coordinates[0].forEach((coordinate, index) => {
             layers[0].geoJson.features[0].geometry.coordinates[0][index] = [coordinate[0] + 5, coordinate[1] + 5];
+            layers[0].geoJson.features[0].properties.fillColor = '#000000';
         })
         this.setState({layers});
     }
