@@ -31,7 +31,14 @@ class KmlLayer extends React.Component {
     		});
     		this.setState({KmlLayer});
         this.listener = KmlLayer.addListener('status_changed', (status) => {
-          console.log('Status Changed: ', KmlLayer.getStatus())
+          switch(KmlLayer.getStatus()) {
+            case 'INVALID_DOCUMENT' : {
+              console.error('Your kml doc is too big for google maps.');
+              if(this.props.onStatusChanged) {
+                this.props.onStatusChanged(KmlLayer.getStatus());
+              }
+            }
+          }
         })
     	}
     	else
@@ -40,6 +47,10 @@ class KmlLayer extends React.Component {
     componentWillUnmount() {
     	if(this.state.KmlLayer)
 	    	this.state.KmlLayer.setMap(null);
+
+      if(this.listener) {
+        this.listener.remove();
+      }
     }
     render() {
     	if(this.state.KmlLayer && this.props.url != this.state.KmlLayer.url)
@@ -55,7 +66,8 @@ KmlLayer.propTypes = {
 	preserveViewport : React.PropTypes.bool,
 	screenOverlays : React.PropTypes.bool,
 	suppressInfoWindows : React.PropTypes.bool,
-	url : React.PropTypes.string.isRequired
+	url : React.PropTypes.string.isRequired,
+  onStatusChanged: React.PropTypes.func
 }
 
 export default KmlLayer;
