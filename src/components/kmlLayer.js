@@ -12,9 +12,9 @@ class KmlLayer extends React.Component {
     	if(this.props.map && this.props.maps)
     	{
     		var {
-    			map, 
-    			maps, 
-    			zIndex, 
+    			map,
+    			maps,
+    			zIndex,
     			preserveViewport,
     			screenOverlays,
     			suppressInfoWindows,
@@ -29,8 +29,10 @@ class KmlLayer extends React.Component {
     			suppressInfoWindows,
     			url
     		});
-
     		this.setState({KmlLayer});
+        this.listener = KmlLayer.addListener('status_changed', (status) => {
+          console.log('Status Changed: ', KmlLayer.getStatus())
+        })
     	}
     	else
     		console.error(new Error("You must put <KmlLayer /> components within a <Map /> context. Or provide the maps and map props manually."))

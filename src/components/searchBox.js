@@ -24,7 +24,7 @@ class SearchBox extends React.Component {
 	    	var input = ReactDom.findDOMNode(this.refs.input);
 	    	var container = ReactDom.findDOMNode(this.refs.child);
 	    	var searchBox = new maps.places.SearchBox(input);
-	    	
+
             this.timer = null;
 
             if(this.boundsListener)
@@ -39,8 +39,8 @@ class SearchBox extends React.Component {
                 this.timer = setTimeout(() => {
                     const map_bounds = map.getBounds();
                     searchBox.setBounds(map_bounds);
-                    
-                    if(typeof this.props.onPlacesChanged === 'function') {
+
+                    if(typeof this.props.onPlacesChanged === 'function' && this.refs.input) {
                         const query = this.refs.input.value;
                         const service = new maps.places.PlacesService(map);
                         query ? service.textSearch({
