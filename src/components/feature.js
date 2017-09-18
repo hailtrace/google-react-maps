@@ -147,9 +147,9 @@ class Feature extends React.Component {
               this.setState({ geoJson: JSON.parse(JSON.stringify(geoJson)) }, () => {
                 if (typeof this.props.onChange === 'function')
                   this.props.onChange(geoJson);
-              }
+              })
             }
-          }));
+          });
         }
       }));
 
