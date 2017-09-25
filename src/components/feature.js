@@ -373,7 +373,7 @@ class Feature extends React.Component {
     }
   }
   setIcon() {
-    if(this.state.feature.geometry.type == 'Point') {
+    if(this.props.geoJson.geometry.type == 'Point') {
       if(this.props.icon) {
         this.props.data.overrideStyle(this.state.feature, { icon: this.props.icon });
       }
