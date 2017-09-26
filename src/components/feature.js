@@ -156,7 +156,22 @@ class Feature extends React.Component {
       }));
 
     //Polygon clicked.
-    if (typeof this.props.onClick === 'function')
+    if(
+      this.state.feature &&
+      this.props.infoWindow
+    ) {
+      this.addListener(this.props.data.addListener('click', e => {
+        const { feature } = e;
+        if(feature.getId() == this.state.feature.getId()) {
+          const infoWindow = new this.props.maps.InfoWindow({
+            content: this.props.infoWindow,
+            position: e.latLng.toJSON()
+          });
+          infoWindow.open(this.props.map);
+        }
+      }));
+    }
+    else if (typeof this.props.onClick === 'function')
       this.addListener(this.props.data.addListener('click', (event) => {
         var { feature } = event;
         if (feature.getId() == this.state.feature.getId()) {
@@ -246,7 +261,6 @@ class Feature extends React.Component {
         geoJson: JSON.parse(JSON.stringify(this.props.geoJson)) //Deep copy
       }, () => {
         this.props.data.add(feature);
-
 
         this.initListeners();
         this.checkPropEditable(this.props);
