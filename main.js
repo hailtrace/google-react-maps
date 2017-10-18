@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 import {Map, DataLayer, Feature, InfoWindow, CustomOverlay, Marker, MarkerCluster, MapControl, SearchBox, Circle} from './src/components/index';
 import {ControlPosition} from './src/utils/utils';

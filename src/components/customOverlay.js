@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 
 function GMCustomOverlay(elem, map) {
@@ -72,12 +73,12 @@ class CustomOverlay extends React.Component {
 }
 
 CustomOverlay.propTypes = {
-  bounds : React.PropTypes.object,
-  maps : React.PropTypes.object,
-  map : React.PropTypes.object,
-  coords : React.PropTypes.shape({
-    lat : React.PropTypes.number.isRequired,
-    lng : React.PropTypes.number.isRequired
+  bounds : PropTypes.object,
+  maps : PropTypes.object,
+  map : PropTypes.object,
+  coords : PropTypes.shape({
+    lat : PropTypes.number.isRequired,
+    lng : PropTypes.number.isRequired
   })
 }
 

@@ -26,6 +26,7 @@ Using the map is fairly simple. Most commonly you would set it up like this:
 
 ```javascript
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
   render() {

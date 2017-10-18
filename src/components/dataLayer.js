@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {processPoints} from '../utils/utils';
 
 class DataLayer extends React.Component {
@@ -200,17 +201,17 @@ class DataLayer extends React.Component {
 }
 
 DataLayer.propTypes = {
-    maps : React.PropTypes.object,
-    map : React.PropTypes.object,
-    dataOptions : React.PropTypes.object,
-    geoJson : React.PropTypes.object,
-    visible : React.PropTypes.bool,
-    onChange : React.PropTypes.func,
-    styleFeatures : React.PropTypes.func,
-    zIndex : React.PropTypes.number.isRequired,
-    fillOpacity : React.PropTypes.number,
-    onCreate: React.PropTypes.func,
-    drawingMode: React.PropTypes.oneOf([ 'Point', 'LineString', 'Polygon' ])
+    maps : PropTypes.object,
+    map : PropTypes.object,
+    dataOptions : PropTypes.object,
+    geoJson : PropTypes.object,
+    visible : PropTypes.bool,
+    onChange : PropTypes.func,
+    styleFeatures : PropTypes.func,
+    zIndex : PropTypes.number.isRequired,
+    fillOpacity : PropTypes.number,
+    onCreate: PropTypes.func,
+    drawingMode: PropTypes.oneOf([ 'Point', 'LineString', 'Polygon' ])
 }
 
 export default DataLayer;

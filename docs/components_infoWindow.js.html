@@ -90,6 +90,7 @@
     <article>
         <pre
             class="sunlight-highlight-javascript linenums">import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 
 /** The component designed to implement the google.maps.InfoWindow class. This component can be the child of either the `&lt;Map />` or `&lt;Marker />` components, but if you decide to put it within the `&lt;Map />` component you must set its coordinate property so that it has an anchor point.
@@ -205,13 +206,13 @@ class InfoWindow extends React.Component {
 }
 
 InfoWindow.propTypes = {
-	maps : React.PropTypes.object,
-	map : React.PropTypes.object,
-	coords : React.PropTypes.shape({
-		lat : React.PropTypes.number.isRequired,
-		lng : React.PropTypes.number.isRequired
+	maps : PropTypes.object,
+	map : PropTypes.object,
+	coords : PropTypes.shape({
+		lat : PropTypes.number.isRequired,
+		lng : PropTypes.number.isRequired
 	}),
-	onCloseClick : React.PropTypes.func
+	onCloseClick : PropTypes.func
 }
 
 export default InfoWindow;

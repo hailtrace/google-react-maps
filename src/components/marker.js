@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MarkerWithLabel from 'markerwithlabel';
 /**
 * The component designed to implement the google.maps.Marker from the javascript api. <Marker /> components live within the context of any <Map /> component.
@@ -98,14 +99,14 @@ class Marker extends React.Component {
 }
 
 Marker.propTypes = {
-	maps : React.PropTypes.object,
-	map : React.PropTypes.object,
-	MarkerClusterer : React.PropTypes.object,
-	options : React.PropTypes.object,
-	anchor : React.PropTypes.object,
-	coords : React.PropTypes.shape({
-		lng : React.PropTypes.number,
-		lat : React.PropTypes.number
+	maps : PropTypes.object,
+	map : PropTypes.object,
+	MarkerClusterer : PropTypes.object,
+	options : PropTypes.object,
+	anchor : PropTypes.object,
+	coords : PropTypes.shape({
+		lng : PropTypes.number,
+		lat : PropTypes.number
 	})
 }
 

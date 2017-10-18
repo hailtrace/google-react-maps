@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 
 class SearchBox extends React.Component {
@@ -111,10 +112,10 @@ class SearchBox extends React.Component {
 }
 
 SearchBox.PropTypes = {
-    placeholder : React.PropTypes.string,
-	position : React.PropTypes.string.isRequired,
-	wrapper : React.PropTypes.func,
-	onPlacesChanged : React.PropTypes.func.isRequired
+    placeholder : PropTypes.string,
+	position : PropTypes.string.isRequired,
+	wrapper : PropTypes.func,
+	onPlacesChanged : PropTypes.func.isRequired
 }
 
 export default SearchBox;

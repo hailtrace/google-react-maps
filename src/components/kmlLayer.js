@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class KmlLayer extends React.Component {
     constructor(props) {
@@ -60,14 +61,14 @@ class KmlLayer extends React.Component {
 }
 
 KmlLayer.propTypes = {
-	maps : React.PropTypes.object,
-	map : React.PropTypes.object,
-	zIndex : React.PropTypes.number.isRequired,
-	preserveViewport : React.PropTypes.bool,
-	screenOverlays : React.PropTypes.bool,
-	suppressInfoWindows : React.PropTypes.bool,
-	url : React.PropTypes.string.isRequired,
-  onStatusChanged: React.PropTypes.func
+	maps : PropTypes.object,
+	map : PropTypes.object,
+	zIndex : PropTypes.number.isRequired,
+	preserveViewport : PropTypes.bool,
+	screenOverlays : PropTypes.bool,
+	suppressInfoWindows : PropTypes.bool,
+	url : PropTypes.string.isRequired,
+  onStatusChanged: PropTypes.func
 }
 
 export default KmlLayer;

@@ -90,6 +90,7 @@
     <article>
         <pre
             class="sunlight-highlight-javascript linenums">import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 import mapsapi from 'google-maps-api';
 import {refreshComponentFromProps, isValidMapListener} from '../utils/utils';
@@ -362,24 +363,24 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-    didMount : React.PropTypes.func,
-    optionsConstructor : React.PropTypes.func,
-	"api-key" : React.PropTypes.string.isRequired,
-	style : React.PropTypes.object,
-    mapType : React.PropTypes.string,
-    zoom : React.PropTypes.number,
-    center : React.PropTypes.shape({
-        lat : React.PropTypes.number,
-        lng : React.PropTypes.number
+    didMount : PropTypes.func,
+    optionsConstructor : PropTypes.func,
+	"api-key" : PropTypes.string.isRequired,
+	style : PropTypes.object,
+    mapType : PropTypes.string,
+    zoom : PropTypes.number,
+    center : PropTypes.shape({
+        lat : PropTypes.number,
+        lng : PropTypes.number
     }),
-    bounds : React.PropTypes.shape({
-        sw : React.PropTypes.shape({
-            lat : React.PropTypes.number,
-            lng : React.PropTypes.number
+    bounds : PropTypes.shape({
+        sw : PropTypes.shape({
+            lat : PropTypes.number,
+            lng : PropTypes.number
         }),
-        ne : React.PropTypes.shape({
-            lat : React.PropTypes.number,
-            lng : React.PropTypes.number
+        ne : PropTypes.shape({
+            lat : PropTypes.number,
+            lng : PropTypes.number
         }) 
     })
 }

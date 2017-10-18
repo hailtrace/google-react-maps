@@ -50,10 +50,9 @@
     "google-maps-api": "^2.0.1",
     "marker-clusterer-plus": "^2.1.4",
     "markerwithlabel": "^2.0.0",
-    "react": "^15.3.0",
-    "react-dom": "^15.6.1",
-    "webpack": "^1.13.1",
-    "webpack-hot-middleware": "^2.12.2"
+    "prop-types": "^15.6.0",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.13.2",
