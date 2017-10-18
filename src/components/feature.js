@@ -31,6 +31,8 @@ class Feature extends React.Component {
     this.removeListeners = this.removeListeners.bind(this);
     //Check props.
     this.checkPropEditable = this.checkPropEditable.bind(this);
+    this.setDraggable = this.setDraggable.bind(this);
+    this.setIcon = this.setIcon.bind(this);
 
     this.updateFeatureGeometry = this.updateFeatureGeometry.bind(this);
     this.getGeometryForFeature = this.getGeometryForFeature.bind(this);
@@ -155,7 +157,22 @@ class Feature extends React.Component {
       }));
 
     //Polygon clicked.
-    if (typeof this.props.onClick === 'function')
+    if(
+      this.state.feature &&
+      this.props.infoWindow
+    ) {
+      this.addListener(this.props.data.addListener('click', e => {
+        const { feature } = e;
+        if(feature.getId() == this.state.feature.getId()) {
+          const infoWindow = new this.props.maps.InfoWindow({
+            content: this.props.infoWindow,
+            position: e.latLng.toJSON()
+          });
+          infoWindow.open(this.props.map);
+        }
+      }));
+    }
+    else if (typeof this.props.onClick === 'function')
       this.addListener(this.props.data.addListener('click', (event) => {
         var { feature } = event;
         if (feature.getId() == this.state.feature.getId()) {
@@ -214,8 +231,14 @@ class Feature extends React.Component {
   componentWillUpdate(nextProps, nextState) {
     this.removeListeners();
   }
-  componentDidUpdate() {
+  componentDidUpdate(prev_props) {
     this.initListeners();
+    if(prev_props.draggable != this.props.draggable) {
+      this.setDraggable();
+    }
+    if(prev_props.icon != this.props.icon) {
+      this.setIcon();
+    }
   }
   componentDidMount() {
     // console.log("F: componentDidMount")
@@ -240,9 +263,10 @@ class Feature extends React.Component {
       }, () => {
         this.props.data.add(feature);
 
-
         this.initListeners();
         this.checkPropEditable(this.props);
+        this.setDraggable();
+        this.setIcon();
       })
     }
     else
@@ -353,6 +377,21 @@ class Feature extends React.Component {
     }
     catch (e) {
       console.error(e);
+    }
+  }
+  setDraggable() {
+    if(this.props.draggable) {
+      this.props.data.overrideStyle(this.state.feature, { draggable: true });
+    }
+    else {
+      this.props.data.overrideStyle(this.state.feature, { draggable: false });
+    }
+  }
+  setIcon() {
+    if(this.props.geoJson.geometry.type == 'Point') {
+      if(this.props.icon) {
+        this.props.data.overrideStyle(this.state.feature, { icon: this.props.icon });
+      }
     }
   }
 
