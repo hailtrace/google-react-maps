@@ -47,6 +47,8 @@
     "marker-clusterer-plus": "^2.1.4",
     "markerwithlabel": "^2.0.0",
     "prop-types": "^15.6.0",
+  },
+  "peerDependancies": {
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   },
