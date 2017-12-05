@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
-import mapsapi from 'google-maps-api';
 import {refreshComponentFromProps, isValidMapListener} from '../utils/utils';
 
 /**
@@ -14,7 +13,7 @@ import {refreshComponentFromProps, isValidMapListener} from '../utils/utils';
 * See [LatLngLiteral object specification]{@link https://developers.google.com/maps/documentation/javascript/3.exp/reference#LatLngLiteral}
 * @class google.maps.LatLngLiteral
 * @memberof google.maps
-* 
+*
 * @property {number} lat
 * @property {number} lng
 */
@@ -30,7 +29,7 @@ import {refreshComponentFromProps, isValidMapListener} from '../utils/utils';
 * @property {function} props.onMount callback(map, maps) Get's called right after the component is done it's initial render. (Key for triggering outside events that require google maps api to be instantiated.)
 * @property {number} props.zoom
 * @property {google.maps.LatLngLiteral} props.center
-* @property {object} props.latLngBounds 
+* @property {object} props.latLngBounds
 * @property {google.maps.LatLngLiteral} props.latLngBounds.sw
 * @property {google.maps.LatLngLiteral} props.latLngBounds.ne
 */
@@ -38,10 +37,10 @@ class Map extends React.Component {
     constructor(props) {
         super(props);
         this.displayName = 'Map';
-        
+
 
         var _div_id = "map_div_" + Math.floor(Date.now() * Math.random()).toString();
-        /** 
+        /**
         *   @property {object} state The Map component's internal state.
         *   @property {object} state.maps A google maps javascript api reference.
         *   @property {object} state._div_id The div id of this map.
@@ -52,7 +51,7 @@ class Map extends React.Component {
         	_div_id
         }
         this.listeners = [];
-        
+
         this.getGeocoder = this.getGeocoder.bind(this);
         this.getGoogleMapsApi = this.getGoogleMapsApi.bind(this);
         this.getGoogleMap = this.getGoogleMap.bind(this);
@@ -88,7 +87,7 @@ class Map extends React.Component {
             mapTypeId : maps.MapTypeId[!this.props.mapType? "ROADMAP" : this.props.mapType],
             data : null
         }
-        
+
         if(this.props.optionsConstructor)
             mapOptions = Object.assign(mapOptions, new this.props.optionsConstructor(maps));
 
@@ -133,7 +132,7 @@ class Map extends React.Component {
         var {map} = this.state;
         var {zoom} = this.props;
         try {
-            map.setZoom(zoom);        
+            map.setZoom(zoom);
         }
         catch(e) {
             console.error(e);
@@ -160,7 +159,7 @@ class Map extends React.Component {
                     if(isValidMapListener(action)) {
                         switch(action.toLowerCase()) {
                             case 'bounds_changed':case 'boundschanged':
-                                
+
                                 assemble('bounds_changed', event => {
                                     const bounds = map.getBounds()? {ne : map.getBounds().getNorthEast().toJSON(), sw : map.getBounds().getSouthWest().toJSON()} : null;
                                     this.props[prop](bounds, event)
@@ -199,7 +198,7 @@ class Map extends React.Component {
     	var initMapComponentWithLibrary = (maps) => {
 
     		// window.maps = maps;
-    		var mapOptions = this.getOptions(maps);            
+    		var mapOptions = this.getOptions(maps);
             try {
 
                 var geocoder = new maps.Geocoder();
@@ -229,6 +228,7 @@ class Map extends React.Component {
     	}
 
     	if(this.props["api-key"]) {
+        const mapsapi = require('google-maps-api');
     		// if(!window.maps)
 		    	mapsapi(this.props["api-key"], ['drawing','geometry','places'])().then(initMapComponentWithLibrary);
 		    // else
@@ -249,7 +249,7 @@ class Map extends React.Component {
     	var children = [];
     	var controls = [];
 
-        if(this.state.maps && this.state.map && this.props.children) 
+        if(this.state.maps && this.state.map && this.props.children)
 	    	children = React.Children.map(this.props.children, child => child ? React.cloneElement(child, {
 	    		maps : this.state.maps,
 	    		map : this.state.map
@@ -259,10 +259,10 @@ class Map extends React.Component {
             controls = React.Children.map(this.props.controls, control => control ? React.cloneElement(control, {
                 maps : this.state.maps,
                 map : this.state.map
-            }) : undefined ); 
+            }) : undefined );
 
         }
-        
+
         return <div ref="map" id={this.state._div_id} style={this.props.style}>
         	<div>{children}</div>
             <div>{controls}</div>
@@ -290,7 +290,7 @@ Map.propTypes = {
         ne : PropTypes.shape({
             lat : PropTypes.number,
             lng : PropTypes.number
-        }) 
+        })
     })
 }
 
