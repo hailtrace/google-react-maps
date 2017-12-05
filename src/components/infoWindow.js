@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 
 /** The component designed to implement the google.maps.InfoWindow class. This component can be the child of either the `<Map />` or `<Marker />` components, but if you decide to put it within the `<Map />` component you must set its coordinate property so that it has an anchor point.
 * @memberof Map
-* 
+*
 * @property {object} props
 * @property {google.maps} props.maps Required.
 * @property {google.maps.Map} props.map Required.
@@ -41,7 +41,7 @@ class InfoWindow extends React.Component {
           if(maps && map) {
           	var options = {
           		position : anchor? undefined : coords
-          	}          	
+          	}
           	var infoWindow = new maps.InfoWindow(options)
           	if(this.props.open)
 	          	infoWindow.open(map, anchor);
@@ -60,7 +60,7 @@ class InfoWindow extends React.Component {
           }
     }
 	/** Load rendered children into infoWindow.
-	* @return {undefined} 
+	* @return {undefined}
 	*/
     loadInfoWindowContent() {
     	if(this.state.infoWindow) {
@@ -101,9 +101,9 @@ class InfoWindow extends React.Component {
 
     	if(!this.node)
 	    	this.loadInfoWindowContent();
-    	
+
     	var {coords} = this.props;
-		
+
 		if(!prevProps.coords || (coords.lat != prevProps.coords.lat && coords.lng != prevProps.coords.lng))
 			this.state.infoWindow.setPosition(this.props.coords);
 

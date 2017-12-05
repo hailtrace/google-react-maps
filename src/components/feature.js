@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { GeoJSON } from '../utils/utils';
-window.GeoJSON = GeoJSON;
 
 let _mounted = false;
 
