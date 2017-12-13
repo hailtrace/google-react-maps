@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {mapChildren} from '../utils/utils';
 /** Defines a circle shape in the map. Relates to google.maps.Circle class.
 * @property {object} props
@@ -89,7 +90,7 @@ class Circle extends React.Component {
     }
 }
 
-var {number, shape} = React.PropTypes;
+var {number, shape} = PropTypes;
 
 Circle.propTypes = {
 	radius : number.isRequired,

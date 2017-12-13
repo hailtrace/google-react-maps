@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { GeoJSON } from '../utils/utils';
-window.GeoJSON = GeoJSON;
 
 let _mounted = false;
 
@@ -404,16 +404,16 @@ class Feature extends React.Component {
 }
 
 Feature.propTypes = {
-  editable: React.PropTypes.bool,
-  fastEditing: React.PropTypes.bool, //This mode enables point creation by right clicking on the map.
-  maps: React.PropTypes.object,
-  map: React.PropTypes.object,
-  data: React.PropTypes.object,
-  geoJson: React.PropTypes.object.isRequired,
-  id: React.PropTypes.string.isRequired,
-  onDelete: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onClick: React.PropTypes.func
+  editable: PropTypes.bool,
+  fastEditing: PropTypes.bool, //This mode enables point creation by right clicking on the map.
+  maps: PropTypes.object,
+  map: PropTypes.object,
+  data: PropTypes.object,
+  geoJson: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+  onDelete: PropTypes.func,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func
 }
 
 export default Feature;

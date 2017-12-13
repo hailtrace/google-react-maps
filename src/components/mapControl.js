@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 import {ControlPosition} from '../utils/utils';
 /**
@@ -50,10 +51,10 @@ class MapControl extends React.Component {
 }
 
 MapControl.propTypes = {
-	map : React.PropTypes.object,
-	maps : React.PropTypes.object,
-	position : React.PropTypes.oneOf(Object.getOwnPropertyNames(ControlPosition)).isRequired,
-	index : React.PropTypes.number
+	map : PropTypes.object,
+	maps : PropTypes.object,
+	position : PropTypes.oneOf(Object.getOwnPropertyNames(ControlPosition)).isRequired,
+	index : PropTypes.number
 }
 
 export default MapControl;

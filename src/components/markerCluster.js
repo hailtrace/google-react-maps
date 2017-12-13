@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MarkerClusterer from 'marker-clusterer-plus';
 /**
 * Clusters `<Marker />` components passed as children in props.children
@@ -59,9 +60,9 @@ class MarkerCluster extends React.Component {
 }
 
 MarkerCluster.propTypes = {
-	map : React.PropTypes.object,
-	maps : React.PropTypes.object,
-	options : React.PropTypes.object
+	map : PropTypes.object,
+	maps : PropTypes.object,
+	options : PropTypes.object
 }
 
 export default MarkerCluster;
