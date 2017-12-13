@@ -43,7 +43,6 @@ class MarkerCluster extends React.Component {
     	var {MarkerClusterer} = this.state;
     	if(MarkerClusterer) {
     		MarkerClusterer.clearMarkers();
-        MarkerCluster.setMap(null);
     	}
     }
     render() {
