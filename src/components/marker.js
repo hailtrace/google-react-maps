@@ -71,18 +71,16 @@ class Marker extends React.Component {
     	return options;
     }
     componentWillUnmount() {
-		if(this.state.marker) {
-			this.state.marker.setMap(null);
-		}
-		this.setState({marker : null});
-
+  		if(this.state.marker) {
+  			this.state.marker.setMap(null);
+  		}
+  		if(this.props.MarkerClusterer) {
+        this.props.MarkerClusterer.removeMarker(this.state.marker);
+      }
     }
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.marker) {
     		this.state.marker.setOptions(this.getOptions())
-
-            if(this.props.MarkerClusterer)
-                this.props.MarkerClusterer.addMarker(this.state.marker);
     	}
     }
     render() {
