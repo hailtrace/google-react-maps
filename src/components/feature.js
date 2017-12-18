@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GeoJSON } from '../utils/utils';
 
-let _mounted = false;
-
 //Rational: This component emulates the google Data.Feature.
 //It lives in the context of a <DataLayer /> Component and interfaces with it's Data object that has been passed as prop to it.
 /** The component that handles individual features within a data layer. */
@@ -37,7 +35,7 @@ class Feature extends React.Component {
     this.getGeometryForFeature = this.getGeometryForFeature.bind(this);
     this.generateFeatureFromGeoJson = this.generateFeatureFromGeoJson.bind(this);
     this.updateProperties = this.updateProperties.bind(this);
-
+    this.mounted = false;
   }
   ///--------------------------------Editor Helper Methods-----------------------------------///
   addPoint(latLng) {
@@ -58,7 +56,7 @@ class Feature extends React.Component {
           ...pointArray.slice(point.index + 1, pointArray.length)
         ]]);
         feature.setGeometry(newGeometry);
-        if(_mounted) {
+        if(this.mounted) {
           this.setState({ selected_point: { index: point.index + 1, latLng } });
         }
         break;
@@ -94,7 +92,7 @@ class Feature extends React.Component {
   }
   selectPoint(latLng) {
     const foundPoint = this.findPoint(latLng);
-    if(foundPoint && _mounted) {
+    if(foundPoint && this.mounted) {
       this.setState({ selected_point: foundPoint });
     }
   }
@@ -145,7 +143,7 @@ class Feature extends React.Component {
         var { feature } = event;
         if (feature.getId() == this.state.feature.getId()) {
           feature.toGeoJson(geoJson => {
-            if(_mounted) {
+            if(this.mounted) {
               this.setState({ geoJson: JSON.parse(JSON.stringify(geoJson)) }, () => {
                 if (typeof this.props.onChange === 'function')
                   this.props.onChange(geoJson);
@@ -241,7 +239,7 @@ class Feature extends React.Component {
   }
   componentDidMount() {
     // console.log("F: componentDidMount")
-    _mounted = true;
+    this.mounted = true;
     if (this.props.data) {
       var id = undefined;
       // console.log("Feature Mounted with ID:", this.props.id);
@@ -272,7 +270,7 @@ class Feature extends React.Component {
       console.error(new Error("You must put this <Feature /> component within the context of a <DataLayer /> Component."))
   }
   componentWillUnmount() {
-    _mounted = false;
+    this.mounted = false;
     if (this.props.data)
       this.props.data.remove(this.state.feature);
 
