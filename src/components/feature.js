@@ -283,7 +283,15 @@ class Feature extends React.Component {
   ///--------------------------------Google Data.Feature Managmenent Methods-----------------------------------///
   updateProperties(properties) {
     const names = Object.keys(properties);
-    names.forEach(name => this.state.feature.setProperty(name, properties[name]));
+    names.forEach(name => {
+      switch(name) {
+        case 'fillColor': {
+          this.props.data.overrideStyle(this.state.feature, { fillColor: properties[name] })
+          break;
+        }
+      }
+      this.state.feature.setProperty(name, properties[name]);
+    });
   }
   updateFeatureGeometry(geoJson) {
     //resets the geometry to match the geojson.
