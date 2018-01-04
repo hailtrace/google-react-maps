@@ -280,6 +280,7 @@ class Feature extends React.Component {
 
   ///--------------------------------Google Data.Feature Managmenent Methods-----------------------------------///
   updateProperties(properties) {
+    if(!properties) return;
     const names = Object.keys(properties);
     names.forEach(name => {
       switch(name) {
