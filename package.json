@@ -4,7 +4,7 @@
   "description": "A more powerfully custom version of the Google Maps Javascript API built for React. Multiple Datalayer support. GEOJSON Enabled.",
   "main": "dist/components/index.js",
   "scripts": {
-    "prepublish": "babel ./src --out-dir ./dist --source-maps --presets react,es2015 --plugins add-module-exports",
+    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./dist --source-maps --presets react,es2015 --plugins add-module-exports",
     "test": "jest",
     "start-dev": "node_modules/.bin/webpack-dev-server",
     "gen-docs": "npm run clear-docs && jsdoc -c ./docs.config.json -t ./node_modules/ink-docstrap/template -R README.md -r ./src",
@@ -43,16 +43,17 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
-    "google-maps-api": "DavidDionise/google-maps-api",
+    "google-maps-api": "github:DavidDionise/google-maps-api",
     "marker-clusterer-plus": "^2.1.4",
-    "markerwithlabel": "^2.0.0",
-    "prop-types": "^15.6.0"
+    "markerwithlabel": "github:egdbear/node-MarkerWithLabel",
+    "prop-types": "^15.6.0",
   },
   "peerDependancies": {
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.2.1",

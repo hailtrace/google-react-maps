@@ -112,7 +112,9 @@ class Map extends React.Component {
         if(bounds && bounds.sw && bounds.ne) {
             bounds = new this.state.maps.LatLngBounds(bounds.sw, bounds.ne);
         }
-        return bounds ? !this.state.map.getBounds().equals(bounds) : false;
+        const mapBounds = this.state.map.getBounds();
+
+        return bounds && mapBounds ? !mapBounds.equals(bounds) : false;
     }
     boundsHandleChange() {
         console.log("Bounds Handle Change")
@@ -230,7 +232,7 @@ class Map extends React.Component {
     	if(this.props["api-key"]) {
         const mapsapi = require('google-maps-api');
     		// if(!window.maps)
-		    	mapsapi(this.props["api-key"], 3.31, ['drawing','geometry','places'])().then(initMapComponentWithLibrary);
+		    	mapsapi(this.props["api-key"], 3.32, ['drawing','geometry','places'])().then(initMapComponentWithLibrary);
 		    // else
 		    // 	initMapComponentWithLibrary(window.maps);
     	}

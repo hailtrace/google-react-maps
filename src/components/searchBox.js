@@ -111,8 +111,8 @@ class SearchBox extends React.Component {
     }
 }
 
-SearchBox.PropTypes = {
-    placeholder : PropTypes.string,
+SearchBox.propTypes = {
+  placeholder : PropTypes.string,
 	position : PropTypes.string.isRequired,
 	wrapper : PropTypes.func,
 	onPlacesChanged : PropTypes.func.isRequired

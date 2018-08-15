@@ -26,7 +26,6 @@ class CustomOverlay extends React.Component {
           this.coords_ = coords;
         }
         GMCustomOverlay.prototype.onRemove = function() {
-          console.log("Remove")
           this.div_.parentNode.removeChild(this.div_);
           this.div_ = null;
         }
