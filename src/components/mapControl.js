@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import {ControlPosition} from '../utils/utils';
 /**
 * The component that defines a custom map control at a predifined position.
-* 
+*
 * @property {object} props
 * @property {google.maps.Map} props.map
 * @property {google.maps} props.maps
@@ -42,8 +42,7 @@ class MapControl extends React.Component {
     componentDidUpdate() {
     }
     componentWillUnmount() {
-    	 console.log("Component unmounting.")
-          this.cleanMapControlContent();
+      this.cleanMapControlContent();
     }
     render() {
         return <div ref="controlParent"><div ref="controlChildren">{this.props.children}</div></div>;

@@ -117,7 +117,6 @@ class Map extends React.Component {
         return bounds && mapBounds ? !mapBounds.equals(bounds) : false;
     }
     boundsHandleChange() {
-        console.log("Bounds Handle Change")
         var {bounds} = this.props;
         if(bounds && bounds.sw && bounds.ne) {
             bounds = new this.state.maps.LatLngBounds(bounds.sw, bounds.ne);
