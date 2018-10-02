@@ -47,8 +47,6 @@
     "marker-clusterer-plus": "^2.1.4",
     "markerwithlabel": "github:egdbear/node-MarkerWithLabel",
     "prop-types": "^15.6.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2"
   },
   "peerDependancies": {
     "react": "^16.4.2",
