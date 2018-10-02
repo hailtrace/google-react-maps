@@ -46,14 +46,14 @@ class SearchBox extends React.Component {
                         const service = new maps.places.PlacesService(map);
                         query ? service.textSearch({
                             query,
-                            bounds : map_bounds
+                            bounds: map_bounds
                         }, (places, status) => {
                             if(status == maps.places.PlacesServiceStatus.OK) {
                                 this.props.onPlacesChanged(places);
                             }
                         }) : '';
                     }
-                }, 300);
+                }, 5000);
 		    });
 
 			this.placesListener = searchBox.addListener('places_changed', () => {
