@@ -95,7 +95,7 @@ class App extends React.Component {
 
     render() {
         var controls = [];
-        var Wrapper = (props) => (<div style={{backgroundColor:"red",padding:"10px"}}>{props.children}</div>);
+        var Wrapper = (props) => (<div style={{backgroundColor:"red",padding:"15px"}}>{props.children}</div>);
         controls.push(<SearchBox wrapper={Wrapper} onPlacesChanged={pl => console.log("Places: ", pl)} position="TOP_CENTER" />)
         var positions = Object.getOwnPropertyNames(ControlPosition);
         positions.forEach(p => {

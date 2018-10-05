@@ -12,6 +12,7 @@ class SearchBox extends React.Component {
         }
         this.postRender = this.postRender.bind(this);
         this.preRender = this.preRender.bind(this);
+        this.ref = this.ref.bind(this);
         this.boundsListener = null;
         this.placesListener = null;
         this.timer = null;
@@ -22,8 +23,8 @@ class SearchBox extends React.Component {
     postRender() {
     	var {map, maps, position} = this.props;
     	if(map && maps) {
-	    	var input = ReactDom.findDOMNode(this.refs.input);
-	    	var container = ReactDom.findDOMNode(this.refs.child);
+	    	var input = ReactDom.findDOMNode(this.input);
+	    	var container = ReactDom.findDOMNode(this.child);
 	    	var searchBox = new maps.places.SearchBox(input);
 
             this.timer = null;
@@ -41,8 +42,8 @@ class SearchBox extends React.Component {
                     const map_bounds = map.getBounds();
                     searchBox.setBounds(map_bounds);
 
-                    if(typeof this.props.onPlacesChanged === 'function' && this.refs.input) {
-                        const query = this.refs.input.value;
+                    if(typeof this.props.onPlacesChanged === 'function' && this.input) {
+                        const query = this.input.value;
                         const service = new maps.places.PlacesService(map);
                         query ? service.textSearch({
                             query,
@@ -84,9 +85,14 @@ class SearchBox extends React.Component {
     	var {internalPosition} = this.state;
 		map.controls[maps.ControlPosition[position]].removeAt(internalPosition);
 
-		var child = ReactDom.findDOMNode(this.refs.child);
-		var parent = ReactDom.findDOMNode(this.refs.parent);
+		var child = ReactDom.findDOMNode(this.child);
+		var parent = ReactDom.findDOMNode(this.parent);
 		parent.appendChild(child);
+    }
+    ref(name) {
+      return (item) => {
+        this[name] = item;
+      };
     }
     componentWillUpdate() {
     	if(this.state.internalPosition > -1)
@@ -105,9 +111,9 @@ class SearchBox extends React.Component {
     render() {
     	var Wrapper = this.props.wrapper;
     	if(Wrapper)
-    		return <div ref="parent"><div ref="child"><Wrapper><input type="text" ref="input" placeholder={this.props.placeholder} style={this.props.style} className={this.props.className} /></Wrapper></div></div>
+    		return <div ref={this.ref('parent')}><div ref={this.ref('child')}><Wrapper><input type="text" ref={this.ref('input')} placeholder={this.props.placeholder} style={this.props.style} className={this.props.className} /></Wrapper></div></div>
     	else
-	        return <div ref="parent"><div ref="child"><input type="text" ref="input" placeholder={this.props.placeholder} style={this.props.style} className={this.props.className} /></div></div>;
+	        return <div ref={this.ref('parent')}><div ref={this.ref('child')}><input type="text" ref={this.ref('input')} placeholder={this.props.placeholder} style={this.props.style} className={this.props.className} /></div></div>;
     }
 }
 

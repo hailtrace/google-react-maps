@@ -34,6 +34,7 @@ class InfoWindow extends React.Component {
         }
 
         this.loadInfoWindowContent = this.loadInfoWindowContent.bind(this);
+        this.ref = this.ref.bind(this);
         this.node = null;
     }
     componentWillMount() {
@@ -65,7 +66,7 @@ class InfoWindow extends React.Component {
     loadInfoWindowContent() {
     	if(this.state.infoWindow) {
 
-	    	this.node = ReactDom.findDOMNode(this.refs.infoWindowChildren);
+	    	this.node = ReactDom.findDOMNode(this.infoWindowChildren);
     		this.state.infoWindow.setContent(this.node); //Set infowindow content
 
     	}
@@ -79,6 +80,11 @@ class InfoWindow extends React.Component {
       	var parent = ReactDom.findDOMNode(this);
       	var child = this.node;
       	parent.appendChild(child);
+    }
+    ref(name) {
+      return (item) => {
+        this[name] = item;
+      };
     }
     componentDidMount() {
 
@@ -110,7 +116,7 @@ class InfoWindow extends React.Component {
     }
     render() {
 
-        return <div><div ref="infoWindowChildren">{this.props.children}</div></div>;
+        return <div><div ref={this.ref("infoWindowChildren")}>{this.props.children}</div></div>;
     }
 }
 

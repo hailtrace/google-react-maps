@@ -52,10 +52,15 @@ class CustomOverlay extends React.Component {
         }
 
     }
+    ref(name) {
+      return (item) => {
+        this[name] = item;
+      };
+    }
     componentDidMount() {
       const {maps, map} = this.props;
       try {
-        this.overlay = new GMCustomOverlay(ReactDom.findDOMNode(this.refs['custom-overlay']), this.props.map);
+        this.overlay = new GMCustomOverlay(ReactDom.findDOMNode(this['custom-overlay']), this.props.map);
         this.overlay.setCoords(this.props.coords);
 
         if(typeof this.props.onClick === 'function')
@@ -67,7 +72,7 @@ class CustomOverlay extends React.Component {
     }
 
     render() {
-        return <div className={this.props.className} style={this.props.style} ref="custom-overlay">{this.props.children}</div>;
+        return <div className={this.props.className} style={this.props.style} ref={this.ref('custom-overlay')}>{this.props.children}</div>;
     }
 }
 

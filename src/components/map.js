@@ -51,7 +51,7 @@ class Map extends React.Component {
         	_div_id
         }
         this.listeners = [];
-
+        this.ref = this.ref.bind(this);
         this.getGeocoder = this.getGeocoder.bind(this);
         this.getGoogleMapsApi = this.getGoogleMapsApi.bind(this);
         this.getGoogleMap = this.getGoogleMap.bind(this);
@@ -193,6 +193,11 @@ class Map extends React.Component {
             });
         }
     }
+    ref(name) {
+      return (item) => {
+        this[name] = item;
+      };
+    }
     componentDidMount() {
 
 
@@ -203,7 +208,7 @@ class Map extends React.Component {
             try {
 
                 var geocoder = new maps.Geocoder();
-        		var map = new maps.Map( ReactDom.findDOMNode(this.refs.map) , mapOptions);
+        		var map = new maps.Map( ReactDom.findDOMNode(this.mapDiv) , mapOptions);
 
                 map.setCenter(!this.props.center? new maps.LatLng(39.5, -98.35) : new maps.LatLng(this.props.center.lat,this.props.center.lng));
                 if(this.props.bounds && this.props.bounds.sw && this.props.bounds.ne) {
@@ -264,7 +269,7 @@ class Map extends React.Component {
 
         }
 
-        return <div ref="map" id={this.state._div_id} style={this.props.style}>
+        return <div ref={this.ref('mapDiv')} id={this.state._div_id} style={this.props.style}>
         	<div>{children}</div>
             <div>{controls}</div>
 

@@ -16,15 +16,16 @@ class MapControl extends React.Component {
         super(props);
         this.displayName = 'MapControl';
         this.cleanMapControlContent = this.cleanMapControlContent.bind(this);
+        this.ref = this.ref.bind(this);
     }
     cleanMapControlContent() {
-    	var parent = ReactDom.findDOMNode(this.refs.controlParent);
-    	var child = ReactDom.findDOMNode(this.refs.controlChildren);
+    	var parent = ReactDom.findDOMNode(this.controlParent);
+    	var child = ReactDom.findDOMNode(this.controlChildren);
     	parent.appendChild(child);
     }
     loadMapControlContent() {
     	var {maps, map, position} = this.props;
-    	var children = ReactDom.findDOMNode(this.refs.controlChildren);
+    	var children = ReactDom.findDOMNode(this.controlChildren);
     	children.index = typeof this.props.index !== 'undefined' ? this.props.index : 1;
 
 		if(position && map){
@@ -32,6 +33,11 @@ class MapControl extends React.Component {
 		}
 		else
 			console.warn("You must provide your map control a specific control position.");
+    }
+    ref(name) {
+      return (item) => {
+        this[name] = item;
+      };
     }
     componentWillMount() {
 
@@ -45,7 +51,7 @@ class MapControl extends React.Component {
       this.cleanMapControlContent();
     }
     render() {
-        return <div ref="controlParent"><div ref="controlChildren">{this.props.children}</div></div>;
+        return <div ref={this.ref("controlParent")}><div ref={this.ref("controlChildren")}>{this.props.children}</div></div>;
     }
 }
 
