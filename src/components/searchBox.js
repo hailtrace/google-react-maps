@@ -11,7 +11,6 @@ class SearchBox extends React.Component {
         	internalPosition : -1
         }
         this.postRender = this.postRender.bind(this);
-        this.preRender = this.preRender.bind(this);
         this.ref = this.ref.bind(this);
         this.boundsListener = null;
         this.placesListener = null;
@@ -91,9 +90,6 @@ class SearchBox extends React.Component {
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.internalPosition > -1 && prevState.internalPosition != -1)
 	    	this.postRender();
-    }
-    componentWillUnmount() {
-   	 	this.preRender();
     }
     render() {
     	var Wrapper = this.props.wrapper;
