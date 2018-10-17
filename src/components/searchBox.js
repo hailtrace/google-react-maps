@@ -80,19 +80,10 @@ class SearchBox extends React.Component {
     	else
     		console.warn(new Error("You must pass this component as a control to a Map component."))
     }
-    preRender() {
-    	var {map, maps, position} = this.props;
-    	var {internalPosition} = this.state;
-  		map.controls[maps.ControlPosition[position]].removeAt(internalPosition);
-    }
     ref(name) {
       return (item) => {
         this[name] = item;
       };
-    }
-    componentWillUpdate() {
-    	if(this.state.internalPosition > -1)
-	    	this.preRender();
     }
     shouldComponentUpdate(nextProps, nextState) {
     	return false;
