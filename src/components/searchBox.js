@@ -83,11 +83,7 @@ class SearchBox extends React.Component {
     preRender() {
     	var {map, maps, position} = this.props;
     	var {internalPosition} = this.state;
-		map.controls[maps.ControlPosition[position]].removeAt(internalPosition);
-
-		var child = ReactDom.findDOMNode(this.child);
-		var parent = ReactDom.findDOMNode(this.parent);
-		parent.appendChild(child);
+  		map.controls[maps.ControlPosition[position]].removeAt(internalPosition);
     }
     ref(name) {
       return (item) => {
