@@ -64,7 +64,7 @@ class SearchBox extends React.Component {
 	    	if(!position)
 	    		position = "TOP_LEFT";
 
-	    	if(this.state.internalPosition < 0)
+	    if(this.state.internalPosition < 0)
 				map.controls[maps.ControlPosition[position]].push(container);
 			else
 				map.controls[maps.ControlPosition[position]].insertAt(this.state.internalPosition, container);
@@ -90,6 +90,13 @@ class SearchBox extends React.Component {
     componentDidUpdate(prevProps, prevState) {
     	if(this.state.internalPosition > -1 && prevState.internalPosition != -1)
 	    	this.postRender();
+    }
+    componentWillUnmount() {
+      const { map, maps, position } = this.props;
+      if (this.state.internalPosition >= 0) {
+        map.controls[maps.ControlPosition[position || 'TOP_LEFT']]
+          .removeAt(this.state.internalPosition);
+      }
     }
     render() {
     	var Wrapper = this.props.wrapper;

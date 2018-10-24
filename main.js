@@ -23,6 +23,7 @@ class App extends React.Component {
             customControls : [],
             circleCenter : {lng: -100.44364929199219, lat: 30.058001435398296},
             markerNumber : 10,
+            searchBoxVisible: true,
         }
 
         this.bounds = JSON.parse(localStorage.getItem('bounds')) || null;
@@ -31,7 +32,7 @@ class App extends React.Component {
         console.log("Test Data Layers: ", layers);
         this.mutateFeature = this.mutateFeature.bind(this);
         this.simulateFeatureCoordinateEdit = this.simulateFeatureCoordinateEdit.bind(this);
-
+        this.toggleSearchbox = this.toggleSearchbox.bind(this);
         this.handleMapClick = this.handleMapClick.bind(this);
         this.infoWindowMap = null;
     }
@@ -92,11 +93,16 @@ class App extends React.Component {
             }
         })
     }
-
+    toggleSearchbox() {
+      this.setState(state => ({ searchBoxVisible: !state.searchBoxVisible }));
+    }
     render() {
+        const { searchBoxVisible } = this.state;
         var controls = [];
         var Wrapper = (props) => (<div style={{backgroundColor:"red",padding:"15px"}}>{props.children}</div>);
-        controls.push(<SearchBox wrapper={Wrapper} onPlacesChanged={pl => console.log("Places: ", pl)} position="TOP_CENTER" />)
+        if (searchBoxVisible) {
+          controls.push(<SearchBox wrapper={Wrapper} onPlacesChanged={pl => console.log("Places: ", pl)} position="TOP_CENTER" />)
+        }
         var positions = Object.getOwnPropertyNames(ControlPosition);
         positions.forEach(p => {
             controls.push(
@@ -123,7 +129,7 @@ class App extends React.Component {
         		</Map>
 
                 <h2>Simple Map with Custom Controls</h2>
-
+                <button onClick={() => this.toggleSearchbox()}>Toggle Searchbox</button>
                 <Map
                     api-key="AIzaSyCWuH5SGDikY4OPSrbJxqTi4Y2uTgQUggw"
                     zoom={Number(this.state.zoom)}
