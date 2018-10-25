@@ -177,7 +177,10 @@ class DataLayer extends React.Component {
     componentWillReceiveProps(nextProps) {
       if(typeof nextProps.visible !== 'undefined') {
          this.checkPropVisibility(nextProps);
-         this.checkPropDrawingMode(nextProps);
+      }
+
+      if (nextProps.drawingMode !== this.props.drawingMode) {
+        this.checkPropDrawingMode(nextProps)
       }
     }
      shouldComponentUpdate(nextProps, nextState) {
