@@ -101,7 +101,7 @@ class App extends React.Component {
         var controls = [];
         var Wrapper = (props) => (<div style={{backgroundColor:"red",padding:"15px"}}>{props.children}</div>);
         if (searchBoxVisible) {
-          controls.push(<SearchBox wrapper={Wrapper} onPlacesChanged={pl => console.log("Places: ", pl)} position="TOP_CENTER" />)
+          controls.push(<SearchBox autoRefreshPlaces wrapper={Wrapper} onPlacesChanged={pl => console.log("Places: ", pl)} position="TOP_CENTER" />)
         }
         var positions = Object.getOwnPropertyNames(ControlPosition);
         positions.forEach(p => {
