@@ -37,12 +37,12 @@ class SearchBox extends React.Component {
         this.placesListener.remove();
       }
 
-      if (this.props.autoRefreshPlaces) {
         this.boundsListener = map.addListener('bounds_changed', () => {
-          if(this.timer) {
-              clearTimeout(this.timer);
-          }
-          this.timer = setTimeout(() => {
+          if (this.props.autoRefreshPlaces) {
+            if(this.timer) {
+                clearTimeout(this.timer);
+            }
+            this.timer = setTimeout(() => {
               const map_bounds = map.getBounds();
               searchBox.setBounds(map_bounds);
 
@@ -58,9 +58,9 @@ class SearchBox extends React.Component {
                       }
                   }) : '';
               }
-          }, 5000);
+            }, 1000);
+          }
   	    });
-      }
 
   		this.placesListener = searchBox.addListener('places_changed', () => {
         if(typeof this.props.onPlacesChanged === 'function') {
