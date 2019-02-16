@@ -7,7 +7,7 @@ export const getMapsApi = (options, callback) => {
 
   mapsapi(options.apiKey, options.version, options.libraries || [])()
     .then(
-      maps => setMaps(maps)
+      maps => callback(maps)
     )
     .catch(error => log.error(error));
 }
