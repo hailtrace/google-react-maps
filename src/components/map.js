@@ -236,7 +236,7 @@ class Map extends React.Component {
     	if(this.props["api-key"]) {
         const mapsapi = require('google-maps-api');
     		// if(!window.maps)
-		    	mapsapi(this.props["api-key"], 3.32, ['drawing','geometry','places'])().then(initMapComponentWithLibrary);
+		    	mapsapi(this.props["api-key"], ['drawing','geometry','places'])().then(initMapComponentWithLibrary);
 		    // else
 		    // 	initMapComponentWithLibrary(window.maps);
     	}

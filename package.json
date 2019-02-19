@@ -43,7 +43,7 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
-    "google-maps-api": "github:DavidDionise/google-maps-api",
+    "google-maps-api": "^2.0.1",
     "marker-clusterer-plus": "^2.1.4",
     "markerwithlabel": "github:egdbear/node-MarkerWithLabel",
     "prop-types": "^15.6.0",
