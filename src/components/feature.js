@@ -346,7 +346,7 @@ class Feature extends React.Component {
     var { map, maps } = this.props;
     switch (geoJson.geometry.type) {
       case "Polygon":
-        var latLngs = geoJson.geometry.coordinates[0].map(coordinate => new maps.LatLng({ lng: coordinate[0], lat: coordinate[1] }));
+        var latLngs = (geoJson.geometry.coordinates[0] || []).map(coordinate => new maps.LatLng({ lng: coordinate[0], lat: coordinate[1] }));
         latLngs.pop(); //Remove the last item.
         var properties = geoJson.properties;
         var polygon = new maps.Data.Polygon([latLngs]);
