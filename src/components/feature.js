@@ -312,7 +312,7 @@ class Feature extends React.Component {
         case "Polygon":
           var currGeoJson = this.state.geoJson;
           //If the coordinates length is not the same, obviously something changed so reset the geometry.
-          if (geoJson.geometry.coordinates[0].length != currGeoJson.geometry.coordinates[0].length) {
+          if ((geoJson.geometry.coordinates[0] || []).length != (currGeoJson.geometry.coordinates[0] || []).length) {
             // console.log("F: Entered unequal coordinate block for id: ", this.props.id);
             resetGeometry();
           }
@@ -320,7 +320,7 @@ class Feature extends React.Component {
           else {
             // console.log("F: Starting coordinate comparison for id: ", this.props.id , currGeoJson.geometry.coordinates[0], geoJson.geometry.coordinates[0]);
 
-            for (var i = currGeoJson.geometry.coordinates[0].length - 1; i >= 0; i--) {
+            for (var i = (currGeoJson.geometry.coordinates[0] || []).length - 1; i >= 0; i--) {
               var currPoint = currGeoJson.geometry.coordinates[0][i];
               var newPoint = geoJson.geometry.coordinates[0][i];
               if (currPoint[0] != newPoint[0] || currPoint[1] != newPoint[1]) {
